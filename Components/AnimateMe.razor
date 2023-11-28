@@ -1,0 +1,72 @@
+﻿﻿@using System.Globalization
+@using Microsoft.Extensions.Options
+
+<div data-aos="@animationName"
+     data-aos-delay="@delay"
+     data-aos-duration="@duration"
+     data-aos-once="@playOnce"
+     data-aos-easing="@easing"
+     data-aos-mirror="@mirroring">
+    @ChildContent
+</div>
+
+@code {
+    #region Private Animation Variable Name
+    private string animationName = "";
+
+    private string duration = "";
+
+    private string delay = "";
+
+    private string playOnce = "";
+
+    private string easing = "";
+
+    private string mirroring = "";
+    #endregion
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string AnimationNameSelect { get; set; } = "zoom-in";
+    [Parameter]
+    public string Duration { get; set; } = "4000";
+    [Parameter]
+    public string Delay { get; set; } = "220";
+    [Parameter]
+    public string PlayOnce { get; set; } = "false";
+    [Parameter]
+    public string Easing { get; set; } = "ease-in-out";
+    [Parameter]
+    public string Mirroring { get; set; } = "true";
+
+    protected override void OnParametersSet()
+    {
+
+        if (!string.IsNullOrEmpty(AnimationNameSelect))
+        {
+            animationName = AnimationNameSelect;
+        }
+        if (!string.IsNullOrEmpty(Duration))
+        {
+            duration = Duration;
+        }
+        if (!string.IsNullOrEmpty(Delay))
+        {
+            delay = Delay;
+        }
+        if (!string.IsNullOrEmpty(PlayOnce))
+        {
+            playOnce = PlayOnce;
+        }
+        if (!string.IsNullOrEmpty(Easing))
+        {
+            easing = Easing;
+        }
+        if (!string.IsNullOrEmpty(Mirroring))
+        {
+            mirroring = Mirroring;
+        }
+    }
+}

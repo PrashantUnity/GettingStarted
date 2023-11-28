@@ -1,0 +1,18 @@
+﻿@page "/language"
+
+
+<CodeSnippets SnippetUrl="@GetSnippets"/> 
+
+
+@code {
+    public List<Snippet> GetSnippets;
+
+    protected override void OnParametersSet()
+    {
+        var languageHolder = new LanguageHolder();
+        languageHolder.AddLanguage(LanguageName.CSharp, "810749d284b94fbce895362f58ed70bf", "Tries DataStructure");
+        languageHolder.AddLanguage(LanguageName.CSharp, "810749d284b94fbce895362f58ed70bf", "Tries DataStructure");
+        languageHolder.AddLanguage(LanguageName.CSharp, "810749d284b94fbce895362f58ed70bf", "Tries DataStructure");
+        GetSnippets = languageHolder.LanguageUrl;
+    }
+}

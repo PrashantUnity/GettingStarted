@@ -1,0 +1,21 @@
+﻿<MudItem xs="12">
+    <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary">
+        @if ( SnippetUrl!=null)
+        {
+            @foreach (var item in SnippetUrl)
+            {
+                <MudTabPanel Text=@item.Language>
+                     <GithubGistSnippet 
+                                Title=@item.Title
+                                UserId=@item.UrserName 
+                                FileName=@item.FileName />  
+                </MudTabPanel> 
+            }
+        } 
+    </MudTabs>
+</MudItem>
+
+@code{ 
+    [Parameter]
+    public List<Snippet> SnippetUrl { get; set; }
+}
