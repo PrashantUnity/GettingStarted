@@ -1,13 +1,112 @@
 ﻿@page "/"
+@inject NavigationManager navigation
 
-<PageTitle>Index</PageTitle>
 
-<h1>
-    Get Start for Wild Programming
-</h1>
+<MudImage   ObjectFit="ObjectFit.Cover"
+          Height="300"
+          Width="300"
+          @onclick="BubbleSortPage"
+          Src="images/bubblesort.png"
+          Alt="Image"
+          Elevation="25"
+          Class="rounded-lg  md-6 mx-lg-auto mud-theme-success" />
 
-<GithubGistSnippet Title="String To List" UserId="PrashantUnity" FileName="9b89a50d2a3f076d1784cd3dfcd7df27" /> 
-<GithubGistSnippet Title="String To List" UserId="PrashantUnity" FileName="9b89a50d2a3f076d1784cd3dfcd7df27" /> 
- 
-  
- 
+@code
+{
+    void BubbleSortPage()
+    {
+        navigation.NavigateTo("/BubbleSort");
+    }
+    void selectionSort(int[] array)
+    {
+        int size = array.Length;
+
+        for (int step = 0; step < size - 1; step++)
+        {
+            int min_idx = step;
+
+            for (int i = step + 1; i < size; i++)
+            {
+                if (array[i] < array[min_idx])
+                {
+                    min_idx = i;
+                }
+            }
+            (array[step], array[min_idx]) = (array[min_idx], array[step]);
+        }
+    }
+    void insertionSort(int[] array)
+    {
+        int size = array.Length;
+
+        for (int step = 1; step < size; step++)
+        {
+            int key = array[step];
+            int j = step - 1;
+            while (j >= 0 && key < array[j])
+            {
+                array[j + 1] = array[j--];
+            }
+
+            array[j + 1] = key;
+        }
+    }
+
+    void merge(int[] arr, int p, int q, int r)
+    {
+        int n1 = q - p + 1;
+        int n2 = r - q;
+
+        int[] L = new int[n1];
+        int[] M = new int[n2];
+        int i, j, k;
+        for (i = 0; i < n1; i++)
+            L[i] = arr[p + i];
+        for (j = 0; j < n2; j++)
+            M[j] = arr[q + 1 + j];
+
+        i = 0;
+        j = 0;
+        k = p;
+
+        while (i < n1 && j < n2)
+        {
+            if (L[i] <= M[j])
+            {
+                arr[k] = L[i];
+                i++;
+            }
+            else
+            {
+                arr[k] = M[j];
+                j++;
+            }
+            k++;
+        }
+        while (i < n1)
+        {
+            arr[k] = L[i];
+            i++;
+            k++;
+        }
+
+        while (j < n2)
+        {
+            arr[k] = M[j];
+            j++;
+            k++;
+        }
+    }
+
+    // Divide the array into two subarrays, sort them and merge them
+    void mergeSort(int[] arr, int l, int r)
+    {
+        if (l < r)
+        {
+            int m = (l + r) / 2;
+            mergeSort(arr, l, m);
+            mergeSort(arr, m + 1, r);
+            merge(arr, l, m, r);
+        }
+    }
+}

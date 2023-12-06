@@ -1,0 +1,105 @@
+﻿@page "/BubbleSort"
+@inject IJSRuntime _js
+
+<style>
+    .bar {
+        display: inline-block;
+        background-color: green; 
+    }
+</style>  
+<MudPaper Class="pa-md-6 mx-lg-auto mud-theme-success">
+    <MudSlider @bind-Value="@value" Min="10" Max="250" @onchange="ReGenerate">Data Count: @value.ToString()</MudSlider>
+        <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Time Delay: @sleep.ToString() </MudSlider>
+        <MudSlider @bind-Value="@width" Min="1" Max="100">Width: @width.ToString() px </MudSlider>
+        <MudSlider @bind-Value="@margin" Min="1" Max="60">Margin: @margin.ToString() px </MudSlider>
+    </MudPaper>
+<div>
+    @if (data.Count >= 1)
+    {
+        foreach (var item in data)
+        {
+            if (change.Item1 == item.Item1 ||
+            change.Item1 == item.Item2 ||
+            change.Item2 == item.Item1 ||
+            change.Item2 == item.Item2)
+            {
+                <div class="bar" style="height:@(item.Item1)px; width: @(width)px; background-color: red; margin-right: @(margin)px;" /> 
+            }
+            else
+            {
+                <div class="bar" style="height:@(item.Item1)px; width: @(width)px; margin-right: @(margin)px;"></div>
+            }
+        }
+    }
+</div>
+
+<div class="p-4">
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Primary"
+               OnClick="Generate"
+               Disabled="@isSorting"
+               FullWidth="true">
+        Generate Random Data
+    </MudButton>
+    <MudButton 
+        Variant="Variant.Filled" 
+        Color="Color.Primary"
+        OnClick="Simulate"
+        FullWidth="true"
+        Disabled="@isSorting"
+    >
+        Sort 
+    </MudButton>
+     
+</div> 
+
+@code {
+    Random random = new Random();
+    List<(int, int)> data = new();
+    int width = 30;
+    int margin = 1;
+    int value = 35;
+    int sleep = 10;
+    (int, int) change = (-1, -1);
+    bool isSorting = false;
+    async void Simulate()
+    {
+        isSorting = true;
+        for (int i = 0; i < data.Count; i++)
+        {
+            for (int j = i + 1; j < data.Count; j++)
+            {
+                if (data[j].Item1 < data[i].Item1)
+                {
+
+                    change = (data[j].Item2, data[i].Item2);
+                    (data[i], data[j]) = ((data[j].Item1, data[j].Item2), (data[i].Item1, data[i].Item2));
+                    StateHasChanged();
+                    await Task.Delay(sleep);
+                }
+            }
+        }
+        change = (-1, -1);
+        isSorting = false;
+        StateHasChanged();
+    }
+
+    void Generate()
+    {
+        data = new();
+        int i = 0;
+        while (i < value)
+        {
+            data.Add((random.Next(1, 200), i));
+            i++;
+        }   
+        StateHasChanged();
+    }
+    void ReGenerate()
+    {
+        Generate();
+        if(isSorting)
+            Simulate();
+    }
+
+}
