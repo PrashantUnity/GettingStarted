@@ -7,10 +7,6 @@
 
         public string  CellColor { get; set; }
 
-        public bool StartingPoint { get; set; } = false;
-
-        public bool EndingPoint { get; set;} = false;
-
-        public bool MyProperty { get; set; }=true;
+        public GraphCellModels Parent { get; set; }   
     }
 }

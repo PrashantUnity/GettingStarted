@@ -1,12 +1,14 @@
 ﻿@page "/graph"
- 
-<MudPaper Class="pa-md-6 mx-lg-auto mud-theme-success justify-center" Width="30%">
-    <MudSlider @bind-Value="@horizontal" Min="5" Max="15" @onchange="ReGenerate">Row Count: @horizontal.ToString()</MudSlider>
-    <MudSlider @bind-Value="@vertical" Min="5" Max="40" @onchange="ReGenerate">Column Count: @vertical.ToString()</MudSlider> 
-    <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Delay: @sleep.ToString()</MudSlider>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="BFS">Traverse</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Error" FullWidth="true" OnClick="Reset">Reset</MudButton>
-</MudPaper>  
+ <MudPaper Class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
+    <MudPaper Class="pa-6 mx-lg-auto mud-theme-success justify-center" Width="80%">
+        <MudSlider @bind-Value="@horizontal" Min="5" Max="15" @onchange="ReGenerate">Row Count: @horizontal.ToString()</MudSlider>
+        <MudSlider @bind-Value="@vertical" Min="5" Max="40" @onchange="ReGenerate">Column Count: @vertical.ToString()</MudSlider> 
+        <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Delay: @sleep.ToString()</MudSlider>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="BFS" Disabled="@isSorting">Depth First Search</MudButton>
+           @*  <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="DFS" Disabled="@isSorting">Breadth First Search</MudButton> *@
+            <MudButton Variant="Variant.Filled" Color="Color.Error" FullWidth="true" OnClick="Reset" Disabled="@isSorting">Reset</MudButton>
+    </MudPaper>  
+</MudPaper>
 @if(graph.Count>0)
 { 
         <table   style="margin: 8px auto; border-color:black; border-width:thick">
@@ -22,14 +24,26 @@
         </table> 
 } 
 @code {
+
+
+
     List<List<GraphCellModels>> graph = new();
     int horizontal = 5;
     int vertical = 10;
-    int sleep = 100;
+    int sleep = 10;
     Random random = new Random();
     GraphCellModels start;
     GraphCellModels end;
     int count = 0;
+    bool isSorting = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        ReGenerate();
+        StateHasChanged();
+    } 
+
     protected void UpdateGraphData(GraphCellModels models)
     {
         if (count >= 2) return;
@@ -44,6 +58,7 @@
             end = models;
         }
         count++;
+        StateHasChanged();
     }
     public void Reset()
     {
@@ -51,9 +66,12 @@
         end = null;
         count = 0;
         ReGenerate();
+        isSorting = false;
+        StateHasChanged();
     }
     public async void BFS()
     { 
+        isSorting = true;
         if (count <= 1|| start is null || end is null) return;
 
         bool[,] visited = new bool[horizontal, vertical];
@@ -61,7 +79,7 @@
         var queue = new Queue<GraphCellModels>();
 
         queue.Enqueue(start);
-
+        var current = start;
         visited[start.XAxis, start.YAxis] = true;
         var neighbour = new List<(int, int)>
         {
@@ -73,7 +91,7 @@
 
         while(queue.Count>0)
         {
-            var current = queue.Dequeue(); 
+            current = queue.Dequeue(); 
 
             foreach (var item in neighbour)
             {
@@ -83,22 +101,98 @@
                     && x < horizontal && y < vertical
                     && !visited[x, y] && graph[x][y].CellColor != "black")
                 {
-                    
-                    if (graph[x][y].CellColor == "blue") return;
+
+                    if (graph[x][y].CellColor == "blue")
+                    {
+                        queue.Clear();
+                        break;
+                    }
                     if (graph[x][y].CellColor != "green")
                         graph[x][y].CellColor = "yellow";
                     visited[x, y] = true;
+                    graph[x][y].Parent = current;
                     queue.Enqueue(graph[x][y]);
                     StateHasChanged();
                     await Task.Delay(sleep);
                 }
             } 
         }
-
+        while(current.Parent!=null)
+        {
+            current.CellColor = "red";
+            current = current.Parent;
+            StateHasChanged();
+            await Task.Delay(sleep);
+        }
+        start = null;
+        end = null;
         count = 0;
+        isSorting = false;
+        StateHasChanged();
+    }
+    public async void DFS()
+    {
+        isSorting = true;
+        if (count <= 1 || start is null || end is null) return;
+
+        bool[,] visited = new bool[horizontal, vertical];
+
+        var queue = new Stack<GraphCellModels>();
+
+        queue.Push(start);
+        var current = start;
+        visited[start.XAxis, start.YAxis] = true;
+        var neighbour = new List<(int, int)>
+        {
+            (-1,0),
+            (1,0),
+            (0,1),
+            (0,-1)
+        };
+
+        while (queue.Count > 0)
+        {
+            current = queue.Pop();
+
+            foreach (var item in neighbour)
+            {
+                var x = current.XAxis + item.Item1;
+                var y = current.YAxis + item.Item2;
+                if (x >= 0 && y >= 0
+                    && x < horizontal && y < vertical
+                    && !visited[x, y] && graph[x][y].CellColor != "black")
+                {
+
+                    if (graph[x][y].CellColor == "blue")
+                    {
+                        queue.Clear();
+                        break;
+                    }
+                    if (graph[x][y].CellColor != "green")
+                        graph[x][y].CellColor = "yellow";
+                    visited[x, y] = true;
+                    queue.Push(graph[x][y]);
+                    StateHasChanged();
+                    await Task.Delay(sleep);
+                }
+            }
+        }
+        while (current.Parent != null)
+        {
+            current.CellColor = "red";
+            current = current.Parent;
+            StateHasChanged();
+            await Task.Delay(sleep);
+        }
+        start = null;
+        end = null;
+        count = 0;
+        isSorting = false;
+        StateHasChanged();
     }
     void ReGenerate()
     {
+        isSorting = false;
         graph.Clear();
         for (int i = 0; i < horizontal; i++)
         {
