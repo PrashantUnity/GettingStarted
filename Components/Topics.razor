@@ -1,0 +1,39 @@
+﻿@inject NavigationManager navigation
+
+<MudImage ObjectFit=@objectFit
+          Height="300"
+          Width="300"
+          @onclick="BubbleSortPage"
+          Src=@ImageSource
+          Alt="Image"
+          Elevation="25"
+          Class=@shape
+          @onmouseout="ChaurkhutMe"
+          @onmouseenter="GoalMe" />
+@code {
+
+    [Parameter, EditorRequired]
+    public string PageNavigateTo { get; set; } = "BubbleSort";
+
+    [Parameter, EditorRequired]
+    public string ImageSource { get; set; } = "images/bubblesort.png";
+
+    string shape = "rounded-xl md-2 mx-lg-auto mud-theme-success";
+
+    ObjectFit objectFit = ObjectFit.Cover;
+    void GoalMe()
+    {
+        shape = "rounded-circle md-2 mx-lg-auto mud-theme-success";
+        objectFit = ObjectFit.Fill;
+    }
+    void ChaurkhutMe()
+    {
+        shape = "rounded-xl md-2 mx-lg-auto mud-theme-success";
+        objectFit = ObjectFit.Cover;
+    }
+    void BubbleSortPage()
+    {
+        navigation.NavigateTo(PageNavigateTo);
+    }
+
+}

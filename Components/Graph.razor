@@ -1,0 +1,121 @@
+﻿@page "/graph"
+ 
+<MudPaper Class="pa-md-6 mx-lg-auto mud-theme-success justify-center" Width="30%">
+    <MudSlider @bind-Value="@horizontal" Min="5" Max="15" @onchange="ReGenerate">Row Count: @horizontal.ToString()</MudSlider>
+    <MudSlider @bind-Value="@vertical" Min="5" Max="40" @onchange="ReGenerate">Column Count: @vertical.ToString()</MudSlider> 
+    <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Delay: @sleep.ToString()</MudSlider>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="BFS">Traverse</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" FullWidth="true" OnClick="Reset">Reset</MudButton>
+</MudPaper>  
+@if(graph.Count>0)
+{ 
+        <table   style="margin: 8px auto; border-color:black; border-width:thick">
+            @foreach (var item in graph)
+            {
+                <tr> 
+                    @foreach (var data in item)
+                    {
+                        <GraphCell BackgroundColorData="@data" OnEmployeeSelection="UpdateGraphData"/>
+                    }
+                </tr>
+            }
+        </table> 
+} 
+@code {
+    List<List<GraphCellModels>> graph = new();
+    int horizontal = 5;
+    int vertical = 10;
+    int sleep = 100;
+    Random random = new Random();
+    GraphCellModels start;
+    GraphCellModels end;
+    int count = 0;
+    protected void UpdateGraphData(GraphCellModels models)
+    {
+        if (count >= 2) return;
+        if(start is null)
+        {
+            models.CellColor = "green";
+            start = models;
+        }
+        else
+        {
+            models.CellColor = "blue";
+            end = models;
+        }
+        count++;
+    }
+    public void Reset()
+    {
+        start = null;
+        end = null;
+        count = 0;
+        ReGenerate();
+    }
+    public async void BFS()
+    { 
+        if (count <= 1|| start is null || end is null) return;
+
+        bool[,] visited = new bool[horizontal, vertical];
+
+        var queue = new Queue<GraphCellModels>();
+
+        queue.Enqueue(start);
+
+        visited[start.XAxis, start.YAxis] = true;
+        var neighbour = new List<(int, int)>
+        {
+            (-1,0),
+            (1,0),
+            (0,1),
+            (0,-1)
+        };
+
+        while(queue.Count>0)
+        {
+            var current = queue.Dequeue(); 
+
+            foreach (var item in neighbour)
+            {
+                var x = current.XAxis + item.Item1;
+                var y = current.YAxis + item.Item2;
+                if ( x >= 0 && y >= 0
+                    && x < horizontal && y < vertical
+                    && !visited[x, y] && graph[x][y].CellColor != "black")
+                {
+                    
+                    if (graph[x][y].CellColor == "blue") return;
+                    if (graph[x][y].CellColor != "green")
+                        graph[x][y].CellColor = "yellow";
+                    visited[x, y] = true;
+                    queue.Enqueue(graph[x][y]);
+                    StateHasChanged();
+                    await Task.Delay(sleep);
+                }
+            } 
+        }
+
+        count = 0;
+    }
+    void ReGenerate()
+    {
+        graph.Clear();
+        for (int i = 0; i < horizontal; i++)
+        {
+            var ls = new List<GraphCellModels>();
+            for (int j = 0; j < vertical; j++)
+            {
+                var cellChora = new GraphCellModels()
+                    {
+                        XAxis = i,
+                        YAxis = j
+                    };
+                if(random.Next(1,100)>80) cellChora.CellColor = "black"; 
+                else  cellChora.CellColor = "white"; 
+                ls.Add(cellChora);
+            }
+            graph.Add(ls);
+        }
+        StateHasChanged();
+    }
+}

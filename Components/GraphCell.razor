@@ -1,0 +1,36 @@
+﻿
+
+
+<td style="height:60px; width: 60px; background-color:@(BackgroundColorData.CellColor); margin-right: 8px; border-width:2px; border-color:green;"
+    @onclick="ChoraTouchKartaHy"
+    @onmouseenter="MouseEnter"
+    @onmouseout="MouseExit">
+    @* <img src=@data style="height:60px; width: 60px" /> *@
+</td>
+@code {
+    [Parameter, EditorRequired]
+    public GraphCellModels BackgroundColorData { get; set; }
+
+    [Parameter]
+    public EventCallback<GraphCellModels> OnEmployeeSelection { get; set; }
+    async Task ChoraTouchKartaHy()
+    {
+        await OnEmployeeSelection.InvokeAsync(BackgroundColorData);
+    }
+
+
+    void MouseEnter()
+    {
+        if (BackgroundColorData.CellColor == "white")
+        {
+            BackgroundColorData.CellColor = "pink";
+        }
+    }
+    void MouseExit()
+    {
+        if (BackgroundColorData.CellColor == "pink")
+        {
+            BackgroundColorData.CellColor = "white";
+        }
+    }
+}

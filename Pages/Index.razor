@@ -1,22 +1,22 @@
-﻿@page "/"
-@inject NavigationManager navigation
+﻿@page "/" 
 
+<MudPaper Height="40px" Width="100%"> 
+</MudPaper>
 
-<MudImage   ObjectFit="ObjectFit.Cover"
-          Height="300"
-          Width="300"
-          @onclick="BubbleSortPage"
-          Src="images/bubblesort.png"
-          Alt="Image"
-          Elevation="25"
-          Class="rounded-lg  md-6 mx-lg-auto mud-theme-success" />
+<MudPaper Class="d-flex flex-wrap gap-2 justify-center" Elevation="0">
+     
+    <Topics PageNavigateTo="BubbleSort" ImageSource="images/bubblesort.png" />
+    <Topics PageNavigateTo="Graph" ImageSource="images/graph.jpeg" />
+    <Topics PageNavigateTo="BubbleSort" ImageSource="images/bubblesort.png" />
+    <Topics PageNavigateTo="BubbleSort" ImageSource="images/bubblesort.png" />
+    
+</MudPaper>
+
+ 
 
 @code
 {
-    void BubbleSortPage()
-    {
-        navigation.NavigateTo("BubbleSort");
-    }
+    
     void selectionSort(int[] array)
     {
         int size = array.Length;
