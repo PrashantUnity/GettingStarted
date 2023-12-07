@@ -1,35 +1,36 @@
 ﻿@page "/graph"
- <MudPaper Class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
+<MudPaper Class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
     <MudPaper Class="pa-6 mx-lg-auto mud-theme-success justify-center" Width="80%">
         <MudSlider @bind-Value="@horizontal" Min="5" Max="15" @onchange="ReGenerate">Row Count: @horizontal.ToString()</MudSlider>
-        <MudSlider @bind-Value="@vertical" Min="5" Max="40" @onchange="ReGenerate">Column Count: @vertical.ToString()</MudSlider> 
-        <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Delay: @sleep.ToString()</MudSlider>
+            <MudSlider @bind-Value="@vertical" Min="5" Max="40" @onchange="ReGenerate">Column Count: @vertical.ToString()</MudSlider>
+            <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Delay: @sleep.ToString()</MudSlider>
             <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="BFS" Disabled="@isSorting">Depth First Search</MudButton>
-           @*  <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="DFS" Disabled="@isSorting">Breadth First Search</MudButton> *@
+            @*  <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="DFS" Disabled="@isSorting">Breadth First Search</MudButton> *@
             <MudButton Variant="Variant.Filled" Color="Color.Error" FullWidth="true" OnClick="Reset" Disabled="@isSorting">Reset</MudButton>
-    </MudPaper>  
-</MudPaper>
-@if(graph.Count>0)
-{ 
-        <table   style="margin: 8px auto; border-color:black; border-width:thick">
-            @foreach (var item in graph)
-            {
-                <tr> 
-                    @foreach (var data in item)
-                    {
-                        <GraphCell BackgroundColorData="@data" OnEmployeeSelection="UpdateGraphData"/>
-                    }
-                </tr>
-            }
-        </table> 
-} 
+        </MudPaper>
+    </MudPaper>
+    @if (graph.Count > 0)
+    { 
+
+        <table class="overflow-auto" style="margin: 8px auto; border-color:black; border-width:thick">
+                @foreach (var item in graph)
+                {
+                    <tr>
+                        @foreach (var data in item)
+                        {
+                            <GraphCell BackgroundColorData="@data" OnEmployeeSelection="UpdateGraphData" />
+                        }
+                    </tr>
+                }
+            </table>  
+    }
 @code {
 
 
 
     List<List<GraphCellModels>> graph = new();
     int horizontal = 5;
-    int vertical = 10;
+    int vertical = 7;
     int sleep = 10;
     Random random = new Random();
     GraphCellModels start;
@@ -42,12 +43,13 @@
     {
         ReGenerate();
         StateHasChanged();
-    } 
+    }
 
     protected void UpdateGraphData(GraphCellModels models)
     {
         if (count >= 2) return;
-        if(start is null)
+        if (start != null && models.XAxis == start.XAxis && models.YAxis == start.YAxis) return;
+        if (start is null)
         {
             models.CellColor = "green";
             start = models;
@@ -70,9 +72,13 @@
         StateHasChanged();
     }
     public async void BFS()
-    { 
+    {
         isSorting = true;
-        if (count <= 1|| start is null || end is null) return;
+        if (count <= 1 || start is null || end is null)
+        {
+            isSorting = false;
+            return;
+        }
 
         bool[,] visited = new bool[horizontal, vertical];
 
@@ -88,22 +94,23 @@
             (0,1),
             (0,-1)
         };
-
-        while(queue.Count>0)
+        bool destinationFound = false;
+        while (queue.Count > 0)
         {
-            current = queue.Dequeue(); 
+            current = queue.Dequeue();
 
             foreach (var item in neighbour)
             {
                 var x = current.XAxis + item.Item1;
                 var y = current.YAxis + item.Item2;
-                if ( x >= 0 && y >= 0
+                if (x >= 0 && y >= 0
                     && x < horizontal && y < vertical
                     && !visited[x, y] && graph[x][y].CellColor != "black")
                 {
 
                     if (graph[x][y].CellColor == "blue")
                     {
+                        destinationFound = true;
                         queue.Clear();
                         break;
                     }
@@ -115,9 +122,18 @@
                     StateHasChanged();
                     await Task.Delay(sleep);
                 }
-            } 
+            }
         }
-        while(current.Parent!=null)
+
+        if (!destinationFound)
+        { 
+            start = null;
+            end = null; 
+            isSorting = false;
+            StateHasChanged();
+            return;
+        }
+        while (current.Parent != null)
         {
             current.CellColor = "red";
             current = current.Parent;
@@ -125,8 +141,7 @@
             await Task.Delay(sleep);
         }
         start = null;
-        end = null;
-        count = 0;
+        end = null; 
         isSorting = false;
         StateHasChanged();
     }
@@ -204,8 +219,8 @@
                         XAxis = i,
                         YAxis = j
                     };
-                if(random.Next(1,100)>80) cellChora.CellColor = "black"; 
-                else  cellChora.CellColor = "white"; 
+                if (random.Next(1, 100) > 80) cellChora.CellColor = "black";
+                else cellChora.CellColor = "white";
                 ls.Add(cellChora);
             }
             graph.Add(ls);
