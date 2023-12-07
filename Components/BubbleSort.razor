@@ -7,7 +7,7 @@
         background-color: green; 
     }
 </style>  
-<MudPaper Class="pa-md-6 mx-lg-auto mud-theme-success">
+<MudPaper Class="pa-md-6 mx-lg-auto mud-theme-success justify-center" Width="30%">
     <MudSlider @bind-Value="@value" Min="10" Max="250" @onchange="ReGenerate">Data Count: @value.ToString()</MudSlider>
         <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Time Delay: @sleep.ToString() </MudSlider>
         <MudSlider @bind-Value="@width" Min="1" Max="100">Width: @width.ToString() px </MudSlider>
