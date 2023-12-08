@@ -1,0 +1,83 @@
+﻿@page "/PixelPaint"
+<PageTitle>Pixel Painter</PageTitle>
+<MudGrid Spacing="3" Justify="Justify.Center">
+    <MudItem>
+        <MudSlider @bind-Value="@size" Min="4" Max="961" Step="1" @onchange="ReGenerate" Class="flex-initial d-flex py-8">Pixel Count :@size.ToString()</MudSlider>
+    </MudItem> 
+        <MudItem>
+            <MudSlider @bind-Value="@pixelSize" Min="24" Max="100" Step="1" @onchange="ReGenerate" Class="flex-initial d-flex py-8">Pixel Size :@pixelSize.ToString()</MudSlider>
+        </MudItem>
+    <MudItem>
+        <MudColorPicker Label="Choose Color" @bind-Text="brushcolor" Style="@($"color: {brushcolor};")" Placeholder="Select Color" Class="flex-initial d-flex py-8 " />
+    </MudItem>
+</MudGrid>
+@if (canvass.Count > 0)
+{
+    <MudPaper Class="d-flex flex-wrap justify-center" MaxWidth="100" Elevation="0">
+        @foreach (var item in canvass)
+        { 
+                @foreach (var data in item)
+                {
+                <div style="height:@(pixelSize)px; width: @(pixelSize)px; background-color:@(data.CellColor); margin: 1px; border-width:2px; border-color:@(BoderColor);"
+                        @onclick="@(()=>ChoraTouchKartaHy(data))"
+                        @onmouseenter="@(()=>MouseEnter(data))"
+                        @onmouseout="@(()=>MouseExit(data))">
+                    </div>
+                } 
+        } 
+    </MudPaper> 
+}
+@code {
+
+    List<List<PaintCellModel>> canvass = new();
+
+    string CellColor = "white";
+    string BoderColor = "green";
+    string brushcolor = "red";
+    int pixelSize = 64;
+
+    int size = 10; 
+
+    protected override async Task OnInitializedAsync()
+    {
+        ReGenerate();
+        StateHasChanged();
+    }
+    void ReGenerate()
+    {
+        canvass = new();
+        for (int i = 0; i < Math.Sqrt(size); i++)
+        {
+            var ls = new List<PaintCellModel>();
+            for (int j = 0; j < Math.Sqrt(size); j++)
+            {
+                var temp = new PaintCellModel()
+                    {
+                        XAxis = i,
+                        YAxis = j,
+                        CellColor = "white"
+                    };
+                ls.Add(temp);
+            }
+            canvass.Add(ls);
+        }
+        StateHasChanged();
+    }
+    void ChoraTouchKartaHy(PaintCellModel cell)
+    {
+        cell.CellColor = brushcolor;
+        cell.PreviousCellColor = brushcolor;
+        StateHasChanged();
+    }
+    void MouseEnter(PaintCellModel cell)
+    {
+        cell.PreviousCellColor = cell.CellColor;
+        cell.CellColor = brushcolor;
+        StateHasChanged();
+    }
+    void MouseExit(PaintCellModel cell)
+    { 
+         cell.CellColor = cell.PreviousCellColor; 
+        StateHasChanged();
+    }
+}
