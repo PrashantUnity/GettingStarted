@@ -1,0 +1,43 @@
+﻿@page "/twoSum" 
+
+<style>
+    .bar {
+        display: inline-block;
+        background-color: green;
+    }
+</style>
+
+
+
+<PageTitle>Two Sum</PageTitle>
+<MudPaper  Class=@Warning>
+    <MudText Class="text-danger">"Please Enter Valid Array i.e Digit seperated by ','(comma)"</MudText>
+</MudPaper>
+<MudTextField @bind-Value="@input" Immediate="true" Label="Array Of Integers Seperated by Comma"  />
+<MudButton OnClick="ShowArray">Generate</MudButton>
+
+
+ 
+
+@code {
+    int target = 0;
+    string input = ""; 
+    string Warning = "invisible"; 
+    private int Index = -1;
+
+    void ShowArray()
+    {
+        try
+        {
+            Warning = "invisible";
+            if (input.Length == 0) return;
+            var ls = input.Split(new char[] { ',', '[', ']' }).Where(x=>x.Length>0).Select(x => Convert.ToInt32(x)).ToArray(); 
+            StateHasChanged();
+        }
+        catch (Exception)
+        {
+            Warning = "";
+        }
+        
+    }
+}

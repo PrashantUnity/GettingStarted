@@ -10,34 +10,42 @@
     <MudItem>
         <MudColorPicker Label="Choose Color" @bind-Text="brushcolor" Style="@($"color: {brushcolor};")" Placeholder="Select Color" Class="flex-initial d-flex py-8 " />
     </MudItem>
+        <MudItem>
+            <MudFab Color="Color.Error" StartIcon="@Icons.Material.Filled.FormatPaint" Class="flex-initial d-flex align-content-end " OnClick="Eraser" Label="Eraser" />
+        </MudItem>
+        <MudItem>
+            <MudFab Color=@encryptionColor StartIcon="@Icons.Material.Filled.FormatPaint" Class="flex-initial d-flex align-content-end " OnClick="Scramble" Label=@label />
+        </MudItem>
 </MudGrid>
 @if (canvass.Count > 0)
 {
     <MudPaper Class="d-flex flex-wrap justify-center" MaxWidth="100" Elevation="0">
-        @foreach (var item in canvass)
-        { 
-                @foreach (var data in item)
-                {
-                    <div style="height:@(pixelSize)px; width: @(pixelSize)px; background-color:@(data.CellColor); margin: 1px; border-width:2px; border-color:@(BoderColor);"
-                            @onclick="@(()=>ChoraTouchKartaHy(data))"
-                            @onmouseenter="@(()=>MouseEnter(data))"
-                            @onmouseout="@(()=>MouseExit(data))"
-                            @onmousemove="@((e) => Dragging(e, data))">
-                        </div>
-                } 
+        @foreach (var data in canvass)
+        {  
+            <div style="height:@(pixelSize)px; width: @(pixelSize)px; background-color:@(data.CellColor); margin: 1px; border-width:2px; border-color:@(BoderColor);"
+                    @onclick="@(()=>ChoraTouchKartaHy(data))"
+                    @onmouseenter="@(()=>MouseEnter(data))"
+                    @onmouseout="@(()=>MouseExit(data))"
+                    @onmousemove="@((e) => Dragging(e, data))">
+                </div> 
         } 
     </MudPaper> 
 }
 @code {
 
-    List<List<PaintCellModel>> canvass = new();
+    List<PaintCellModel> canvass = new();
 
     string CellColor = "white";
     string BoderColor = "green";
     string brushcolor = "red";
+
+    Color encryptionColor = Color.Success;
     int pixelSize = 64;
 
-    int size = 10; 
+    int size = 10;
+
+    string label = "Encrypt";
+    List<PaintCellModel> canvassOriginal;
 
     protected override async Task OnInitializedAsync()
     {
@@ -48,8 +56,7 @@
     {
         canvass = new();
         for (int i = 0; i < Math.Sqrt(size); i++)
-        {
-            var ls = new List<PaintCellModel>();
+        { 
             for (int j = 0; j < Math.Sqrt(size); j++)
             {
                 var temp = new PaintCellModel()
@@ -58,9 +65,8 @@
                         YAxis = j,
                         CellColor = "white"
                     };
-                ls.Add(temp);
-            }
-            canvass.Add(ls);
+                canvass.Add(temp);
+            } 
         }
         StateHasChanged();
     }
@@ -89,5 +95,43 @@
             cell.PreviousCellColor = brushcolor; 
             StateHasChanged();
         }
+    }
+    void Eraser()
+    {
+        brushcolor = "white";
+    }
+    void Scramble()
+    {
+        if (label == "Encrypt")
+        {
+            label = "Decrypt";
+            canvassOriginal = canvass;
+            var random = new Random();
+            encryptionColor = Color.Error;
+
+            canvass = SuffeledArray(new List<PaintCellModel> (canvass), random.Next(1, 100000));
+            StateHasChanged();
+        }
+        else
+        {
+            label = "Encrypt";
+            canvass = canvassOriginal;
+            encryptionColor = Color.Success;
+            StateHasChanged();
+        }
+
+
+    }
+    public static List<T> SuffeledArray<T>(List<T> array, int seed)
+    {
+        var rand = new Random(seed); 
+        for (int i = 0; i < array.Count; i++)
+        {
+            var randIndex = rand.Next(i, array.Count);
+            var tempItem = array[randIndex];
+            array[randIndex] = array[i];
+            array[i] = tempItem;
+        }
+        return array;
     }
 }
