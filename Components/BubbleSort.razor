@@ -4,15 +4,17 @@
 <style>
     .bar {
         display: inline-block;
-        background-color: green; 
+        background-color: green;
     }
-</style>  
-<MudPaper Class="pa-md-6 mx-lg-auto mud-theme-success justify-center" Width="30%">
-    <MudSlider @bind-Value="@value" Min="10" Max="250" @onchange="ReGenerate">Data Count: @value.ToString()</MudSlider>
-        <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Time Delay: @sleep.ToString() </MudSlider>
-        <MudSlider @bind-Value="@width" Min="1" Max="100">Width: @width.ToString() px </MudSlider>
+</style>
+<MudPaper Class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
+    <MudPaper Class="pa-6 mx-lg-auto mud-theme-success justify-center" Width="80%">
+        <MudSlider @bind-Value="@value" Min="10" Max="250" @onchange="ReGenerate">Data Count: @value.ToString()</MudSlider>
+            <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Time Delay: @sleep.ToString() </MudSlider>
+            <MudSlider @bind-Value="@width" Min="1" Max="100">Width: @width.ToString() px </MudSlider>
         <MudSlider @bind-Value="@margin" Min="1" Max="60">Margin: @margin.ToString() px </MudSlider>
     </MudPaper>
+</MudPaper>
 <div>
     @if (data.Count >= 1)
     {
@@ -23,7 +25,7 @@
             change.Item2 == item.Item1 ||
             change.Item2 == item.Item2)
             {
-                <div class="bar" style="height:@(item.Item1)px; width: @(width)px; background-color: red; margin-right: @(margin)px;" /> 
+                <div class="bar" style="height:@(item.Item1)px; width: @(width)px; background-color: red; margin-right: @(margin)px;" />
             }
             else
             {
@@ -41,17 +43,15 @@
                FullWidth="true">
         Generate Random Data
     </MudButton>
-    <MudButton 
-        Variant="Variant.Filled" 
-        Color="Color.Primary"
-        OnClick="Simulate"
-        FullWidth="true"
-        Disabled="@isSorting"
-    >
-        Sort 
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Primary"
+               OnClick="Simulate"
+               FullWidth="true"
+               Disabled="@isSorting">
+        Sort
     </MudButton>
-     
-</div> 
+
+</div>
 
 @code {
     Random random = new Random();
@@ -92,13 +92,13 @@
         {
             data.Add((random.Next(1, 200), i));
             i++;
-        }   
+        }
         StateHasChanged();
     }
     void ReGenerate()
     {
         Generate();
-        if(isSorting)
+        if (isSorting)
             Simulate();
     }
 
