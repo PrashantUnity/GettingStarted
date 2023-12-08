@@ -13,9 +13,19 @@
         <MudItem>
             <MudFab Color="Color.Error" StartIcon="@Icons.Material.Filled.FormatPaint" Class="flex-initial d-flex align-content-end " OnClick="Eraser" Label="Eraser" />
         </MudItem>
-        <MudItem>
-            <MudFab Color=@encryptionColor StartIcon="@Icons.Material.Filled.FormatPaint" Class="flex-initial d-flex align-content-end " OnClick="Scramble" Label=@label />
-        </MudItem>
+        @if(encryptionIcon)
+        {
+            <MudItem>
+            <MudFab Color=@encryptionColor StartIcon="@Icons.Material.Filled.LockOpen" Class="flex-initial d-flex align-content-end " OnClick="Scramble" Label=@label />
+            </MudItem>
+        }
+        @if(!encryptionIcon)
+        {
+            <MudItem>
+            <MudFab Color=@encryptionColor StartIcon="@Icons.Material.Filled.Lock" Class="flex-initial d-flex align-content-end " OnClick="Scramble" Label=@label />
+            </MudItem>
+        }
+
 </MudGrid>
 @if (canvass.Count > 0)
 {
@@ -38,6 +48,7 @@
     string CellColor = "white";
     string BoderColor = "green";
     string brushcolor = "red";
+    bool encryptionIcon = false;
 
     Color encryptionColor = Color.Success;
     int pixelSize = 64;
@@ -108,7 +119,7 @@
             canvassOriginal = canvass;
             var random = new Random();
             encryptionColor = Color.Error;
-
+            encryptionIcon = true;
             canvass = SuffeledArray(new List<PaintCellModel> (canvass), random.Next(1, 100000));
             StateHasChanged();
         }
@@ -117,6 +128,7 @@
             label = "Encrypt";
             canvass = canvassOriginal;
             encryptionColor = Color.Success;
+            encryptionIcon = false;
             StateHasChanged();
         }
 
