@@ -18,11 +18,12 @@
         { 
                 @foreach (var data in item)
                 {
-                <div style="height:@(pixelSize)px; width: @(pixelSize)px; background-color:@(data.CellColor); margin: 1px; border-width:2px; border-color:@(BoderColor);"
-                        @onclick="@(()=>ChoraTouchKartaHy(data))"
-                        @onmouseenter="@(()=>MouseEnter(data))"
-                        @onmouseout="@(()=>MouseExit(data))">
-                    </div>
+                    <div style="height:@(pixelSize)px; width: @(pixelSize)px; background-color:@(data.CellColor); margin: 1px; border-width:2px; border-color:@(BoderColor);"
+                            @onclick="@(()=>ChoraTouchKartaHy(data))"
+                            @onmouseenter="@(()=>MouseEnter(data))"
+                            @onmouseout="@(()=>MouseExit(data))"
+                            @onmousemove="@((e) => Dragging(e, data))">
+                        </div>
                 } 
         } 
     </MudPaper> 
@@ -77,7 +78,16 @@
     }
     void MouseExit(PaintCellModel cell)
     { 
-         cell.CellColor = cell.PreviousCellColor; 
+        cell.CellColor = cell.PreviousCellColor; 
         StateHasChanged();
+    }
+    void Dragging(MouseEventArgs e, PaintCellModel cell)
+    {
+        if (e.Buttons==1)
+        { 
+            cell.CellColor = brushcolor;
+            cell.PreviousCellColor = brushcolor; 
+            StateHasChanged();
+        }
     }
 }
