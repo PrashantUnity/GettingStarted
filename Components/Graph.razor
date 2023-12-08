@@ -1,14 +1,14 @@
 ﻿@page "/graph"
 <MudPaper Class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
     <MudPaper Class="pa-6 mx-lg-auto mud-theme-success justify-center" Width="80%">
-        <MudSlider @bind-Value="@horizontal" Min="5" Max="15" @onchange="ReGenerate">Row Count: @horizontal.ToString()</MudSlider>
-            <MudSlider @bind-Value="@vertical" Min="5" Max="40" @onchange="ReGenerate">Column Count: @vertical.ToString()</MudSlider>
-            <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Delay: @sleep.ToString()</MudSlider>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="BFS" Disabled="@isSorting">Depth First Search</MudButton>
-            @*  <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="DFS" Disabled="@isSorting">Breadth First Search</MudButton> *@
-            <MudButton Variant="Variant.Filled" Color="Color.Error" FullWidth="true" OnClick="Reset" Disabled="@isSorting">Reset</MudButton>
-        </MudPaper>
+        <MudSlider @bind-Value="@horizontal" Min="5" Max="15" @onchange="ReGenerate" Disabled="@isSorting">Row Count: @horizontal.ToString()</MudSlider>
+            <MudSlider @bind-Value="@vertical" Min="5" Max="40" @onchange="ReGenerate" Disabled="@isSorting">Column Count: @vertical.ToString()</MudSlider>
+        <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Delay: @sleep.ToString()</MudSlider>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="BFS" Disabled="@isSorting">Depth First Search</MudButton>
+        @*  <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="DFS" Disabled="@isSorting">Breadth First Search</MudButton> *@
+        <MudButton Variant="Variant.Filled" Color="Color.Error" FullWidth="true" OnClick="Reset" Disabled="@isSorting">Reset</MudButton>
     </MudPaper>
+</MudPaper>
     @if (graph.Count > 0)
     { 
 
@@ -49,6 +49,7 @@
     {
         if (count >= 2) return;
         if (start != null && models.XAxis == start.XAxis && models.YAxis == start.YAxis) return;
+        if (models.CellColor == "black") return;
         if (start is null)
         {
             models.CellColor = "green";
@@ -66,9 +67,18 @@
     {
         start = null;
         end = null;
-        count = 0;
-        ReGenerate();
+        count = 0; 
         isSorting = false;
+        foreach (var item in graph)
+        {
+            foreach (var data in item)
+            {
+                if (data.CellColor == "yellow" || data.CellColor == "green" || data.CellColor == "blue" || data.CellColor == "red")
+                {
+                    data.CellColor = "white";
+                }
+            }
+        }
         StateHasChanged();
     }
     public async void BFS()
@@ -133,12 +143,15 @@
             StateHasChanged();
             return;
         }
-        while (current.Parent != null)
+        var parentTrace = new HashSet<GraphCellModels>();
+        while (current.Parent != null && parentTrace.Add(current))
         {
+
             current.CellColor = "red";
             current = current.Parent;
             StateHasChanged();
             await Task.Delay(sleep);
+            if (current == start) break;
         }
         start = null;
         end = null; 
@@ -224,7 +237,10 @@
                 ls.Add(cellChora);
             }
             graph.Add(ls);
-        }
+        } 
+        start = null;
+        end = null;
+        count = 0; 
         StateHasChanged();
     }
 }
