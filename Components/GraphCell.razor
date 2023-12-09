@@ -1,9 +1,8 @@
 ﻿  
-<td style="height:60px; width: 60px; background-color:@(BackgroundColorData.CellColor); margin-right: 8px; border-width:2px; border-color:green;"
+<td style="height:60px; width: 60px; background-color:@(BackgroundColorData.CellColor); margin:@(BackgroundColorData.Margin)px; border-width:@(BackgroundColorData.BoderWidth)px; border-color:@(BackgroundColorData.BoderColor);"
     @onclick="ChoraTouchKartaHy"
     @onmouseenter="MouseEnter"
-    @onmouseout="MouseExit">
-    @* <img src=@data style="height:60px; width: 60px" /> *@
+    @onmouseout="MouseExit"> 
 </td>
 @code {
     [Parameter, EditorRequired]

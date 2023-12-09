@@ -36,6 +36,38 @@
                            Class="d-flex align-center justify-center mud-width-full px-8 " />
             </MudPaper>
         </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Margin:@margin.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@margin" Min="1" Max="10"
+                           Size="Size.Large"
+                           Color="Color.Info"
+                           @onchange="ReGenerate"
+                           Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Boder:@boderWidth.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@boderWidth" Min="0" Max="20"
+                           Size="Size.Large"
+                           Color="Color.Info"
+                           @onchange="ReGenerate"
+                           Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Height="84px" Class="mx-6"> 
+                <MudColorPicker DisableToolbar="false" DisableAlpha="false" DisableColorField="false" DisablePreview="false" DisableSliders="false" DisableInputs="false" DisableModeSwitch="false" ColorPickerMode="ColorPickerMode.HEX" PickerVariant="PickerVariant.Dialog"
+                                @onchange="ReGenerate"
+                                Class="d-flex align-center justify-center mud-width-full px-8 "
+                                @bind-Text="boderColor" />
+            </MudPaper>
+        </MudItem>
         <MudItem xs="12" sm="6" md="2"  >
             <MudButton
                 Variant="Variant.Filled" 
@@ -63,7 +95,7 @@
 @if (graph.Count > 0)
 { 
     <MudPaper Class="d-flex flex-wrap justify-center ma-6" Height="100" >
-        <MudPaper Class="d-flex flex-column flex-grow-1 gap-0 ma-6 py-3">  
+        <MudPaper Class="d-flex flex-column flex-grow-1 gap-0">  
                     @foreach (var item in graph)
                     {
                         <MudPaper Class="d-flex flex-row flex-grow-1 gap-0" Elevation="0">
@@ -95,12 +127,13 @@
 } *@
 @code {
 
-
-
     List<List<GraphCellModels>> graph = new();
     int horizontal = 5;
-    int vertical = 7;
+    int vertical = 5;
     int sleep = 10;
+    int margin = 1;
+    int boderWidth = 1;
+    string boderColor = "green";
     Random random = new Random();
     GraphCellModels start;
     GraphCellModels end;
@@ -239,7 +272,10 @@
                 var cellChora = new GraphCellModels()
                     {
                         XAxis = i,
-                        YAxis = j
+                        YAxis = j,
+                        BoderWidth =boderWidth,
+                        Margin=margin,
+                        BoderColor = boderColor
                     };
                 if (random.Next(1, 100) > 80) cellChora.CellColor = "black";
                 else cellChora.CellColor = "white";
