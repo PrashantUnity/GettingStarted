@@ -3,7 +3,7 @@
 
 <MudPaper Class="ma-6"> 
     <MudGrid Spacing="3" Justify="Justify.Center">
-        <MudItem xs="12" sm="6" md="4" lg="2">
+        <MudItem xs="12" sm="6" md="4"  >
             <MudPaper Height="60px" Class="mx-6">
                 <MudText Class="d-flex align-center justify-center mud-width-full px-8">
                     Row:@horizontal.ToString()
@@ -14,7 +14,7 @@
                            Class="d-flex align-center justify-center mud-width-full px-8 " />
             </MudPaper> 
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="2">
+        <MudItem xs="12" sm="6" md="4"  >
             <MudPaper Height="60px" Class="mx-6">
                 <MudText Class="d-flex align-center justify-center mud-width-full px-8">
                     Column:@vertical.ToString()
@@ -25,7 +25,7 @@
                            Class="d-flex align-center justify-center mud-width-full px-8 " />
             </MudPaper> 
         </MudItem>
-        <MudItem xs="12" sm="6" md="4" lg="2">
+        <MudItem xs="12" sm="6" md="4" >
             <MudPaper Height="60px" Class="mx-6">
                 <MudText Class="d-flex align-center justify-center mud-width-full px-8">
                     Delay:@sleep.ToString()
@@ -62,18 +62,19 @@
 </MudPaper> 
     @if (graph.Count > 0)
     { 
-
-        <table class="overflow-auto" style="margin: 8px auto; border-color:black; border-width:thick">
-                @foreach (var item in graph)
-                {
-                    <tr>
-                        @foreach (var data in item)
-                        {
-                            <GraphCell BackgroundColorData="@data" OnEmployeeSelection="UpdateGraphData" />
-                        }
-                    </tr>
-                }
-            </table>  
+        <MudPaper Class="ma-6 pa-6"> 
+            <table class="overflow-auto" style="margin: 8px auto; border-color:black; border-width:thick">
+                    @foreach (var item in graph)
+                    {
+                        <tr>
+                            @foreach (var data in item)
+                            {
+                                <GraphCell BackgroundColorData="@data" OnEmployeeSelection="UpdateGraphData" />
+                            }
+                        </tr>
+                    }
+            </table> 
+        </MudPaper> 
     }
 @code {
 

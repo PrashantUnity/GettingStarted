@@ -3,25 +3,66 @@
 <MudPaper Class="ma-6"> 
     <MudGrid Spacing="3" Justify="Justify.Center">
         <MudItem xs="12" sm="4" md="3" lg="2">
-            <MudPaper Height="60px" Class="mx-6">
+            <MudPaper Height="84px" Class="mx-6">
                 <MudText Class="d-flex align-center justify-center mud-width-full px-8">
                    Count:@size.ToString()
                 </MudText>
                 <MudSlider @bind-Value="@size" Min="1" Max="1000" Step="1" @onchange="ReGenerate"
+                           Size="Size.Large"
+                           Color="Color.Info"
                            Class="d-flex align-center justify-center mud-width-full px-8 " />
             </MudPaper> 
         </MudItem>
         <MudItem xs="12" sm="4" md="3" lg="2">
-            <MudPaper Height="60px" Class="mx-6">
+            <MudPaper Height="84px" Class="mx-6">
                 <MudText Class="d-flex align-center justify-center mud-width-full px-8">Size :@pixelSize.ToString()
                 </MudText>
                 <MudSlider @bind-Value="@pixelSize" Min="24" Max="100" Step="1" @onchange="ReGenerate"
+                           Size="Size.Large"
+                           Color="Color.Info"
                            Class="d-flex align-center justify-center mud-width-full px-8 "></MudSlider>
             </MudPaper>
                 
         </MudItem>
         <MudItem xs="12" sm="4" md="3" lg="2">
-            <MudPaper Height="60px" Class="mx-6">
+            <MudPaper Height="84px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Margin:@marginWidth.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@marginWidth" Min="0" Max="10" Step="1" 
+                           Size="Size.Large"
+                           Color="Color.Info"
+                           Class="d-flex align-center justify-center mud-width-full px-8 "></MudSlider>
+            </MudPaper>
+
+        </MudItem>
+        <MudItem xs="12" sm="4" md="3" lg="2">
+            <MudPaper Height="84px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Boder:@boderWidth.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@boderWidth" Min="0" Max="5" Step="1"
+                           Size="Size.Large"
+                           Color="Color.Info"
+                           Class="d-flex align-center justify-center mud-width-full px-8 "></MudSlider>
+            </MudPaper>
+
+        </MudItem>
+        <MudItem xs="12" sm="4" md="3" lg="2">
+            <MudPaper Height="84px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Boder Color
+                </MudText>
+                <MudColorPicker DisableToolbar="false" DisableAlpha="false" DisableColorField="false" DisablePreview="false" DisableSliders="false" DisableInputs="false" DisableModeSwitch="false" ColorPickerMode="ColorPickerMode" PickerVariant="PickerVariant.Dialog"
+                                Class="d-flex align-center justify-center mud-width-full px-8 "
+                                @bind-Text="BoderColor" />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="3" lg="2">
+            <MudPaper Height="84px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Choose Color
+                </MudText>
                 <MudColorPicker DisableToolbar="false" DisableAlpha="false" DisableColorField="false" DisablePreview="false" DisableSliders="false" DisableInputs="false" DisableModeSwitch="false" ColorPickerMode="ColorPickerMode" PickerVariant="PickerVariant.Dialog"
                                 Class="d-flex align-center justify-center mud-width-full px-8 "
                 @bind-Text="brushcolor" /> 
@@ -50,10 +91,10 @@
 </MudPaper>
 @if (canvass.Count > 0)
 {
-    <MudPaper Class="d-flex flex-wrap justify-center ma-6" MaxWidth="100" MinHeight="100" Elevation="0">
+    <MudPaper Class="d-flex flex-wrap justify-center ma-6 mb-6" Height="100" >
         @foreach (var data in canvass)
-        {  
-            <div style="height:@(pixelSize)px; width: @(pixelSize)px; background-color:@(data.CellColor); margin: 1px; border-width:2px; border-color:@(BoderColor);"
+        {
+            <div style="height:@(pixelSize)px; width: @(pixelSize)px; background-color:@(data.CellColor); margin: @(marginWidth)px; border-width:@(boderWidth)px; border-color:@(BoderColor);"
                     @onclick="@(()=>ChoraTouchKartaHy(data))"
                     @onmouseenter="@(()=>MouseEnter(data))"
                     @onmouseout="@(()=>MouseExit(data))"
@@ -71,11 +112,13 @@
     string brushcolor = "red";
     bool encryptionIcon = false;
 
+
     Color encryptionColor = Color.Success;
     int pixelSize = 64;
 
     int size = 10;
-
+    int marginWidth = 1;
+    int boderWidth = 2;
     string label = "Encrypt";
     List<PaintCellModel> canvassOriginal;
 
