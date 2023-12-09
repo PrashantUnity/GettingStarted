@@ -1,0 +1,252 @@
+﻿@page "/Maze"
+<PageTitle>Maze</PageTitle>
+ 
+
+<MudPaper Class="ma-6"> 
+    <MudGrid Spacing="3" Justify="Justify.Center">
+        <MudItem xs="12" sm="4" md="3" lg="2">
+            <MudPaper Height="64px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Width:@vertical.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@vertical" Min="1" Max="100" Step="1"
+                           Size="Size.Large"
+                           Color="Color.Info"
+                           @onchange="Generate"
+                           Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="3" lg="2">
+            <MudPaper Height="64px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Height:@horizontal.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@horizontal" Min="1" Max="100" Step="1"
+                           Size="Size.Large"
+                           Color="Color.Info"
+                           @onchange="Generate"
+                           Class="d-flex align-center justify-center mud-width-full px-8 "></MudSlider>
+            </MudPaper>
+
+        </MudItem>
+        <MudItem xs="12" sm="4" md="3" lg="2">
+            <MudPaper Height="64px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Margin:@margin.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@margin" Min="0" Max="10" Step="1" 
+                           Size="Size.Large"
+                           Color="Color.Info" 
+                           Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="3" lg="2">
+            <MudPaper Height="64px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Boder:@boderWidth.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@boderWidth" Min="0" Max="10" Step="1" 
+                           Size="Size.Large"
+                           Color="Color.Info"
+                           Class="d-flex align-center justify-center mud-width-full px-8 "></MudSlider>
+            </MudPaper>
+
+        </MudItem>
+        <MudItem xs="12" sm="6" md="2">
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       FullWidth="true"
+                       OnClick="Generate"
+                       Class="align-center justify-center object-fill ">
+                GENERATE
+            </MudButton> 
+        </MudItem>
+        <MudItem xs="12" sm="6" md="2">
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       FullWidth="true"
+                       OnClick="Simulate"
+                       Class="align-center justify-center object-fill ">
+                SIMULATE
+            </MudButton>
+        </MudItem>
+    </MudGrid>
+</MudPaper>
+
+<MudPaper Class="d-flex flex-wrap justify-center ma-6 mb-6" Height="100" >
+    <MudPaper Class="d-flex flex-column flex-grow-1 gap-0 ma-6 py-3" > 
+            @foreach (var item in maze)
+            {
+                <MudPaper Class="d-flex flex-row flex-grow-1 gap-0" Elevation="0">
+                    @foreach (var data in item)
+                    {
+                        <td style="height:60px; width: 60px; background-color:@(data.CellColor); margin:@(margin)px; border-width:@(boderWidth)px; border-color:green;">
+                        </td>
+                    }
+                </MudPaper>
+            } 
+    </MudPaper>
+</MudPaper>
+
+@* <MudPaper Class="ma-6 py-3">
+    <table class="overflow-auto" style="margin: 8px auto; border-color:black; border-width:thick">
+        @foreach (var item in maze)
+        {
+            <tr>
+                @foreach (var data in item)
+                {
+                    <td style="height:60px; width: 60px; background-color:@(data.CellColor); margin:@(margin)px; border-width:@(boderWidth)px; border-color:green;">
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+</MudPaper> *@
+
+@code {
+    int horizontal = 20;
+    int vertical = 20;
+    int margin = 0;
+    int boderWidth = 0;
+
+    Random random = new();
+
+    List<List<MazeCellModel>> maze = new(); 
+
+    void Generate()
+    {
+        maze.Clear();
+        for (int i = 0; i < horizontal; i++)
+        {
+            var ls = new List<MazeCellModel>();
+            for (int j = 0; j < vertical; j++)
+            {
+                var temp = new MazeCellModel
+                    {
+                        XAxis = i,
+                        YAxis = j
+                    };
+                ls.Add(temp);
+            }
+            maze.Add(ls);
+            StateHasChanged();
+        }
+        LinkNeighBour();
+    }
+    void LinkNeighBour()
+    { 
+        for (int i = 0; i < horizontal; i++)
+        {
+            for (int j = 0; j < vertical; j++)
+            {
+                var left = i - 2;
+                var right = i + 2;
+                var front = j + 2;
+                var back = j - 2;
+
+                if(left>0)
+                {
+                    maze[i][j].Neighbour.Add(maze[left][j]);
+                } 
+
+                if(right<horizontal)
+                {
+                    maze[i][j].Neighbour.Add( maze[right][j]);
+                } 
+
+                if(front<vertical)
+                {
+                    maze[i][j].Neighbour.Add( maze[i][front]);
+                } 
+
+                if(back>=0)
+                {
+                    maze[i][j].Neighbour.Add( maze[i][back]);
+                }
+                maze[i][j].Neighbour = SuffeledArray(maze[i][j].Neighbour, random.Next(1, 100000));
+            } 
+        }
+    }
+    async void Simulate()
+    {
+        Generate(); // for testing purpose
+        var random = new Random();
+        int a = random.Next(0, horizontal);
+        int b = random.Next(0, vertical);
+        var stack = new Stack<MazeCellModel>();
+
+        var visited = new bool[horizontal, vertical]; 
+        stack.Push(maze[a][b]);
+        maze[a][b].CellColor = "white";
+
+        Traverse(stack, visited); 
+    }
+
+    async void Traverse(Stack<MazeCellModel> stack, bool[,] visited)
+    {
+        if (stack.Count == 0) return;
+
+        var parent = stack.Pop();
+
+        foreach (var item in parent.Neighbour)
+        {
+            if(!visited[parent.XAxis,parent.YAxis])
+            {
+                stack.Push(item);
+                item.CellColor = "white";
+                item.Count--;
+                if(item.XAxis==parent.XAxis)
+                {
+                    if(item.YAxis+2==parent.YAxis)
+                    {
+                        if (maze[item.XAxis][item.YAxis + 1].CellColor != "white") 
+                            maze[item.XAxis][item.YAxis + 1].Count--;
+
+                        maze[item.XAxis][item.YAxis + 1].CellColor = "white";
+                    }
+                    else
+                    {
+                        if (maze[item.XAxis][item.YAxis - 1].CellColor != "white")
+                            maze[item.XAxis][item.YAxis - 1].Count--;
+                        maze[item.XAxis][item.YAxis - 1].CellColor = "white";
+                    }
+                }
+                else
+                {
+                    if (item.XAxis +2 ==parent.XAxis)
+                    {
+                        if (maze[item.XAxis + 1][item.YAxis].CellColor != "white")
+                            maze[item.XAxis + 1][item.YAxis].Count--;
+                        maze[item.XAxis + 1][item.YAxis].CellColor = "white";
+                    }
+                    else
+                    {
+                        if (maze[item.XAxis - 1][item.YAxis].CellColor != "white")
+                            maze[item.XAxis - 1][item.YAxis].Count--;
+                        maze[item.XAxis - 1][item.YAxis].CellColor = "white";
+                    }
+                }
+                visited[parent.XAxis, parent.YAxis] = true;
+                StateHasChanged();
+                Traverse(stack, visited);
+                if(parent.Count>2)
+                    visited[parent.XAxis, parent.YAxis] = false;
+                if(stack.Count>0)
+                    stack.Pop();
+
+            }
+        }
+    }
+    public static List<T> SuffeledArray<T>(List<T> array, int seed)
+    {
+        var rand = new Random(seed);
+        for (int i = 0; i < array.Count; i++)
+        {
+            var randIndex = rand.Next(i, array.Count);
+            var tempItem = array[randIndex];
+            array[randIndex] = array[i];
+            array[i] = tempItem;
+        }
+        return array;
+    }
+}

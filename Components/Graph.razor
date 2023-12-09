@@ -60,22 +60,39 @@
         </MudItem>
     </MudGrid>
 </MudPaper> 
-    @if (graph.Count > 0)
-    { 
-        <MudPaper Class="ma-6 pa-6"> 
-            <table class="overflow-auto" style="margin: 8px auto; border-color:black; border-width:thick">
+@if (graph.Count > 0)
+{ 
+    <MudPaper Class="d-flex flex-wrap justify-center ma-6" Height="100" >
+        <MudPaper Class="d-flex flex-column flex-grow-1 gap-0 ma-6 py-3">  
                     @foreach (var item in graph)
                     {
-                        <tr>
+                        <MudPaper Class="d-flex flex-row flex-grow-1 gap-0" Elevation="0">
                             @foreach (var data in item)
                             {
                                 <GraphCell BackgroundColorData="@data" OnEmployeeSelection="UpdateGraphData" />
                             }
-                        </tr>
-                    }
-            </table> 
+                        </MudPaper>
+                    } 
         </MudPaper> 
-    }
+    </MudPaper>  
+}
+
+@* @if (graph.Count > 0)
+{
+    <MudPaper Class="ma-6 pa-6">
+        <table class="overflow-auto" style="margin: 8px auto; border-color:black; border-width:thick">
+            @foreach (var item in graph)
+            {
+                <tr>
+                    @foreach (var data in item)
+                    {
+                        <GraphCell BackgroundColorData="@data" OnEmployeeSelection="UpdateGraphData" />
+                    }
+                </tr>
+            }
+        </table>
+    </MudPaper>
+} *@
 @code {
 
 
