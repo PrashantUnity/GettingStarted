@@ -1,35 +1,56 @@
 ﻿@page "/PixelPaint"
 <PageTitle>Pixel Painter</PageTitle>
-<MudGrid Spacing="3" Justify="Justify.Center">
-    <MudItem>
-        <MudSlider @bind-Value="@size" Min="4" Max="961" Step="1" @onchange="ReGenerate" Class="flex-initial d-flex py-8">Pixel Count :@size.ToString()</MudSlider>
-    </MudItem> 
-        <MudItem>
-            <MudSlider @bind-Value="@pixelSize" Min="24" Max="100" Step="1" @onchange="ReGenerate" Class="flex-initial d-flex py-8">Pixel Size :@pixelSize.ToString()</MudSlider>
+<MudPaper Class="ma-6"> 
+    <MudGrid Spacing="3" Justify="Justify.Center">
+        <MudItem xs="12" sm="4" md="3" lg="2">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                   Count:@size.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@size" Min="1" Max="1000" Step="1" @onchange="ReGenerate"
+                           Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper> 
         </MudItem>
-    <MudItem>
-        <MudColorPicker Label="Choose Color" @bind-Text="brushcolor" Style="@($"color: {brushcolor};")" Placeholder="Select Color" Class="flex-initial d-flex py-8 " />
-    </MudItem>
-        <MudItem>
-            <MudFab Color="Color.Error" StartIcon="@Icons.Material.Filled.FormatPaint" Class="flex-initial d-flex align-content-end " OnClick="Eraser" Label="Eraser" />
+        <MudItem xs="12" sm="4" md="3" lg="2">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">Size :@pixelSize.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@pixelSize" Min="24" Max="100" Step="1" @onchange="ReGenerate"
+                           Class="d-flex align-center justify-center mud-width-full px-8 "></MudSlider>
+            </MudPaper>
+                
         </MudItem>
-        @if(encryptionIcon)
-        {
-            <MudItem>
-            <MudFab Color=@encryptionColor StartIcon="@Icons.Material.Filled.LockOpen" Class="flex-initial d-flex align-content-end " OnClick="Scramble" Label=@label />
-            </MudItem>
-        }
-        @if(!encryptionIcon)
-        {
-            <MudItem>
-            <MudFab Color=@encryptionColor StartIcon="@Icons.Material.Filled.Lock" Class="flex-initial d-flex align-content-end " OnClick="Scramble" Label=@label />
-            </MudItem>
-        }
+        <MudItem xs="12" sm="4" md="3" lg="2">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudColorPicker DisableToolbar="false" DisableAlpha="false" DisableColorField="false" DisablePreview="false" DisableSliders="false" DisableInputs="false" DisableModeSwitch="false" ColorPickerMode="ColorPickerMode" PickerVariant="PickerVariant.Dialog"
+                                Class="d-flex align-center justify-center mud-width-full px-8 "
+                @bind-Text="brushcolor" /> 
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="6" sm="3" md="2" xxl="1">
+            <MudFab Color="Color.Error" StartIcon="@Icons.Material.Filled.FormatPaint"
+                        Class="d-flex align-center justify-center mud-width-full" OnClick="Eraser" Label="Eraser" />
+        </MudItem> 
+        <MudItem xs="6" sm="3" md="2" xxl="1">
+            @if(encryptionIcon)
+            {
+        
+                <MudFab Color=@encryptionColor StartIcon="@Icons.Material.Filled.LockOpen"
+                        Class="d-flex align-center justify-center mud-width-full" OnClick="Scramble" Label=@label />
+            }
+            @if(!encryptionIcon)
+            { 
+                <MudFab Color=@encryptionColor StartIcon="@Icons.Material.Filled.Lock"
+                        Class="d-flex align-center justify-center mud-width-full" OnClick="Scramble" Label=@label />
+            
+            }
+        </MudItem>
 
-</MudGrid>
+    </MudGrid>
+</MudPaper>
 @if (canvass.Count > 0)
 {
-    <MudPaper Class="d-flex flex-wrap justify-center" MaxWidth="100" Elevation="0">
+    <MudPaper Class="d-flex flex-wrap justify-center ma-6" MaxWidth="100" MinHeight="100" Elevation="0">
         @foreach (var data in canvass)
         {  
             <div style="height:@(pixelSize)px; width: @(pixelSize)px; background-color:@(data.CellColor); margin: 1px; border-width:2px; border-color:@(BoderColor);"
@@ -42,7 +63,7 @@
     </MudPaper> 
 }
 @code {
-
+    public ColorPickerMode ColorPickerMode { get; set; }
     List<PaintCellModel> canvass = new();
 
     string CellColor = "white";

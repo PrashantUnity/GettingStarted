@@ -7,15 +7,78 @@
         background-color: green;
     }
 </style>
-<MudPaper Class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
-    <MudPaper Class="pa-6 mx-lg-auto mud-theme-success justify-center" Width="80%">
-        <MudSlider @bind-Value="@value" Min="10" Max="250" @onchange="ReGenerate">Data Count: @value.ToString()</MudSlider>
-            <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Time Delay: @sleep.ToString() </MudSlider>
-            <MudSlider @bind-Value="@width" Min="1" Max="100">Width: @width.ToString() px </MudSlider>
-        <MudSlider @bind-Value="@margin" Min="1" Max="60">Margin: @margin.ToString() px </MudSlider>
-    </MudPaper>
+
+<MudPaper Class="ma-6">
+    <MudGrid Spacing="3" Justify="Justify.Center">
+         
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Count: @value.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@value" Min="10" Max="250" @onchange="ReGenerate" Disabled="@isSorting"
+                           Size="Size.Large"
+                           Color="Color.Primary"
+                           Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Delay: @sleep.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@sleep" Min="1" Max="1000"
+                           Size="Size.Large"
+                           Color="Color.Error"
+                           Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Width: @width.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@width" Min="1" Max="100"
+                           Size="Size.Large"
+                           Color="Color.Info"
+                            Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Spacing: @margin.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@margin" Min="1" Max="60"
+                           Size="Size.Large"
+                           Color="Color.Info"
+                            Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper>
+        </MudItem> 
+        <MudItem xs="12" sm="6" md="3" lg="2"> 
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Secondary"
+                           OnClick="Generate"
+                           Disabled="@isSorting"
+                           FullWidth="true"
+                           Class="align-center justify-center">
+                    Generate
+                </MudButton> 
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3" lg="2"> 
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Success"
+                           OnClick="Simulate"
+                           FullWidth="true"
+                           Disabled="@isSorting" 
+                           Class="align-center justify-center object-fill ">
+                    Sort
+                </MudButton> 
+        </MudItem>
+    </MudGrid>
 </MudPaper>
-<div>
+
+<MudPaper Class="ma-6 pa-6">
     @if (data.Count >= 1)
     {
         foreach (var item in data)
@@ -33,25 +96,9 @@
             }
         }
     }
-</div>
+</MudPaper>
 
-<div class="p-4">
-    <MudButton Variant="Variant.Filled"
-               Color="Color.Primary"
-               OnClick="Generate"
-               Disabled="@isSorting"
-               FullWidth="true">
-        Generate Random Data
-    </MudButton>
-    <MudButton Variant="Variant.Filled"
-               Color="Color.Primary"
-               OnClick="Simulate"
-               FullWidth="true"
-               Disabled="@isSorting">
-        Sort
-    </MudButton>
 
-</div>
 
 @code {
     Random random = new Random();

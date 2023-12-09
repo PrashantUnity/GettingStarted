@@ -1,15 +1,65 @@
 ﻿@page "/graph"
 <PageTitle>Path Finder</PageTitle>
-<MudPaper Class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
-    <MudPaper Class="pa-6 mx-lg-auto mud-theme-success justify-center" Width="80%">
-        <MudSlider @bind-Value="@horizontal" Min="5" Max="15" @onchange="ReGenerate" Disabled="@isSorting">Row Count: @horizontal.ToString()</MudSlider>
-            <MudSlider @bind-Value="@vertical" Min="5" Max="40" @onchange="ReGenerate" Disabled="@isSorting">Column Count: @vertical.ToString()</MudSlider>
-        <MudSlider @bind-Value="@sleep" Min="1" Max="1000">Delay: @sleep.ToString()</MudSlider>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="BFS" Disabled="@isSorting">Breadth First Search</MudButton>
-        @*  <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="DFS" Disabled="@isSorting">Breadth First Search</MudButton> *@
-        <MudButton Variant="Variant.Filled" Color="Color.Error" FullWidth="true" OnClick="Reset" Disabled="@isSorting">Reset</MudButton>
-    </MudPaper>
-</MudPaper>
+
+<MudPaper Class="ma-6"> 
+    <MudGrid Spacing="3" Justify="Justify.Center">
+        <MudItem xs="12" sm="6" md="4" lg="2">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Row:@horizontal.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@horizontal" Min="5" Max="15" @onchange="ReGenerate" Disabled="@isSorting"
+                           Size="Size.Large"
+                           Color="Color.Info"
+                           Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper> 
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="2">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Column:@vertical.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@vertical" Min="5" Max="40" @onchange="ReGenerate" Disabled="@isSorting"
+                           Size="Size.Large"
+                           Color="Color.Info"
+                           Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper> 
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="2">
+            <MudPaper Height="60px" Class="mx-6">
+                <MudText Class="d-flex align-center justify-center mud-width-full px-8">
+                    Delay:@sleep.ToString()
+                </MudText>
+                <MudSlider @bind-Value="@sleep" Min="1" Max="1000"
+                           Size="Size.Large"
+                           Color="Color.Info"
+                           Class="d-flex align-center justify-center mud-width-full px-8 " />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="2"  >
+            <MudButton
+                Variant="Variant.Filled" 
+                Color="Color.Primary" 
+                FullWidth="true" 
+                OnClick="BFS" 
+                Disabled="@isSorting"
+                Class="align-center justify-center object-fill ">
+                B F S 
+            </MudButton>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="2"  >
+            <MudButton 
+                Variant="Variant.Filled" 
+                Color="Color.Error" 
+                FullWidth="true" 
+                OnClick="Reset" 
+                Disabled="@isSorting"
+                Class="align-center justify-center object-fill ">
+                Reset
+            </MudButton>
+        </MudItem>
+    </MudGrid>
+</MudPaper> 
     @if (graph.Count > 0)
     { 
 
