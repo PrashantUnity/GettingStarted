@@ -1,3 +1,35 @@
-﻿<MudPaper Class="ma-2" Elevation="3" MaxWidth="100%" id="@Id">
+﻿@using Microsoft.AspNetCore.Components 
+
+<MudPaper Class="ma-2" Elevation="3" MaxWidth="100%" id="@Id" MinHeight="400px">
         <MudText Align="Align.Center">@Title</MudText> 
 </MudPaper>
+@code{
+    private IJSObjectReference? module;
+
+    protected string Id = Guid.NewGuid().ToString();
+
+    [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
+
+    [Parameter, EditorRequired] public string Title { get; set; } = default!;
+    [Parameter, EditorRequired] public string UserId { get; set; } = default!;
+    [Parameter, EditorRequired] public string FileName { get; set; } = default!;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/githubgist.js");
+
+            await module.InvokeVoidAsync("printSnippetFrom", Id, UserId, FileName);
+
+            StateHasChanged();
+        }
+    }
+
+    async ValueTask DisposeAsync()
+    {
+        if (module is not null)
+        {
+            await module.DisposeAsync();
+        }
+    }
+}

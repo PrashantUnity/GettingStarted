@@ -1,43 +1,252 @@
-﻿@page "/twoSum" 
+﻿@page "/TwoSum"
+@using System.Runtime.CompilerServices
 
 <style>
-    .bar {
-        display: inline-block;
-        background-color: green;
+    .element {
+        
+        width: 150px;
+        height: 150px;
+        color: black;
+        font-family: Arial, sans-serif;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right:3px;
+    }
+
+    .element-number {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        font-size: 18px;
+    }
+
+    .element-numbertwo {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        font-size: 18px;
+    }
+
+    .element-name {
+        position: absolute;
+        bottom: 2px;
+        font-size: 16px;
+    }
+
+    .element-symbol {
+        font-size: 32px;
     }
 </style>
-
-
-
-<PageTitle>Two Sum</PageTitle>
-<MudPaper  Class=@Warning>
-    <MudText Class="text-danger">"Please Enter Valid Array i.e Digit seperated by ','(comma)"</MudText>
-</MudPaper>
-<MudTextField @bind-Value="@input" Immediate="true" Label="Array Of Integers Seperated by Comma"  />
-<MudButton OnClick="ShowArray">Generate</MudButton>
-
-
  
+<MudExpansionPanels MultiExpansion="true">
+    <MudExpansionPanel Text="Configure Me " >
+        <MudStack Class="ma-6">
+            <MudPaper>
+                <MudText Typo="Typo.h1">
+                    Two Sum
+                </MudText>
+            </MudPaper>
+            <MudPaper>
+                <div id="description">
+                    <p>Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.</p>
+                    <p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
+                </div>
+            </MudPaper>
+            
+            <MudSlider @bind-Value="@delay" Min="1" Max="5000" Size="Size.Large" Color="Color.Info">Interval : @delay</MudSlider>
+                <MudSlider @bind-Value="@length" Min="3" Max="200" Size="Size.Large" Color="Color.Info" @onchange="GenerateArray" Disabled="@isSimulating">Array Length :@length</MudSlider>
+                <MudSlider @bind-Value="@dataRangeNegative" Min="-50" Max="0" Size="Size.Large" Color="Color.Info" @onchange="GenerateArray" Disabled="@isSimulating">Negative Data Range :@dataRangeNegative</MudSlider>
+                <MudSlider @bind-Value="@dataRange" Min="0" Max="50" Size="Size.Large" Color="Color.Info" @onchange="GenerateArray" Disabled="@isSimulating">Positive Data Rnage : @dataRange</MudSlider>
+                <MudSlider @bind-Value="@target" Min="-50" Max="50" Size="Size.Large" Color="Color.Info" @onchange="GenerateArray" Disabled="@isSimulating">Target : @target</MudSlider>
+            </MudStack>
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Start" IsExpanded="true">
+            <MudPaper>
+                <MudButton OnClick="GenerateArray" Disabled="@isSimulating">Generate Array</MudButton>
+                <MudButton OnClick="SimulationUsingTwoLoop" Disabled="@isSimulating">Finding Using Two Loop</MudButton>
+            </MudPaper>
+    </MudExpansionPanel>
+</MudExpansionPanels>
 
-@code {
-    int target = 0;
-    string input = ""; 
-    string Warning = "invisible"; 
-    private int Index = -1;
-
-    void ShowArray()
-    {
-        try
+@if(canvass.Count>0)
+{
+    <MudPaper Class="d-flex flex-wrap justify-center ma-6 mb-6"  > 
+            @foreach (var data in canvass)
+            {
+                <div class="element" style="background: @(data.Color); margin-bottom:2px">
+                    <div class="element-number">@data.Index</div>
+                    <div class="element-symbol">@data.Value</div> 
+                </div> 
+            } 
+    </MudPaper> 
+}
+@if(isSimulating)
+{
+    <MudGrid>
+        @if(activeObject!=null)
         {
-            Warning = "invisible";
-            if (input.Length == 0) return;
-            var ls = input.Split(new char[] { ',', '[', ']' }).Where(x=>x.Length>0).Select(x => Convert.ToInt32(x)).ToArray(); 
-            StateHasChanged();
-        }
-        catch (Exception)
-        {
-            Warning = "";
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                    <div class="element" style="background: @(activeObject.Color);">
+                        <div class="element-number">@activeObject.Index</div>
+                        <div class="element-symbol">@activeObject.Value</div> 
+                    </div>
+                </MudPaper>
+            </MudItem>
         }
         
+        @if(variableObject!=null)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                    <div class="element" style="background: @(variableObject.Color);">
+                        <div class="element-number">@variableObject.Index</div>
+                        <div class="element-symbol">@variableObject.Value</div> 
+                    </div>
+                </MudPaper>
+            </MudItem>
+        }
+        @if(resultObject!=null)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                    <div class="element" style="background: @(resultObject.Color);"> 
+                        <div class="element-symbol">@resultObject.Value</div>
+                        <div class="element-name">@resultObject.Position</div>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        }
+        
+    </MudGrid>
+}
+@if(found)
+{ 
+    <MudPaper Class="d-flex flex-wrap justify-center ma-6 mb-6"> 
+        @foreach (var data in answersList)
+        {   
+            <MudPaper>
+                <div class="element" style="background:@(data.Item1.Color); margin:2px">
+                    <div class="element-number">@data.Item1.Index</div>
+                    <div class="element-numbertwo">@data.Item2.Index</div>
+                    <div class="element-symbol">@data.Item1.Value , @data.Item2.Value</div>
+                    <div class="element-name">@target</div>
+                </div>
+            </MudPaper>  
+        } 
+    </MudPaper>
+            
+}
+
+ 
+@code {
+    List<ArrayDataModel> canvass = new();
+    List<(ArrayDataModel, ArrayDataModel)> answersList = new();
+    int length = 15;
+    int dataRange = 20;
+    int dataRangeNegative = 0;
+    string activeColor ="blue";
+    string inactiveColor = "skyblue";
+    string answerColor = "green";
+    string variableColor = "Yellow";
+    string errorColor = "red";
+    bool isSimulating = false; 
+    int target = 10;
+    bool found = false;
+    int delay = 1000;
+
+    ArrayDataModel? activeObject;
+    ArrayDataModel? variableObject;
+    ArrayDataModel? resultObject;
+
+    Random random = new();
+    public class ArrayDataModel
+    {
+        public int Value { get; set; }
+        public int Index { get; set; } 
+        public string? Color { get; set; }
+        public string? Position { get; set; } 
     }
+
+    void GenerateArray()
+    {
+        canvass.Clear();
+        for (int i = 0; i < length; i++)
+        {
+            canvass.Add(new ArrayDataModel()
+                {
+                    Index = i,
+                    Value = random.Next(dataRangeNegative, dataRange),
+                    Color = inactiveColor
+
+                });
+        }
+    }
+    async void SimulationUsingTwoLoop()
+    {
+        var visited = new HashSet<(int, int)>();
+        answersList.Clear();
+        isSimulating = true;
+        found = false;
+        for (int i = 0; i < length; i++)
+        {
+            activeObject = canvass[i];
+            activeObject.Color = activeColor;
+            StateHasChanged();
+
+            for (int j = 0; j < length; j++)
+            { 
+                if(i!=j)
+                {
+                    variableObject = canvass[j];
+                    variableObject.Color = variableColor;
+
+                    resultObject = new ArrayDataModel()
+                        {
+                            Value = variableObject.Value + activeObject.Value,
+                            Position = $"{activeObject.Index},{variableObject.Index}",
+                            Color = errorColor
+                        };
+                    if (variableObject.Value + activeObject.Value == target)
+                    {
+                        if(visited.Add((i,j)) && visited.Add((j,i)))
+                        {
+                            var one = new ArrayDataModel()
+                                {
+                                    Value = activeObject.Value,
+                                    Index = activeObject.Index,
+                                    Color = answerColor
+                                };
+                            var two = new ArrayDataModel()
+                                {
+                                    Value = variableObject.Value,
+                                    Index = variableObject.Index,
+                                    Color = answerColor
+                                };
+                            answersList.Add((one, two));
+                        } 
+                        found = true;
+                        resultObject.Color = answerColor;
+                        StateHasChanged();
+                        await Task.Delay(10 * delay);
+                    }
+                    StateHasChanged();
+                    await Task.Delay(delay); 
+                    variableObject.Color = inactiveColor;
+                    StateHasChanged();
+                }
+                resultObject = null;
+                variableObject = null;
+                StateHasChanged();
+            }
+            activeObject.Color = inactiveColor;
+            StateHasChanged();
+        }
+        isSimulating = false;
+        StateHasChanged();
+    }
+
 }

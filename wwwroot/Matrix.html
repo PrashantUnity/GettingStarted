@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matrix</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 64px);
+            grid-auto-rows: 64px;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .box {
+            background-color: skyblue;
+            opacity: 0;
+        }
+
+        @keyframes starlight {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix"></div>
+
+    <script>
+        function createMatrix() {
+            const matrix = document.querySelector('.matrix');
+            const { clientWidth, clientHeight } = document.documentElement;
+            const boxSize = 64;
+            const cols = Math.ceil(clientWidth / boxSize);
+            const rows = Math.ceil(clientHeight / boxSize);
+
+            matrix.style.gridTemplateColumns = `repeat(${cols}, ${boxSize}px)`;
+            matrix.style.gridAutoRows = `${boxSize}px`;
+            function createMatrix() {
+                const matrix = document.querySelector('.matrix');
+                const { clientWidth, clientHeight } = document.documentElement;
+                const boxSize = 64;
+                const cols = Math.ceil(clientWidth / boxSize);
+                const rows = Math.ceil(clientHeight / boxSize);
+
+                matrix.style.gridTemplateColumns = `repeat(${cols}, ${boxSize}px)`;
+                matrix.style.gridAutoRows = `${boxSize}px`;
+
+                matrix.innerHTML = ''; // Clear previous boxes
+
+                for (let i = 0; i < rows * cols; i++) {
+                    const box = document.createElement('div');
+                    box.classList.add('box');
+                    matrix.appendChild(box);
+                }
+            }
+
+            function randomizeStarlight() {
+                const boxes = document.querySelectorAll('.box');
+                boxes.forEach(box => {
+                    const delay = Math.random() * 5;
+                    const duration = Math.random() * 0.5 + 0.5;
+                    const opacity = Math.random() * 0.8 + 0.2;
+
+                    box.style.animation = `starlight ${duration}s ${delay}s infinite`;
+                    box.style.opacity = opacity;
+                });
+            }
+
+            function handleResize() {
+                createMatrix();
+                randomizeStarlight();
+            }
+
+            createMatrix();
+            randomizeStarlight();
+
+            window.addEventListener('resize', handleResize);
+
+            for (let i = 0; i < rows * cols; i++) {
+                const box = document.createElement('div');
+                box.classList.add('box');
+                matrix.appendChild(box);
+            }
+        }
+
+        function randomizeStarlight() {
+            const boxes = document.querySelectorAll('.box');
+            boxes.forEach(box => {
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 0.5 + 0.5;
+                const opacity = Math.random() * 0.8 + 0.2;
+
+                box.style.animation = `starlight ${duration}s ${delay}s infinite`;
+                box.style.opacity = opacity;
+            });
+        }
+
+        createMatrix();
+        randomizeStarlight();
+    </script>
+</body>
+</html>

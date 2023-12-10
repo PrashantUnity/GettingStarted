@@ -1,0 +1,23 @@
+﻿
+
+
+<div style="height:@(Height)px; border:@Boder)px solid @(BoderColor);">
+    <iframe src="@SourceURL" height="100%;">
+
+    </iframe>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public int Height { get; set; } = 500;
+
+    [Parameter, EditorRequired]
+    public string SourceURL { get; set; } = "https://sharplab.io";
+
+
+    [Parameter]
+    public int Boder { get; set; } = 1;
+
+    [Parameter]
+    public string BoderColor { get; set; } = "black";
+}
