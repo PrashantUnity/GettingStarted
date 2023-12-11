@@ -187,6 +187,10 @@
     }
     async void SimulationUsingTwoLoop()
     {
+        if(canvass.Count==0)
+        {
+            GenerateArray();
+        }
         var visited = new HashSet<(int, int)>();
         answersList.Clear();
         isSimulating = true;
