@@ -1,0 +1,13 @@
+﻿<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GenerateImage">Download Image</MudButton>
+@code {
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
+    [Parameter, EditorRequired]
+    public string IDOfImageToDownload { get; set; } = "ImageToDownload";
+
+    private async Task GenerateImage()
+    {
+        await JSRuntime.InvokeVoidAsync("generateImage", IDOfImageToDownload);
+    }
+}

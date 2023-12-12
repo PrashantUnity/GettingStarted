@@ -101,11 +101,14 @@
                 Rgenerate
             </MudButton>
         </MudItem>
+        <MudItem xs="12" sm="6" md="2">
+            <ImageDownloader IDOfImageToDownload="@id" />
+        </MudItem>
     </MudGrid>
 </MudPaper> 
 @if (graph.Count > 0)
-{ 
-    <MudPaper Class="d-flex flex-wrap justify-center ma-6" Height="100" >
+{
+    <MudPaper id="@id" Class="d-flex flex-wrap justify-center ma-6" Height="100">
         <MudPaper Class="d-flex flex-column flex-grow-1 gap-0">  
                     @foreach (var item in graph)
                     {
@@ -151,6 +154,7 @@
     int count = 0;
     bool isSorting = false;
     bool perfect = false;
+    string id = "maze";
 
 
     protected override async Task OnInitializedAsync()
