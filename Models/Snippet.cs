@@ -2,10 +2,12 @@
 {
     public class Snippet
     {
-        public string Language { get; set; } = Enum.GetName(LanguageName.CSharp); 
-        public string Title { get; set; }
-        public string FileName { get; set; }
+        public string HeadingName { get; set; } = "Code";
+        public string BoderColor { get; set; } = "black";
+        public int BoderThickNess { get; set; } = 0; 
+        public int HeightOfFrame { get; set; } = 500;
+        public string Language { get; set; } = Enum.GetName(LanguageName.CSharp);
 
-        public string UrserName { get; set; } = "PrashantUnity";
+        public string SourceUrl { get; set; } = "https://pastebin.com/embed_iframe/YBZtRsfb";
     }
 }

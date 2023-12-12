@@ -9,7 +9,7 @@
                 <MudText Class="d-flex align-center justify-center mud-width-full px-8">
                     Width:@vertical.ToString()
                 </MudText>
-                <MudSlider @bind-Value="@vertical" Min="1" Max="100" Step="1"
+                <MudSlider @bind-Value="@vertical" Min="1" Max="100" Step="2"
                            Size="Size.Large"
                            Color="Color.Info"
                            @onchange="Generate"
@@ -21,7 +21,7 @@
                 <MudText Class="d-flex align-center justify-center mud-width-full px-8">
                     Height:@horizontal.ToString()
                 </MudText>
-                <MudSlider @bind-Value="@horizontal" Min="1" Max="100" Step="1"
+                <MudSlider @bind-Value="@horizontal" Min="1" Max="100" Step="2"
                            Size="Size.Large"
                            Color="Color.Info"
                            @onchange="Generate"
@@ -61,7 +61,7 @@
                 GENERATE
             </MudButton> 
         </MudItem>
-        <MudItem xs="12" sm="6" md="2">
+       @*  <MudItem xs="12" sm="6" md="2">
             <MudButton Variant="Variant.Filled"
                        Color="Color.Primary"
                        FullWidth="true"
@@ -69,7 +69,7 @@
                        Class="align-center justify-center object-fill ">
                 SIMULATE
             </MudButton>
-        </MudItem>
+        </MudItem> *@
     </MudGrid>
 </MudPaper>
 
@@ -115,6 +115,7 @@
 
     void Generate()
     {
+        var data = (new MazeAlgorithm()).GenerateMaze(horizontal, vertical);
         maze.Clear();
         for (int i = 0; i < horizontal; i++)
         {
@@ -126,12 +127,14 @@
                         XAxis = i,
                         YAxis = j
                     };
+                if (data[i, j] == 1) temp.CellColor = "black";
+                else temp.CellColor = "white";
                 ls.Add(temp);
             }
             maze.Add(ls);
             StateHasChanged();
         }
-        LinkNeighBour();
+        //LinkNeighBour();
     }
     void LinkNeighBour()
     { 
@@ -170,6 +173,7 @@
     async void Simulate()
     {
         Generate(); // for testing purpose
+        return;
         var random = new Random();
         int a = random.Next(0, horizontal);
         int b = random.Next(0, vertical);

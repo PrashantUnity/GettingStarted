@@ -1,0 +1,29 @@
+﻿
+<MudPaper class="pa-6" Elevation="0">
+    <MudStack>
+        <MudText Typo="Typo.h4" Class="d-flex justify-center flex-grow-1 gap-4 ma-0">
+            @HeadingName
+        </MudText>
+        <div style="height:@(HeightOfIframe)px; border:@BoderThickness)px solid @(BoderColor);">
+            <iframe src="@SourceURL" height="100%;" />
+        </div>
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter, EditorRequired]
+    public string HeadingName { get; set; } = "C# Code";
+
+    [Parameter, EditorRequired]
+    public int HeightOfIframe { get; set; } = 500;
+
+    [Parameter, EditorRequired]
+    public string SourceURL { get; set; } = "https://pastebin.com/embed_iframe/YBZtRsfb";
+
+
+    [Parameter]
+    public int BoderThickness { get; set; } = 1;
+
+    [Parameter]
+    public string BoderColor { get; set; } = "black";
+}

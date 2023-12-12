@@ -8,7 +8,7 @@
                 <MudText Class="d-flex align-center justify-center mud-width-full px-8">
                     Row:@horizontal.ToString()
                 </MudText>
-                <MudSlider @bind-Value="@horizontal" Min="5" Max="15" @onchange="ReGenerate" Disabled="@isSorting"
+                <MudSlider @bind-Value="@horizontal" Min="5" Max="101" Step="2" @onchange="ReGenerate" Disabled="@isSorting"
                            Size="Size.Large"
                            Color="Color.Info"
                            Class="d-flex align-center justify-center mud-width-full px-8 " />
@@ -19,7 +19,7 @@
                 <MudText Class="d-flex align-center justify-center mud-width-full px-8">
                     Column:@vertical.ToString()
                 </MudText>
-                <MudSlider @bind-Value="@vertical" Min="5" Max="40" @onchange="ReGenerate" Disabled="@isSorting"
+                <MudSlider @bind-Value="@vertical" Min="5" Max="101" Step="2" @onchange="ReGenerate" Disabled="@isSorting"
                            Size="Size.Large"
                            Color="Color.Info"
                            Class="d-flex align-center justify-center mud-width-full px-8 " />
@@ -68,6 +68,7 @@
                                 @bind-Text="boderColor" />
             </MudPaper>
         </MudItem>
+        <MudCheckBox @bind-Checked="@perfect" Color="Color.Primary"> Perfect Maze</MudCheckBox>
         <MudItem xs="12" sm="6" md="2"  >
             <MudButton
                 Variant="Variant.Filled" 
@@ -88,6 +89,16 @@
                 Disabled="@isSorting"
                 Class="align-center justify-center object-fill ">
                 Reset
+            </MudButton>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="2">
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Secondary"
+                       FullWidth="true"
+                       OnClick="ReGenerate"
+                       Disabled="@isSorting"
+                       Class="align-center justify-center object-fill ">
+                Rgenerate
             </MudButton>
         </MudItem>
     </MudGrid>
@@ -128,8 +139,8 @@
 @code {
 
     List<List<GraphCellModels>> graph = new();
-    int horizontal = 5;
-    int vertical = 5;
+    int horizontal = 7;
+    int vertical = 7;
     int sleep = 10;
     int margin = 1;
     int boderWidth = 1;
@@ -139,6 +150,7 @@
     GraphCellModels end;
     int count = 0;
     bool isSorting = false;
+    bool perfect = false;
 
 
     protected override async Task OnInitializedAsync()
@@ -262,6 +274,8 @@
     } 
     void ReGenerate()
     {
+        var maze = (new MazeAlgorithm()).GenerateMaze(horizontal, vertical);
+
         isSorting = false;
         graph.Clear();
         for (int i = 0; i < horizontal; i++)
@@ -277,7 +291,11 @@
                         Margin=margin,
                         BoderColor = boderColor
                     };
-                if (random.Next(1, 100) > 80) cellChora.CellColor = "black";
+                if (perfect && maze[i, j] == 1)
+                {
+                    cellChora.CellColor = "black";
+                }
+                else if (!perfect &&  random.Next(1, 100) > 80) cellChora.CellColor = "black";
                 else cellChora.CellColor = "white";
                 ls.Add(cellChora);
             }

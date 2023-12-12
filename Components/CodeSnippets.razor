@@ -1,21 +1,23 @@
 ﻿<MudItem xs="12">
     <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary">
-        @if ( SnippetUrl!=null)
+        @if (SnippetList != null)
         {
-            @foreach (var item in SnippetUrl)
+            @foreach (var item in SnippetList)
             {
                 <MudTabPanel Text=@item.Language>
-                     <GithubGistSnippet 
-                                Title=@item.Title
-                                UserId=@item.UrserName 
-                                FileName=@item.FileName /> 
-                </MudTabPanel> 
+                    <Pastebin 
+                        HeadingName="@item.HeadingName" 
+                        BoderColor="@item.BoderColor" 
+                        BoderThickness="@item.BoderThickNess" 
+                        HeightOfIframe="@item.HeightOfFrame" 
+                        SourceURL="@item.SourceUrl" /> 
+                </MudTabPanel>
             }
         } 
     </MudTabs>
 </MudItem>
 
 @code{ 
-    [Parameter]
-    public List<Snippet> SnippetUrl { get; set; }
+    [Parameter,EditorRequired]
+    public List<Snippet> SnippetList { get; set; }
 }

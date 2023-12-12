@@ -1,0 +1,324 @@
+﻿@page "/Playground"
+<MudPaper Class="ma-6" Elevation="0">
+    <MudGrid>
+        <MudItem xs=12 sm="6">
+            <MudButton OnClick="Generate">
+                Generate Grid
+            </MudButton>
+        </MudItem>
+        <MudItem xs=12>
+            <MudSlider @bind-Value="@width" @onchange="Generate" Min="1" Max="30" Step="2">
+                Width : @obstacleCount
+            </MudSlider>
+        </MudItem>
+        <MudItem xs=12>
+            <MudSlider @bind-Value="@length" @onchange="Generate" Min="1" Max="30" Step="2">
+                Height : @length
+            </MudSlider>
+        </MudItem>
+        <MudItem xs=12>
+            @if (grid.Count > 0)
+            {
+                <MudPaper Class="d-flex flex-column flex-grow-1 gap-1" Elevation="0">
+                    @foreach (var item in grid)
+                    {
+                        <MudPaper Class="d-flex flex-row justify-center flex-grow-1 gap-1" Elevation="0">
+                            @foreach (var data in item)
+                            {
+                                <MudPaper Class="@data.IsPath" Width="64px" Height="64px" />
+                            }
+                        </MudPaper>
+
+                    }
+                </MudPaper>
+            }
+        </MudItem>
+    </MudGrid>
+</MudPaper>
+
+
+@code {
+    List<List<Grid>> grid = new();
+    int currentStoneCount = 0;
+    int currentPathCount = 0;
+    string grass = "mud-theme-success";
+    string stone = "mud-theme-primary";
+    string pathVisiting = "mud-theme-secondary";
+    int length = 7;
+    int obstacleCount = 7;
+    int width = 7;
+    Random random = new();
+
+    public class Grid
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public string IsPath { get; set; } = "mud-theme-success";
+
+    }
+    void Generate()
+    {
+        grid.Clear();
+        var maze = GenerateMaze(length, width);
+
+        for (int i = 0; i < length; i++)
+        {
+            var ls = new List<Grid>();
+            for (int j = 0; j < width; j++)
+            {
+                var temp = new Grid()
+                    {
+                        X = i,
+                        Y = j
+                    };
+                if (maze[i, j] == 1)
+                {
+                    temp.IsPath = stone;
+                }
+                ls.Add(temp);
+
+            }
+            grid.Add(ls);
+        }
+    }
+
+    int[,] GenerateMaze(int rows, int cols)
+    {
+        int[,] maze = new int[rows, cols];
+
+        // Initialize maze with walls
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                maze[i, j] = 1;
+            }
+        }
+
+        // Set starting point
+        maze[1, 1] = 0;
+
+        DFS(maze, 1, 1);
+
+        return maze;
+    }
+
+    void DFS(int[,] maze, int row, int col)
+    {
+        int[] directions = { 1, 2, 3, 4 };
+        Shuffle(directions);
+
+        foreach (int dir in directions)
+        {
+            int[] dRow = { 0, 0, 1, -1 };
+            int[] dCol = { 1, -1, 0, 0 };
+
+            int newRow = row + 2 * dRow[dir - 1];
+            int newCol = col + 2 * dCol[dir - 1];
+
+            if (newRow > 0 && newRow < maze.GetLength(0) - 1 &&
+                newCol > 0 && newCol < maze.GetLength(1) - 1 &&
+                maze[newRow, newCol] == 1)
+            {
+                maze[row + dRow[dir - 1], col + dCol[dir - 1]] = 0;
+                maze[newRow, newCol] = 0;
+
+                DFS(maze, newRow, newCol);
+            }
+        }
+    }
+
+    void Shuffle(int[] array)
+    {
+        int n = array.Length;
+        for (int i = 0; i < n; i++)
+        {
+            int r = i + random.Next(n - i);
+            int temp = array[r];
+            array[r] = array[i];
+            array[i] = temp;
+        }
+    }
+    // another disgarding
+    int[,] Maze(int m, int n)
+    {
+        var matrix = new int[m, n];
+        var suffled = new List<(int, int)>();
+        int a = 0;
+        int b = 0;
+
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                suffled.Add((i, j));
+            }
+        }
+        suffled = SuffeledArray(suffled);
+        int stone = obstacleCount;
+        int stonePlaced = 0;
+        foreach (var item in suffled)
+        {
+            if (stone == stonePlaced) break;
+
+            if (item.Item1 == a && item.Item2 == b) continue;
+
+            matrix[item.Item1, item.Item2] = 1;
+            stonePlaced++;
+
+            var path = BFS(a, b, new bool[m, n], matrix) + stonePlaced;
+
+            if ((path) != m * n)
+            {
+                matrix[item.Item1, item.Item2] = 0;
+                stonePlaced--;
+            }
+        }
+        return matrix;
+
+    }
+    int BFS(int m, int n, bool[,] visited, int[,] matrix)
+    {
+        var queue = new Stack<(int, int)>();
+
+        queue.Push((m, n));
+        visited[m, n] = true;
+
+        int path = 1;
+
+        var neighbour = new List<(int, int)>()
+            {
+                (1,0),(0,1),(-1,0),(0,-1)
+            };
+        while (queue.Count > 0)
+        {
+            var current = queue.Pop();
+            int x = current.Item1;
+            int y = current.Item2;
+            //visited[x, y] = true;
+
+            foreach (var item in neighbour)
+            {
+                x = x + item.Item1;
+                y = y + item.Item2;
+
+                if (x >= 0 && y >= 0 && x < visited.GetLength(0) && y < visited.GetLength(1) && !visited[x, y] && matrix[x, y] != 1)
+                {
+                    visited[x, y] = true;
+                    path++;
+                    queue.Push((x, y));
+                }
+            }
+
+        }
+        return path;
+
+    }
+    List<(T, T)> SuffeledArray<T>(List<(T, T)> array)
+    {
+
+        for (int i = 0; i < array.Count; i++)
+        {
+            var randIndex = random.Next(i, array.Count);
+            var tempItem = array[randIndex];
+            array[randIndex] = array[i];
+            array[i] = tempItem;
+        }
+        return array;
+    }
+
+
+    // disgarded concept;
+    async void CanWePlace()
+    {
+        int count = 0;
+        var isStoned = new HashSet<Grid>();
+        var suffled = new List<Grid>();
+        foreach (var item in suffled)
+        {
+            grid[item.Y][item.Y].IsPath = stone;
+
+            bool[,] visited = new bool[length, length];
+            var queue = new Queue<Grid>();
+            queue.Enqueue(grid[0][0]);
+
+            visited[0, 0] = true;
+            grid[0][0].IsPath = grass;
+            var ls = new List<(int, int)>()
+            {
+                (-1,0),
+                (1,0),
+                (0,1),
+                (0,-1)
+            };
+            int path = 1;
+            var lss = new List<Grid>();
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                foreach (var i in ls)
+                {
+                    int X = i.Item1 + current.X;
+                    int Y = i.Item2 + current.Y;
+
+                    if (X >= 0 &&
+                        Y >= 0 &&
+                        X < length &&
+                        Y < length &&
+                        !visited[X, Y] &&
+                        grid[X][Y].IsPath != stone &&
+                        !isStoned.Contains(grid[item.Y][item.Y]))
+                    {
+
+                        path++;
+                        visited[X, Y] = true;
+                        grid[X][Y].IsPath = pathVisiting;
+                        queue.Enqueue(grid[X][Y]);
+                        lss.Add(grid[X][Y]);
+                    }
+                    StateHasChanged();
+                    await Task.Delay(10);
+                }
+            }
+
+            currentStoneCount = path + isStoned.Count + 1;
+
+            if (path + isStoned.Count + 1 != length * length)
+            {
+                grid[item.Y][item.Y].IsPath = grass;
+            }
+            else
+            {
+                isStoned.Add(grid[item.Y][item.Y]);
+                foreach (var jj in lss)
+                {
+                    if (!isStoned.Contains(jj))
+                    {
+                        grid[item.Y][item.Y].IsPath = grass;
+                    }
+                }
+            }
+
+            StateHasChanged();
+            await Task.Delay(100);
+            if (count == obstacleCount)
+            {
+                break;
+            }
+        }
+        Console.WriteLine("Finished");
+    }
+    public static List<T> SuffeledArray<T>(List<T> array, int seed)
+    {
+        var rand = new Random(seed);
+        for (int i = 0; i < array.Count; i++)
+        {
+            var randIndex = rand.Next(i, array.Count);
+            var tempItem = array[randIndex];
+            array[randIndex] = array[i];
+            array[i] = tempItem;
+        }
+        return array;
+    }
+
+}
