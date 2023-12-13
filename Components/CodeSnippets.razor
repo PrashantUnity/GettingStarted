@@ -1,5 +1,5 @@
 ﻿<MudItem xs="12">
-    <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary">
+    <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Info};")">
         @if (SnippetList != null)
         {
             @foreach (var item in SnippetList)
@@ -20,4 +20,5 @@
 @code{ 
     [Parameter,EditorRequired]
     public List<Snippet> SnippetList { get; set; }
+    private MudTheme Theme = new MudTheme(); 
 }

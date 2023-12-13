@@ -1,0 +1,136 @@
+﻿@page "/TransformString"
+<style>
+    #codeBlock {
+        border: 1px solid #1B1A17;
+        padding: 10px;
+        margin: 10px 0;
+        position: relative;
+    }
+
+    #copyButton {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0px 0px;
+        cursor: pointer; 
+        background-color: transparent;
+    }
+</style>
+ <MudPaper Class="ma-6" Elevation="0">
+<MudGrid >
+    <MudItem xs=12 sm=6>
+            <MudPaper Class="d-flex justify-center object-fill " Elevation="0">
+            <textarea @bind="@Value" class="" Label="Input Text Here" Variant="Variant.Text" />
+        </MudPaper>
+    </MudItem>
+    <MudItem xs=12 sm=6>
+        <MudSelect @bind-Value="enumValue"
+                   Label="Operation Type" 
+                   OpenIcon="@Icons.Material.Filled.Settings"
+                   AdornmentColor="Color.Secondary">
+        @foreach (var item in ls)
+        {
+            <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
+        }
+        </MudSelect>
+    </MudItem>
+    <MudItem xs=12> 
+        <MudButton 
+            Variant="Variant.Filled" 
+            FullWidth="true"
+            StartIcon="@Icons.Material.Filled.AutoAwesome"
+            Color="Color.Secondary"
+            OnClick="Transform">Transform</MudButton>
+    </MudItem>
+    @if (operatedListOfString != null)
+    {
+        <MudItem xs=12>
+            <MudPaper> 
+                <div id="codeBlock">
+                    @foreach (var item in operatedListOfString)
+                    {
+                        <MudText>
+                            @item
+                        </MudText>
+                    }
+                    
+                    <div id="copyButton" class="ma-6">
+                        <CopyCode CodeText="@finalResult" />
+                    </div>
+                </div>
+            </MudPaper>
+        </MudItem>
+    }
+
+</MudGrid>
+ </MudPaper>
+@code {
+    public string Value { get; set; } = "C Sharp, Python, C Plus Plus";
+    public string enumValue { get; set; } = "Select Option";
+    string finalResult;
+
+    List<string> operatedListOfString;
+    List<string> ls = new List<string>()
+        {
+            "To Upper",
+            "To Lower",
+            "To Array", 
+        };
+
+    void Transform()
+    {
+        switch (enumValue)
+        {
+            case "To Upper":
+                ToUpper();
+                break;
+            case "To Lower":
+                ToLower();
+                break;
+            case "To Array":
+                ToArray();
+                break;
+        }
+    }
+    List<string> ToListConverter(string str)
+    {
+        return str.Trim().Split(new char[] { ',', '|', '[', ']', '{', '}', '!', '@', '#', '$', '%' }).ToList();
+    }
+    void ToUpper()
+    {
+        finalResult = Value.ToUpper(); 
+        operatedListOfString = ToListConverter(finalResult);
+        StateHasChanged();
+    }
+    void ToLower()
+    {
+        finalResult = Value.ToLower(); 
+        operatedListOfString = ToListConverter(finalResult);
+        StateHasChanged(); 
+    }
+    void ToArray()
+    {
+        var ls = ToListConverter(Value);
+
+        finalResult = string.Join(',', ls);
+        operatedListOfString = ls;
+        StateHasChanged();
+    }
+    void AllSubString()
+    {
+
+    }
+    void Decode()
+    {
+
+    }
+    void Encode()
+    {
+
+    }
+    void Duplicate()
+    {
+        
+    }
+
+}

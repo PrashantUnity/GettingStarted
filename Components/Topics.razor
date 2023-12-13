@@ -1,12 +1,18 @@
 ﻿@inject NavigationManager navigation
 
-<MudImage ObjectFit=@objectFit
-          Height="300"
-          Width="300"
+<style>
+    img:hover {
+        box-shadow: 0 0 15px 5px rgba(255, 165, 0, 0.7); /* Orange color glow effect */
+    }
+</style>
+<MudImage id="img"
+          ObjectFit=@objectFit
+          Height="200"
+          Width="200"
           @onclick="BubbleSortPage"
           Src=@ImageSource
           Alt="Image"
-          Elevation="25"
+          Elevation="@elevation"
           Class=@shape
           @onmouseout="ChaurkhutMe"
           @onmouseenter="GoalMe" />
@@ -18,18 +24,22 @@
     [Parameter, EditorRequired]
     public string ImageSource { get; set; } = "images/bubblesort.png";
 
-    string shape = "rounded-xl md-2 mx-lg-auto mud-theme-success";
+    string shape = "rounded-circle md-2 mx-lg-auto mud-theme-success";
+
+    int elevation = 10;
 
     ObjectFit objectFit = ObjectFit.Cover;
     void GoalMe()
     {
-        shape = "rounded-circle md-2 mx-lg-auto mud-theme-success";
+        //shape = "rounded-circle md-2 mx-lg-auto mud-theme-success";
         objectFit = ObjectFit.Fill;
+        elevation =25;
     }
     void ChaurkhutMe()
     {
-        shape = "rounded-xl md-2 mx-lg-auto mud-theme-success";
+        //shape = "rounded-xl md-2 mx-lg-auto mud-theme-success";
         objectFit = ObjectFit.Cover;
+        elevation = 10;
     }
     void BubbleSortPage()
     {

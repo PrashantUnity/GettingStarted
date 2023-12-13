@@ -1,18 +1,13 @@
 ﻿
-<MudPaper class="pa-6" Elevation="0">
-    <MudStack>
-        <MudText Typo="Typo.h4" Class="d-flex justify-center flex-grow-1 gap-4 ma-0">
-            @HeadingName
-        </MudText>
+<MudPaper Elevation="0"> 
         <div style="height:@(HeightOfIframe)px; border:@BoderThickness)px solid @(BoderColor);">
             <iframe src="@SourceURL" height="100%;" />
-        </div>
-    </MudStack>
+        </div> 
 </MudPaper>
 
 @code {
     [Parameter, EditorRequired]
-    public string HeadingName { get; set; } = "C# Code";
+    public string HeadingName { get; set; } = "Code";
 
     [Parameter, EditorRequired]
     public int HeightOfIframe { get; set; } = 500;

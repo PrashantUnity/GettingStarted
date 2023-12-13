@@ -86,12 +86,14 @@
             
             }
         </MudItem>
-
+        <MudItem xs="6" sm="3" md="2" xxl="1">
+            <ImageDownloader IDOfImageToDownload="paintImage"/>
+        </MudItem>
     </MudGrid>
 </MudPaper>
 @if (canvass.Count > 0)
 {
-    <MudPaper Class="d-flex flex-wrap justify-center ma-6 mb-6" Height="100" >
+    <MudPaper id="paintImage" Class="d-flex flex-wrap justify-center ma-6 mb-6" Height="100" >
         @foreach (var data in canvass)
         {
             <div style="height:@(pixelSize)px; width: @(pixelSize)px; background-color:@(data.CellColor); margin: @(marginWidth)px; border-width:@(boderWidth)px; border-color:@(BoderColor);"

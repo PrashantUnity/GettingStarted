@@ -1,0 +1,14 @@
+﻿<button @onclick="Copy">Copy</button>
+
+@code {
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
+    [Parameter, EditorRequired]
+    public string CodeText { get; set; }
+
+    private async Task Copy()
+    {
+        await JSRuntime.InvokeVoidAsync("copyCode", CodeText);
+    }
+}
