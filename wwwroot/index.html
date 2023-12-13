@@ -16,9 +16,17 @@
     <link rel="manifest" href="site.webmanifest">
     <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="theme-color" content="#ffffff"> 
+    <meta name="theme-color" content="#ffffff">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VHF7LB99VX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
+        gtag('config', 'G-VHF7LB99VX');
+    </script>
     <style>
         .loader {
             margin: auto;
@@ -54,7 +62,8 @@
             padding: 10px;
             font-size: 16px;
         }
-        .page_404 {  
+
+        .page_404 {
             height: 100%;
             background-position: center;
             background-repeat: no-repeat;
@@ -64,7 +73,8 @@
             align-items: center;
             flex-direction: column;
         }
-        .container { 
+
+        .container {
             background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
             height: 100%;
             background-position: center;
@@ -76,9 +86,9 @@
             flex-direction: column;
         }
 
-            .page_404 img {
-                width: 100%;
-            }
+        .page_404 img {
+            width: 100%;
+        }
 
         .four_zero_four_bg h1 {
             font-size: 80px;
@@ -99,7 +109,6 @@
         .contant_box_404 {
             margin-top: 100%;
         }
-
     </style>
 </head>
 
