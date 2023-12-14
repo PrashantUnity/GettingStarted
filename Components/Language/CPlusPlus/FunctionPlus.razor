@@ -1,0 +1,81 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-cilkcpp">#include &lt;iostream>
+#include &lt;functional>
+#include &lt;future>
+
+// Return Type
+int Add(int a, int b) {
+    return a + b;
+}
+
+// Parameters
+void Greet(const std::string& name) {
+    std::cout &lt;&lt; "Hello, " &lt;&lt; name &lt;&lt; std::endl;
+}
+
+void GreetWithDefault(const std::string& name = "Guest") {
+    std::cout &lt;&lt; "Hello, " &lt;&lt; name &lt;&lt; std::endl;
+}
+
+// Overloading
+int Add(int a, int b) { /* Code here */ }
+double Add(double a, double b) { /* Code here */ }
+
+// Optional Parameters
+void PrintName(const std::string& firstName, const std::string& lastName = "") {
+    std::cout &lt;&lt; firstName &lt;&lt; " " &lt;&lt; lastName &lt;&lt; std::endl;
+}
+
+// Lambda Expressions (C++11 onwards)
+auto add = [](int a, int b) { return a + b; };
+
+// Function Pointer (Equivalent to Delegate Methods)
+using MathOperation = std::function&lt;int(int, int)>;
+MathOperation add = [](int a, int b) { return a + b; };
+
+// Async Methods (C++11 onwards)
+std::future&lt;int> GetDataAsync() {
+    // Asynchronous operations
+    return std::async(std::launch::async, []() -> int {
+        // Some asynchronous operation here
+        return 42;
+    });
+}
+
+// Extension Methods (Not directly supported, but member functions or free functions can be used)
+bool IsNullOrEmpty(const std::string& str) {
+    return str.empty();
+}
+
+// Ref and Out Parameters: Passing parameters by reference or returning multiple values
+void Modify(int& number) { /* Code here */ }
+void Retrieve(int& number) { /* Code here */ }
+
+int main() {
+    // Example usage of functions and features
+    Greet("John");
+    GreetWithDefault();
+    int result = Add(5, 7);
+    std::cout &lt;&lt; "Result: " &lt;&lt; result &lt;&lt; std::endl;
+
+    return 0;
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

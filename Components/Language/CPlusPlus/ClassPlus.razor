@@ -1,0 +1,49 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-cilkcpp">#include &lt;iostream>
+#include &lt;string>
+
+class Person {
+public:
+    // Fields (attributes)
+    std::string Name;
+    int Age;
+
+    // Constructor
+    Person(const std::string& name, int age) : Name(name), Age(age) {}
+
+    // Method (behavior)
+    void SayHello() {
+        std::cout &lt;&lt; "Hello, my name is " &lt;&lt; Name &lt;&lt; " and I'm " &lt;&lt; Age &lt;&lt; " years old." &lt;&lt; std::endl;
+    }
+};
+
+int main() {
+    // Creating an instance of the Person class
+    Person person("Alice", 30);
+
+    // Accessing fields and calling methods of the object
+    std::cout &lt;&lt; person.Name &lt;&lt; std::endl; // Output: Alice
+    std::cout &lt;&lt; person.Age &lt;&lt; std::endl; // Output: 30
+    person.SayHello(); // Output: Hello, my name is Alice and I'm 30 years old.
+
+    return 0;
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

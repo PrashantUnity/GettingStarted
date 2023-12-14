@@ -1,0 +1,29 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-python">myInteger = 10  # int: Used to store integer values.
+myFloat = 3.14  # float: Used to store single-precision floating-point numbers.
+myDouble = 3.14159  # double: Used to store double-precision floating-point numbers.
+isTrue = True  # bool: Used to store boolean values (True or False).
+myChar = 'A'  # char: Used to store a single character (in Python, it's a string of length 1).
+myByte = 255  # byte: Used to store unsigned integers from 0 to 255 (Python does not have explicit byte type).
+myShort = 1000  # short: Used to store small integers.
+myLong = 1000000000  # long: Used to store large integers.
+myDecimal = 123.456  # decimal: Used to precise decimal numbers (Python has Decimal module for precise decimal arithmetic).
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

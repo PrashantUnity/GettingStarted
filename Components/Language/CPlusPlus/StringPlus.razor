@@ -1,0 +1,46 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-cilkcpp">#include &lt;iostream>
+#include &lt;string>
+
+int main() {
+    // String Concatenation
+    std::string name = "John";
+    int age = 30;
+    std::string message = "My name is " + name + " and I am " + std::to_string(age) + " years old.";
+    std::cout &lt;&lt; message &lt;&lt; std::endl;
+
+    // String Interpolation (C++20 onwards)
+    std::string nameInter = "John";
+    int ageInter = 30;
+    std::string messageInter = "My name is " + nameInter + " and I am " + std::to_string(ageInter) + " years old.";
+    std::cout &lt;&lt; messageInter &lt;&lt; std::endl;
+
+    // Verbatim String (Not directly supported in C++, an alternative way)
+    std::string path = R"(C:\MyFolder\MyFile.txt)";
+    std::cout &lt;&lt; path &lt;&lt; std::endl;
+
+    std::string multiline = "This is a\n"
+                            "multiline\n"
+                            "string.";
+    std::cout &lt;&lt; multiline &lt;&lt; std::endl;
+
+    return 0;
+}</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

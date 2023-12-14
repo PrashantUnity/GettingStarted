@@ -1,0 +1,76 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-python"># Return Type (Python is dynamically typed, so there's no explicit return type declaration)
+def add(a, b):
+    return a + b
+
+# Parameters
+def greet(name):
+    print("Hello, " + name)
+
+def greet_with_default(name="Guest"):
+    print("Hello, " + name)
+
+# Overloading (Python doesn't support function overloading directly)
+# Function overloading can be simulated using default arguments or variable argument lists
+
+# Optional Parameters
+def print_name(first_name, last_name=""):
+    print(first_name + " " + last_name)
+
+# Lambda Expressions
+add_lambda = lambda a, b: a + b
+
+# Lambda functions are used for short functions without a formal def and return
+
+# Delegate Methods (Python uses first-class functions, delegates are not explicitly defined)
+# Functions can be assigned to variables and passed as arguments
+
+# Async Methods (asynchronous programming in Python using async/await)
+import asyncio
+
+async def get_data_async():
+    # Asynchronous operations
+    return await some_async_operation()
+
+# Extension Methods (Python doesn't have the concept of extension methods)
+# You can create utility functions that operate on specific types, but they won't be bound to those types like in C#
+
+# Ref and Out Parameters (Python does not have direct equivalents to ref and out parameters)
+# Python uses pass-by-object-reference, allowing modifications to mutable objects but not directly similar to ref/out
+def modify(number):
+    number[0] = 10  # Modifying a mutable object (like a list) passed as an argument
+
+def retrieve():
+    return 42  # Returning multiple values can be achieved by returning a tuple or a collection
+
+# Example usage:
+result = add(5, 10)
+greet("Alice")
+greet_with_default()
+print_name("John")
+print_name("John", "Doe")
+
+# Example of using async function
+async def example():
+    data = await get_data_async()
+    print(data)
+     
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

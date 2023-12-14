@@ -1,0 +1,47 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-csharp">// Defining a class named Person
+public class Person
+{
+    // Fields (attributes)
+    public string Name;
+    public int Age;
+
+    // Constructor (to initialize objects)
+    public Person(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
+
+    // Method (behavior)
+    public void SayHello()
+    {
+        Console.WriteLine($"Hello, my name is {Name} and I'm {Age} years old.");
+    }
+}
+
+// Creating an instance of the Person class
+Person person = new Person("Alice", 30);
+
+// Accessing fields and calling methods of the object
+Console.WriteLine(person.Name); // Output: Alice
+Console.WriteLine(person.Age); // Output: 30
+person.SayHello(); // Output: Hello, my name is Alice and I'm 30 years old.</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

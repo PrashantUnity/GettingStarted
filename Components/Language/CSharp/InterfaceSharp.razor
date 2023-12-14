@@ -1,0 +1,53 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-csharp">// Define an interface
+public interface IShape
+{
+    // Method to calculate area
+    double CalculateArea();
+
+    // Property to get the shape's name
+    string Name { get; }
+}
+
+// Implement the IShape interface in a class
+public class Circle : IShape
+{
+    public double Radius { get; set; }
+
+    // Constructor
+    public Circle(double radius)
+    {
+        Radius = radius;
+    }
+
+    // Implement CalculateArea method from the interface
+    public double CalculateArea()
+    {
+        return Math.PI * Math.Pow(Radius, 2);
+    }
+
+    // Implement the Name property from the interface
+    public string Name => "Circle";
+}
+
+// Using the implemented interface
+Circle circle = new Circle(5);
+Console.WriteLine($"Area of the {circle.Name} is: {circle.CalculateArea()}");</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

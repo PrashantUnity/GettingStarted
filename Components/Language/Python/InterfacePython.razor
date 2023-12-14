@@ -1,0 +1,49 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-python">from abc import ABC, abstractmethod
+import math
+
+# Define an abstract base class (similar to an interface)
+class IShape(ABC):
+        @@abstractmethod
+    def calculate_area(self):
+        pass
+
+        @@property
+        @@abstractmethod
+    def name(self):
+        pass
+
+# Implement the abstract class in a concrete class
+class Circle(IShape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def calculate_area(self):
+        return math.pi * self.radius ** 2
+
+        @@property
+    def name(self):
+        return "Circle"
+
+# Using the implemented abstract class
+circle = Circle(5)
+print(f"Area of the {circle.name} is: {circle.calculate_area()}")
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

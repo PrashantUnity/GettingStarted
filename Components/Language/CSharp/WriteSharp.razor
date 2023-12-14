@@ -1,0 +1,22 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-csharp">Console.WriteLine("This will write in single line after that what ever you write will be printed in new Line");
+Console.Write("We can use This to write in single line by multiple Console.Write Statement");
+Console.Write("This Will Also Print In Same Line as Above");</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

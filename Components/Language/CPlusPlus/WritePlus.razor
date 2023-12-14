@@ -1,0 +1,32 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-cilkcpp">#include &lt;iostream>
+
+int main() {
+    // Printing with new line using cout
+    std::cout &lt;&lt; "This will write in single line after that whatever you write will be printed in a new line" &lt;&lt; std::endl;
+
+    // Printing in the same line using multiple cout statements
+    std::cout &lt;&lt; "We can use this to write in a single line by multiple std::cout statements";
+    std::cout &lt;&lt; "This will also print in the same line as above" &lt;&lt; std::endl;
+
+    return 0;
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

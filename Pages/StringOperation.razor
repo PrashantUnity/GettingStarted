@@ -19,10 +19,19 @@
  <MudPaper Class="ma-6" Elevation="0">
 <MudGrid >
     <MudItem xs=12 sm=6>
-            <MudPaper Class="d-flex justify-center object-fill " Elevation="0">
-            <textarea @bind="@Value" class="" Label="Input Text Here" Variant="Variant.Text" />
+            <MudPaper Class="d-flex justify-center object-fill " Elevation="0"> 
+            <MudTextField AutoGrow=true @bind-Value="@Value"   Label="Input Text Here" T="string"/>
         </MudPaper>
     </MudItem>
+    @if(duplicateSelection)
+    {
+        <MudItem xs=12 sm=6>
+            <MudPaper Class="d-flex justify-center object-fill " Elevation="0">
+                <MudNumericField @bind-Value="@times"   Label="Times" T="int" Min="1" />
+            </MudPaper>
+        </MudItem>
+    }
+       
     <MudItem xs=12 sm=6>
         <MudSelect @bind-Value="enumValue"
                    Label="Operation Type" 
@@ -30,7 +39,7 @@
                    AdornmentColor="Color.Secondary">
         @foreach (var item in ls)
         {
-            <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
+            <MudSelectItem Value="@item" >@item.ToString()</MudSelectItem>
         }
         </MudSelect>
     </MudItem>
@@ -47,13 +56,14 @@
         <MudItem xs=12>
             <MudPaper> 
                 <div id="codeBlock">
-                    @foreach (var item in operatedListOfString)
-                    {
-                        <MudText>
-                            @item
-                        </MudText>
-                    }
-                    
+                     <MudPaper id="paintImage" Class="d-flex flex-wrap justify-center ma-6 mb-6" Height="100" Elevation="0">
+                        @foreach (var item in operatedListOfString)
+                        {
+                                <MudPaper Height="30px" Class="d-flex pa-2 ma-6 align-content-center">
+                                @item
+                            </MudPaper>
+                        }
+                    </MudPaper>
                     <div id="copyButton" class="ma-6">
                         <CopyCode CodeText="@finalResult" />
                     </div>
@@ -68,27 +78,46 @@
     public string Value { get; set; } = "C Sharp, Python, C Plus Plus";
     public string enumValue { get; set; } = "Select Option";
     string finalResult;
+    bool duplicateSelection = false;
+    int times = 2;
 
     List<string> operatedListOfString;
     List<string> ls = new List<string>()
         {
             "To Upper",
             "To Lower",
-            "To Array", 
-        };
-
+            "To Array",
+            "All Substring",
+            "Duplicate"
+        }; 
+    void Reset()
+    {
+        duplicateSelection = false; 
+    }
     void Transform()
     {
         switch (enumValue)
         {
             case "To Upper":
+                Reset();
                 ToUpper();
                 break;
             case "To Lower":
+                Reset();
                 ToLower();
                 break;
             case "To Array":
+                Reset();
                 ToArray();
+                break;
+            case "All Substring":
+                Reset();
+                AllSubString();
+                break;
+            case "Duplicate":
+                duplicateSelection = true;
+                StateHasChanged();
+                Duplicate(); 
                 break;
         }
     }
@@ -118,7 +147,23 @@
     }
     void AllSubString()
     {
-
+        if(Value.Length>50)
+        {
+            finalResult = "Why In the World You Want to Print Substring of this";
+            operatedListOfString = new();
+            operatedListOfString.Add(finalResult);
+            return;
+        }
+        operatedListOfString = new();
+        for (int i = 0; i < Value.Length; i++)
+        {
+            for (int j = i+1; j <= Value.Length; j++)
+            {
+                operatedListOfString.Add(Value.Substring(i, j - i));
+            }
+        }
+        finalResult = string.Join('\n', operatedListOfString);
+        StateHasChanged();
     }
     void Decode()
     {
@@ -130,7 +175,13 @@
     }
     void Duplicate()
     {
-        
+        operatedListOfString = new();
+        for (int i = 0; i < times; i++)
+        {
+            operatedListOfString.Add(Value);
+        }
+        finalResult = string.Join('\n', operatedListOfString);
+        StateHasChanged();
     }
 
 }

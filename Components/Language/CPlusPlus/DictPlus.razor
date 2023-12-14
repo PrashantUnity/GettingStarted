@@ -1,0 +1,56 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-cilkcpp">#include &lt;iostream>
+#include &lt;unordered_map>
+#include &lt;unordered_set>
+#include &lt;set>
+
+int main() {
+    // Dictionary&lt;TKey, TValue> equivalent using std::unordered_map
+    std::unordered_map&lt;std::string, int> ages;
+    ages["Alice"] = 30;
+    ages["Bob"] = 25;
+
+    int aliceAge = ages["Alice"]; // Access value by key
+
+    // HashSet&lt;T> equivalent using std::unordered_set
+    std::unordered_set&lt;int> uniqueNumbers;
+    uniqueNumbers.insert(10);
+    uniqueNumbers.insert(20);
+    uniqueNumbers.insert(10); // Won't be added since it's a duplicate
+
+    bool containsTwenty = uniqueNumbers.count(20) > 0; // true
+
+    // SortedSet&lt;T> equivalent using std::set
+    std::set&lt;int> sortedNumbers;
+    sortedNumbers.insert(30);
+    sortedNumbers.insert(10);
+    sortedNumbers.insert(20);
+
+    // Elements are automatically sorted
+    // sortedNumbers contains: {10, 20, 30}
+    for (const auto& num : sortedNumbers) {
+        std::cout &lt;&lt; num &lt;&lt; " ";
+    }
+    std::cout &lt;&lt; std::endl;
+
+    return 0;
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

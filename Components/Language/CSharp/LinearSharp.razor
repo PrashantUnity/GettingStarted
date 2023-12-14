@@ -1,0 +1,43 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-csharp">//Arrays:
+int[] numbers = new int[] { 1, 2, 3, 4, 5 };
+ 
+//Lists:
+List&lt;string> names = new List&lt;string>();
+names.Add("Alice");
+names.Add("Bob");
+ 
+//Queues:
+Queue&lt;int> queue = new Queue&lt;int>();
+queue.Enqueue(10);
+queue.Enqueue(20);
+int value = queue.Dequeue(); // Removes and returns the first element (10)
+ 
+//Stacks:
+Stack&lt;string> stack = new Stack&lt;string>();
+stack.Push("A");
+stack.Push("B");
+string item = stack.Pop(); // Removes and returns the top element ("B")
+ 
+//LinkedList:
+LinkedList&lt;int> linkedList = new LinkedList&lt;int>();
+linkedList.AddLast(1);
+linkedList.AddLast(2);</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

@@ -1,0 +1,35 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-csharp">// In C#, a string is a sequence of characters stored as a single data type
+//String Concatenation:
+string name = "John";
+int age = 30;
+string message = "My name is " + name + " and I am " + age + " years old.";
+ 
+//String Interpolation:
+string name = "John";
+int age = 30;
+string message = $"My name is {name} and I am {age} years old.";
+ 
+//Verbatim String:
+string path = @@"C:\MyFolder\MyFile.txt";
+string multiline = @@"This is a
+                   multiline
+                   string.";</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

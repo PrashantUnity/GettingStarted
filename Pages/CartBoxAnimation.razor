@@ -2,14 +2,45 @@
 @inject IJSRuntime JSRuntime
 
 <PageTitle>Cartanimation</PageTitle>
-<Pastebin HeadingName="Beautiful String" HeightOfIframe="700" SourceURL="https://pastebin.com/embed_iframe/YBZtRsfb"> 
-</Pastebin>
+<pre class="line-numbers">
+    <code class="language-csharp">#include &le;iostream>
+using namespace std;
 
-<div class="container">
-    <div class="box box1"></div>
-    <div class="box box2"></div>
-</div>
+int main() {
+    // Example of a for loop
+    for (int i = 0; i &le; 5; ++i) {
+        cout &lt;&lt; "Iteration " &lt;&lt; i + 1 &lt;&lt; endl;
+    }
+
+    // Example of a while loop
+    int count = 0;
+    while (count &le; 5) {
+        cout &lt;&lt; "Count: " &lt;&lt; count &lt;&lt; endl;
+        ++count;
+    }
+
+    // Example of a do-while loop
+    int x = 5;
+    do {
+        cout &lt;&lt; "x: " &lt;&lt; x &lt;&lt; endl;
+        --x;
+    } while (x > 0);
+    return 0;
+}</code>
+</pre>
+
 
 @code {
+        // Inside a .razor file or a separate class
+@inject IJSRuntime JSRuntime
+
+         
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await JSRuntime.InvokeVoidAsync("initializePrism");
+            }
+        } 
 
 }

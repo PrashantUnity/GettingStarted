@@ -1,0 +1,41 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-python"># Dictionary&lt;TKey, TValue>
+ages = {
+    "Alice": 30,
+    "Bob": 25
+}
+
+alice_age = ages["Alice"]  # Access value by key
+
+# HashSet&lt;T> equivalent (Python does not have a direct equivalent to HashSet, but can use set)
+unique_numbers = {10, 20}  # Sets automatically remove duplicates
+unique_numbers.add(10)  # Won't be added since it's a duplicate
+
+contains_twenty = 20 in unique_numbers  # True if 20 is present in the set
+
+# SortedSet&lt;T> equivalent (Python does not have a built-in SortedSet, but can use sorted)
+sorted_numbers = {30, 10, 20}  # Sets automatically maintain sorted order
+
+# You can use sorted() function to sort a set
+sorted_numbers = sorted(sorted_numbers)
+
+# sorted_numbers contains: [10, 20, 30]
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

@@ -1,0 +1,51 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-cilkcpp">#include &lt;iostream>
+#include &lt;vector>
+#include &lt;list>
+#include &lt;queue>
+#include &lt;stack>
+
+int main() {
+    // Arrays (Using std::vector)
+    std::vector&lt;int> numbers = { 1, 2, 3, 4, 5 };
+
+    // Lists (Using std::list)
+    std::list&lt;std::string> names;
+    names.push_back("Alice");
+    names.push_back("Bob");
+
+    // Queues (Using std::queue)
+    std::queue&lt;int> queue;
+    queue.push(10);
+    queue.push(20);
+    int value = queue.front(); // Retrieves the first element (10)
+    queue.pop(); // Removes the first element
+
+    // Stacks (Using std::stack)
+    std::stack&lt;std::string> stack;
+    stack.push("A");
+    stack.push("B");
+    std::string item = stack.top(); // Retrieves the top element ("B")
+    stack.pop(); // Removes the top element 
+
+    return 0;
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

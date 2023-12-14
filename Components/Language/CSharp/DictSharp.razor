@@ -1,0 +1,44 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-csharp">// Dictionary&lt;TKey, TValue>:
+ 
+Dictionary&lt;string, int> ages = new Dictionary&lt;string, int>();
+ages["Alice"] = 30;
+ages["Bob"] = 25;
+ 
+int aliceAge = ages["Alice"]; // Access value by key
+ 
+// HashSet&lt;T>:
+ 
+HashSet&lt;int> uniqueNumbers = new HashSet&lt;int>();
+uniqueNumbers.Add(10);
+uniqueNumbers.Add(20);
+uniqueNumbers.Add(10); // Won't be added since it's a duplicate
+ 
+bool containsTwenty = uniqueNumbers.Contains(20); // true
+ 
+//SortedSet&lt;T>:
+SortedSet&lt;int> sortedNumbers = new SortedSet&lt;int>();
+sortedNumbers.Add(30);
+sortedNumbers.Add(10);
+sortedNumbers.Add(20);
+ 
+// Elements are automatically sorted
+// sortedNumbers contains: {10, 20, 30}</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

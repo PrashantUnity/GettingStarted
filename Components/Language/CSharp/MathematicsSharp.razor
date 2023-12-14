@@ -1,0 +1,25 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-csharp">int result = 10 + 5; // result will be 15
+int result = 20 - 8; // result will be 12
+int result = 7 * 4; // result will be 28
+int result = 15 / 3; // result will be 5
+int remainder = 17 % 5; // remainder will be 2
+float result = 15f / 4f; // result will be 3.75</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

@@ -1,0 +1,41 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-python"># for loop
+for i in range(5):
+    print(i)
+
+# while loop
+count = 0
+while count &lt; 5:
+    print(count)
+    count += 1
+
+# do-while loop (not directly available in Python)
+value = 0
+while True:
+    print(value)
+    value += 1
+    if value >= 5:
+        break
+
+# foreach loop (equivalent using Python's for-each syntax)
+numbers = [1, 2, 3, 4, 5]
+for number in numbers:
+    print(number)</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

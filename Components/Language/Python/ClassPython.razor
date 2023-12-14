@@ -1,0 +1,38 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-python"># Defining a class named Person
+class Person:
+    # Constructor (to initialize objects)
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    # Method (behavior)
+    def say_hello(self):
+        print(f"Hello, my name is {self.name} and I'm {self.age} years old.")
+
+# Creating an instance of the Person class
+person = Person("Alice", 30)
+
+# Accessing fields and calling methods of the object
+print(person.name)  # Output: Alice
+print(person.age)  # Output: 30
+person.say_hello()  # Output: Hello, my name is Alice and I'm 30 years old.
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

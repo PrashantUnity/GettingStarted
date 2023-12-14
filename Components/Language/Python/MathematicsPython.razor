@@ -1,0 +1,26 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-python">result1 = 10 + 5  # result will be 15
+result2 = 20 - 8  # result will be 12
+result3 = 7 * 4  # result will be 28
+result4 = 15 // 3  # result will be 5 (using // for integer division)
+remainder = 17 % 5  # remainder will be 2
+result5 = 15.0 / 4.0  # result will be 3.75 (using floating-point division with floats)
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

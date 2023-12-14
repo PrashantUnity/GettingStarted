@@ -1,0 +1,24 @@
+﻿@inject IJSRuntime JSRuntime 
+<pre class="line-numbers">
+<code class="language-csharp">// Double forward slash is used for commenting single line statement
+
+/*
+For Multiline commenting
+*/</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

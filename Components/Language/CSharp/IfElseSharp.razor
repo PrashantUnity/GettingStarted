@@ -1,0 +1,33 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-csharp">int number = 10;
+
+if (number > 10)
+{
+    Console.WriteLine("The number is greater than 10");
+}
+else if (number == 10)
+{
+    Console.WriteLine("The number is equal to 10");
+}
+else
+{
+    Console.WriteLine("The number is less than 10");
+}</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

@@ -1,0 +1,249 @@
+﻿@page "/Languages"
+<PageTitle>Language Dimension</PageTitle>
+<MudPaper Class="ma-6">
+    <MudExpansionPanels>
+
+<MudExpansionPanel Text="Comment">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                    <MudTabPanel Text="C#">
+                        <CommentSharp/>     
+                </MudTabPanel> 
+                <MudTabPanel Text="Python">
+                        <CommentPython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                        <CommentPlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="Writing to Console">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#">
+                    <WriteSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <WritePython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <WritePlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="Primitive Data Type">
+    <MudGrid>
+        <MudItem xs="12">
+            <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#">
+                    <PrimitiveSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <PrimitivePython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <PrimitivePlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="Variable Decleration">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#">
+                    <VariableSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <VariablePython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <VariablePlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="Take User Input">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#">
+                    <InputSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <InputPython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <InputPlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="Mathematic Operation">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#">
+                    <MathematicsSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <MathematicsPython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <MathematicsPlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="String Data Type">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#">
+                    <StringSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <StringPython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <StringPlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="If Else">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#">
+                    <IfElseSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <IfElsePython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <IfElsePlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="Loops">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#"> 
+                    <LoopSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <LoopPython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <LoopPlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="Linear Data Types">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#"> 
+                    <LinearSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <LinearPython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <LinearPlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="Function">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#"> 
+                    <FunctionSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <FunctionPython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <FunctionPlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="Dictionary and Hashset">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#"> 
+                    <DictSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <DictPython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <DictPlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="Class">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#"> 
+                    <ClassSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <ClassPython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <ClassPlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+<MudExpansionPanel Text="Interface And Inheritance">
+    <MudGrid>
+        <MudItem xs="12">
+                <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                <MudTabPanel Text="C#"> 
+                    <InterfaceSharp/>
+                </MudTabPanel>
+                <MudTabPanel Text="Python">
+                    <InterfacePython/>
+                </MudTabPanel>
+                <MudTabPanel Text="C++">
+                    <InterfacePlus/>
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    </MudGrid>
+</MudExpansionPanel>
+
+</MudExpansionPanels>
+</MudPaper>
+@code {
+    private MudTheme Theme = new MudTheme(); 
+}

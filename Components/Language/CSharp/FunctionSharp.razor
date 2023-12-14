@@ -1,0 +1,72 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-csharp">//Return Type:
+int Add(int a, int b)
+{
+    return a + b;
+}
+ 
+// Parameters:
+void Greet(string name)
+{
+    Console.WriteLine("Hello, " + name);
+}
+ 
+void GreetWithDefault(string name = "Guest")
+{
+    Console.WriteLine("Hello, " + name);
+}
+ 
+//Overloading:
+int Add(int a, int b) { /* Code here */ }
+double Add(double a, double b) { /* Code here */ }
+ 
+//Optional Parameters:
+void PrintName(string firstName, string lastName = "")
+{
+    Console.WriteLine(firstName + " " + lastName);
+}
+ 
+//Lambda Expressions:
+Func&lt;int, int, int> add = (a, b) => a + b;
+ 
+//Delegate Methods:
+delegate int MathOperation(int a, int b);
+MathOperation add = (a, b) => a + b;
+ 
+//Async Methods:
+async Task&lt;int> GetDataAsync()
+{
+    // Asynchronous operations
+    return await SomeAsyncOperation();
+}
+ 
+//Extension Methods:
+public static class StringExtensions
+{
+    public static bool IsNullOrEmpty(this string str)
+    {
+        return string.IsNullOrEmpty(str);
+    }
+}
+ 
+// Ref and Out Parameters: ref and out keywords allow passing parameters by reference or returning multiple values.
+void Modify(ref int number) { /* Code here */ }
+void Retrieve(out int number) { /* Code here */ &lt;</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

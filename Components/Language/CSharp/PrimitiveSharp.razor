@@ -1,0 +1,28 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-csharp">int myInteger = 10; //int: Used to store integer values.
+float myFloat = 3.14f; //float: Used to store single-precision floating-point numbers.
+double myDouble = 3.14159; //double: Used to store double-precision floating-point numbers.
+bool isTrue = true; //bool: Used to store boolean values (true or false).
+char myChar = 'A'; //char: Used to store a single character.
+byte myByte = 255; //byte: Used to store unsigned integers from 0 to 255
+short myShort = 1000; //short: Used to store small integers.
+long myLong = 1000000000; //long: Used to store large integers.
+decimal myDecimal = 123.456m; // decimal : Used to precise decimal number. Uses Banking etc..</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

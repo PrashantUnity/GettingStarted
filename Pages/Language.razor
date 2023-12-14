@@ -2,12 +2,15 @@
 
 @foreach (var item in list)
 {
-    <MudText Typo="Typo.h4" Class="d-flex justify-center flex-grow-1 gap-4 ma-0">
+    @* <MudText Typo="Typo.h4" Class="d-flex justify-center flex-grow-1 gap-4 ma-0">
         @item[0].HeadingName
-    </MudText>
-    <MudGrid>
-        <CodeSnippets SnippetList="@item" />
-    </MudGrid>
+    </MudText> *@
+    <MudExpansionPanel Text="@item[0].HeadingName">
+        <MudGrid>
+            <CodeSnippets SnippetList="@item" />
+        </MudGrid>
+    </MudExpansionPanel>
+    
 }
 
 
@@ -33,6 +36,13 @@
                 Language = "Python",
                 SourceUrl ="https://pastebin.com/embed_iframe/qdEvzf2y",
                 HeightOfFrame =170
+           },
+           new Snippet()
+           {
+                HeadingName = "Comment",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/vv9zSxTv",
+                HeightOfFrame =170
            }
         },
         new List<Snippet>()
@@ -49,6 +59,13 @@
                 HeadingName = "Writing to Console",
                 Language = "Python",
                 SourceUrl ="https://pastebin.com/embed_iframe/eyfMeMQd",
+                HeightOfFrame =130
+           },
+           new Snippet()
+           {
+                HeadingName = "Writing to Console",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/ndzJXy5m",
                 HeightOfFrame =130
            }
         },
@@ -67,6 +84,13 @@
                 Language = "Python",
                 SourceUrl ="https://pastebin.com/embed_iframe/1cW66448",
                 HeightOfFrame =250
+           },
+           new Snippet()
+           {
+                HeadingName = "Primitive Data Type",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/5jh5CR9p",
+                HeightOfFrame =250
            }
         },
         new List<Snippet>()
@@ -83,6 +107,13 @@
                 HeadingName = "Variable Decleration",
                 Language = "Python",
                 SourceUrl ="https://pastebin.com/embed_iframe/u5E4tc2n",
+                HeightOfFrame =250
+           },
+           new Snippet()
+           {
+                HeadingName = "Variable Decleration",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/2gALJsUJ",
                 HeightOfFrame =250
            }
         },
@@ -101,6 +132,13 @@
                 Language = "Python",
                 SourceUrl ="https://pastebin.com/embed_iframe/h4PFcKVC",
                 HeightOfFrame =130
+           },
+           new Snippet()
+           {
+                HeadingName = "Take User Input",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/PmjUfzfa",
+                HeightOfFrame =130
            }
         },
         new List<Snippet>()
@@ -118,6 +156,13 @@
                 Language = "Python",
                 SourceUrl ="https://pastebin.com/embed_iframe/Ed8Dz2vc",
                 HeightOfFrame =450
+           },
+           new Snippet()
+           {
+            HeadingName = "Mathematic Operation",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/dfy8NUpp",
+                HeightOfFrame =450
            }
         },
         new List<Snippet>()
@@ -127,6 +172,20 @@
                 HeadingName = "String Data Type",
                 Language = "C#",
                 SourceUrl ="https://pastebin.com/embed_iframe/0fpV79sX",
+                HeightOfFrame =380
+           },
+           new Snippet()
+           {
+                HeadingName = "String Data Type",
+                Language = "Python",
+                SourceUrl ="https://pastebin.com/embed_iframe/06AzKnbA",
+                HeightOfFrame =380
+           },
+           new Snippet()
+           {
+                HeadingName = "String Data Type",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/xbkyBrMr",
                 HeightOfFrame =380
            }
         },
@@ -138,6 +197,20 @@
                 Language = "C#",
                 SourceUrl ="https://pastebin.com/embed_iframe/gxukJvbn",
                 HeightOfFrame =330
+           },
+           new Snippet()
+           {
+                HeadingName = "If Else",
+                Language = "Python",
+                SourceUrl ="https://pastebin.com/embed_iframe/Xq3q5Udz",
+                HeightOfFrame =330
+           },
+           new Snippet()
+           {
+                HeadingName = "If Else",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/YXaW4Dx7",
+                HeightOfFrame =330
            }
         },
         new List<Snippet>()
@@ -147,6 +220,20 @@
                 HeadingName = "Loops",
                 Language = "C#",
                 SourceUrl ="https://pastebin.com/embed_iframe/9Qz2NZfz",
+                HeightOfFrame =610
+           },
+           new Snippet()
+           {
+                HeadingName = "Loops",
+                Language = "Python",
+                SourceUrl ="https://pastebin.com/embed_iframe/nmXnGTEK",
+                HeightOfFrame =610
+           },
+           new Snippet()
+           {
+                HeadingName = "Loops",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/1Rsgv8FB",
                 HeightOfFrame =610
            }
         },
@@ -158,6 +245,20 @@
                 Language = "C#",
                 SourceUrl ="https://pastebin.com/embed_iframe/3AR86qef",
                 HeightOfFrame =550
+           },
+           new Snippet()
+           {
+                HeadingName = "Linear Data Types",
+                Language = "Python",
+                SourceUrl ="https://pastebin.com/embed_iframe/Dv0tGmp3",
+                HeightOfFrame =550
+           },
+           new Snippet()
+           {
+                HeadingName = "Linear Data Types",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/DT43Jscq",
+                HeightOfFrame =550
            }
         },
         new List<Snippet>()
@@ -167,6 +268,20 @@
                 HeadingName = "Function",
                 Language = "C#",
                 SourceUrl ="https://pastebin.com/embed_iframe/LWZ7aMXV",
+                HeightOfFrame =1150
+           },
+           new Snippet()
+           {
+                HeadingName = "Function",
+                Language = "Python",
+                SourceUrl ="https://pastebin.com/embed_iframe/t92h0YLV",
+                HeightOfFrame =1150
+           },
+           new Snippet()
+           {
+                HeadingName = "Function",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/b7YkipZ5",
                 HeightOfFrame =1150
            }
         },
@@ -178,6 +293,20 @@
                 Language = "C#",
                 SourceUrl ="https://pastebin.com/embed_iframe/iXF9ZYTZ",
                 HeightOfFrame =600
+           },
+           new Snippet()
+           {
+                HeadingName = "Dictionary and Hashset",
+                Language = "Python",
+                SourceUrl ="https://pastebin.com/embed_iframe/Cn2VRcPa",
+                HeightOfFrame =600
+           },
+           new Snippet()
+           {
+                HeadingName = "Dictionary and Hashset",
+                Language = "C++",
+                SourceUrl ="https://pastebin.com/embed_iframe/kCvaD3Ve",
+                HeightOfFrame =600
            }
         },
         new List<Snippet>()
@@ -188,6 +317,13 @@
                 Language = "C#",
                 SourceUrl ="https://pastebin.com/embed_iframe/GvP3ZGPA",
                 HeightOfFrame =650
+           },
+           new Snippet()
+           {
+                HeadingName = "Class",
+                Language = "Python",
+                SourceUrl ="https://pastebin.com/embed_iframe/n8cVC5DA",
+                HeightOfFrame =650
            }
         },
         new List<Snippet>()
@@ -197,6 +333,13 @@
                 HeadingName = "Interface And Inheritance",
                 Language = "C#",
                 SourceUrl ="https://pastebin.com/embed_iframe/1wPTgM01",
+                HeightOfFrame =760
+           },
+           new Snippet()
+           {
+                HeadingName = "Interface And Inheritance",
+                Language = "Python",
+                SourceUrl ="https://pastebin.com/embed_iframe/YDXuneB9",
                 HeightOfFrame =760
            }
         }

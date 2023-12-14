@@ -1,0 +1,46 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-csharp">//for loop:
+for (int i = 0; i &lt; 5; i++)
+{
+    Console.WriteLine(i);
+}
+// while loop:
+int count = 0;
+while (count &lt; 5)
+{
+    Console.WriteLine(count);
+    count++;
+}
+ 
+//do-while loop
+int value = 0;
+do
+{
+    Console.WriteLine(value);
+    value++;
+} while (value &lt; 5);
+ 
+//foreach loop:
+int[] numbers = { 1, 2, 3, 4, 5 };
+foreach (int number in numbers)
+{
+    Console.WriteLine(number);
+}</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

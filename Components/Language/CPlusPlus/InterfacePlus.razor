@@ -1,0 +1,61 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-cilkcpp">#include &lt;iostream>
+#include &lt;cmath>
+#include &lt;string>
+
+// Abstract class representing the interface
+class IShape {
+public:
+    // Pure virtual method to calculate area
+    virtual double CalculateArea() const = 0;
+
+    // Pure virtual property to get the shape's name
+    virtual std::string GetName() const = 0;
+};
+
+// Class implementing the IShape interface
+class Circle : public IShape {
+private:
+    double Radius;
+
+public:
+    // Constructor
+    Circle(double radius) : Radius(radius) {}
+
+    // Implement CalculateArea method from the interface
+    double CalculateArea() const override {
+        return M_PI * pow(Radius, 2);
+    }
+
+    // Implement the GetName property from the interface
+    std::string GetName() const override {
+        return "Circle";
+    }
+};
+
+int main() {
+    // Using the implemented interface
+    Circle circle(5);
+    std::cout &lt;&lt; "Area of the " &lt;&lt; circle.GetName() &lt;&lt; " is: " &lt;&lt; circle.CalculateArea() &lt;&lt; std::endl;
+
+    return 0;
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

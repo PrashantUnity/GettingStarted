@@ -1,0 +1,46 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-python"># Arrays (using Python lists)
+numbers = [1, 2, 3, 4, 5]
+
+# Lists
+names = []
+names.append("Alice")
+names.append("Bob")
+
+# Queues (using collections.deque)
+from collections import deque
+
+queue = deque()
+queue.append(10)
+queue.append(20)
+value = queue.popleft()  # Removes and returns the first element (10)
+
+# Stacks
+stack = []
+stack.append("A")
+stack.append("B")
+item = stack.pop()  # Removes and returns the top element ("B")
+
+# LinkedList (using collections.deque as a double-ended queue)
+linkedList = deque()
+linkedList.append(1)
+linkedList.append(2)
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}
