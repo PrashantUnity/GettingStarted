@@ -2,6 +2,15 @@
 <html>
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VHF7LB99VX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-VHF7LB99VX');
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <title>Chaos World</title>
@@ -18,15 +27,8 @@
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VHF7LB99VX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    <link href="prism.css" rel="stylesheet"/>
 
-        gtag('config', 'G-VHF7LB99VX');
-    </script>
     <style>
         .loader {
             margin: auto;
@@ -138,12 +140,15 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
     <script src="imageDownloader.js"></script>
     <script src="copyCode.js"></script>
+    <script src="prism.js"></script>
+    <script src="prismInvoke.js"></script>
+     
 </body>
 
 </html>
