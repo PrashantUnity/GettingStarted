@@ -1,46 +1,60 @@
-﻿@page "/cartanimation"
+﻿@page "/Test"
 @inject IJSRuntime JSRuntime
-
-<PageTitle>Cartanimation</PageTitle>
 <pre class="line-numbers">
-    <code class="language-csharp">#include &le;iostream>
-using namespace std;
+<code class="language-markdown"># Instruction to Setup Of My Posh for windows
 
-int main() {
-    // Example of a for loop
-    for (int i = 0; i &le; 5; ++i) {
-        cout &lt;&lt; "Iteration " &lt;&lt; i + 1 &lt;&lt; endl;
-    }
+### Install OhMyPosh
+    winget install JanDeDobbeleer.OhMyPosh -s winget
 
-    // Example of a while loop
-    int count = 0;
-    while (count &le; 5) {
-        cout &lt;&lt; "Count: " &lt;&lt; count &lt;&lt; endl;
-        ++count;
-    }
+### Get All themes to your local Machine
+    Get-PoshThemes
 
-    // Example of a do-while loop
-    int x = 5;
-    do {
-        cout &lt;&lt; "x: " &lt;&lt; x &lt;&lt; endl;
-        --x;
-    } while (x > 0);
-    return 0;
-}</code>
+### Default Themes assuming that you have VS Code installed 
+    code $PROFILE
+
+### Now Paste the below snippet inside .ps1 File which opened from above 
+    oh-my-posh.exe init pwsh| Invoke-Expression
+---
+## For Specific Themes You need to replace "pathoftheme" with absolute theme path
+    oh-my-posh.exe init pwsh --config "pathoftheme" | Invoke-Expression
+### Generally themes path  is located inside
+    User => AppData => Local\Programs\oh-my-posh\themes\atomic.omp.json"
+Copy Full path replace "pathoftheme" with your selected Choice of themes
+
+### Your teminal might be appering in blocky, because of Missing Nerd Font in pc
+### go to [Nerd Font Website](https://www.nerdfonts.com/font-downloads) and download any font of you like
+---
+
+## For VS Code You Might Have To Setup Font Manually 
+    open Setting of Vs Code 
+    search Teminal 
+    locate 
+        Teminal > Integrated : Font Family
+    Click On 
+        Editor : Font Family
+    And append "Font Name" Which you intalled on your pc
+    in my case this is what look likes after adding
+    Consolas, 'Courier New', monospace,'UbuntuMono Nerd Font'
+## for Terminal/Powershell
+    Got to setting 
+    Default 
+    Font Face 
+    Select Nerd Front From Drop Down
+</code>
 </pre>
 
 
 @code {
-        // Inside a .razor file or a separate class
-@inject IJSRuntime JSRuntime
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
 
-         
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
         {
-            if (firstRender)
-            {
-                await JSRuntime.InvokeVoidAsync("initializePrism");
-            }
-        } 
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
 
 }
