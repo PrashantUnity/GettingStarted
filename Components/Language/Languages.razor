@@ -2,14 +2,70 @@
 <PageTitle>Language Dimension</PageTitle>
 <MudPaper Class="ma-6">
     <MudExpansionPanels>
+        @foreach (var component in list)
+        { 
+            <MudExpansionPanel Text="@component.Name">
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
+                            <MudTabPanel Text="C#">
+                                @RenderComponent(component.Sharp)
+                            </MudTabPanel>
+                            <MudTabPanel Text="Python">
+                                @RenderComponent(component.Python) 
+                            </MudTabPanel>
+                            <MudTabPanel Text="C++">
+                                @RenderComponent(component.Plus)
+                            </MudTabPanel>
+                        </MudTabs>
+                    </MudItem>
+                </MudGrid>
+            </MudExpansionPanel>
+        }
+    </MudExpansionPanels>
+</MudPaper>
+
+@code {
+    private MudTheme Theme = new MudTheme();
+    List<(ComponentBase Sharp, ComponentBase Python, ComponentBase Plus, string Name)> list = new()
+    {  
+        (new CommentSharp(), new CommentPython(), new CommentPlus(),"Commenting"),
+        (new WriteSharp(), new WritePython(), new WritePlus(),"Write to Console"),
+        (new PrimitiveSharp(), new PrimitivePython(), new PrimitivePlus(),"Primitive Data Types"),
+        (new VariableSharp(), new VariablePython(), new VariablePlus(),"Variable Decleration"),
+        (new InputSharp(), new InputPython(), new InputPlus(),"Take User Input"),
+        (new MathematicsSharp(), new MathematicsPython(), new MathematicsPlus(),"Mathematical Operations"),
+        (new StringSharp(), new StringPython(), new StringPlus(),"String"),
+        (new IfElseSharp(), new IfElsePython(), new IfElsePlus(),"If Else"),
+        (new LoopSharp(), new LoopPython(), new LoopPlus(),"Loop"), 
+        (new LinearSharp(), new LinearPython(), new LinearPlus(),"Linear Data Types"),
+        (new FunctionSharp(), new FunctionPython(), new FunctionPlus(),"Function"),
+        (new DictSharp(), new DictPython(), new DictPlus(),"Dictionary and Hashset"),
+        (new ClassSharp(), new ClassPython(), new ClassPlus(),"Class"),
+        (new InterfaceSharp(), new InterfacePython(), new InterfacePlus(),"Interface And Inheritance")
+    };
+    private RenderFragment RenderComponent(ComponentBase component)
+    {
+        RenderFragment fragment = builder =>
+        {
+            builder.OpenComponent(0, component.GetType());
+            builder.CloseComponent();
+        };
+
+        return fragment;
+    }
+}
+@*
+<MudPaper Class="ma-6">
+    <MudExpansionPanels>
 
 <MudExpansionPanel Text="Comment">
     <MudGrid>
         <MudItem xs="12">
                 <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
                     <MudTabPanel Text="C#">
-                        <CommentSharp/>     
-                </MudTabPanel> 
+                        <CommentSharp/>
+                </MudTabPanel>
                 <MudTabPanel Text="Python">
                         <CommentPython/>
                 </MudTabPanel>
@@ -143,7 +199,7 @@
     <MudGrid>
         <MudItem xs="12">
                 <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
-                <MudTabPanel Text="C#"> 
+                <MudTabPanel Text="C#">
                     <LoopSharp/>
                 </MudTabPanel>
                 <MudTabPanel Text="Python">
@@ -160,7 +216,7 @@
     <MudGrid>
         <MudItem xs="12">
                 <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
-                <MudTabPanel Text="C#"> 
+                <MudTabPanel Text="C#">
                     <LinearSharp/>
                 </MudTabPanel>
                 <MudTabPanel Text="Python">
@@ -177,7 +233,7 @@
     <MudGrid>
         <MudItem xs="12">
                 <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
-                <MudTabPanel Text="C#"> 
+                <MudTabPanel Text="C#">
                     <FunctionSharp/>
                 </MudTabPanel>
                 <MudTabPanel Text="Python">
@@ -194,7 +250,7 @@
     <MudGrid>
         <MudItem xs="12">
                 <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
-                <MudTabPanel Text="C#"> 
+                <MudTabPanel Text="C#">
                     <DictSharp/>
                 </MudTabPanel>
                 <MudTabPanel Text="Python">
@@ -211,7 +267,7 @@
     <MudGrid>
         <MudItem xs="12">
                 <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
-                <MudTabPanel Text="C#"> 
+                <MudTabPanel Text="C#">
                     <ClassSharp/>
                 </MudTabPanel>
                 <MudTabPanel Text="Python">
@@ -228,7 +284,7 @@
     <MudGrid>
         <MudItem xs="12">
                 <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
-                <MudTabPanel Text="C#"> 
+                <MudTabPanel Text="C#">
                     <InterfaceSharp/>
                 </MudTabPanel>
                 <MudTabPanel Text="Python">
@@ -244,6 +300,4 @@
 
 </MudExpansionPanels>
 </MudPaper>
-@code {
-    private MudTheme Theme = new MudTheme(); 
-}
+ *@
