@@ -1,0 +1,10 @@
+﻿<MudPaper Class="pa-6 ma-2">
+    <MudText Typo="Typo.h4">
+        @QuestionText
+    </MudText>
+</MudPaper>
+
+@code {
+    [Parameter, EditorRequired]
+    public string QuestionText { get; set; }
+}

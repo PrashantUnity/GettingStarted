@@ -1,0 +1,155 @@
+﻿ @page "/whatisdotnet"
+
+<MudPaper Elevation="0">
+    <Question QuestionText="What is .NET ?" />
+    <MudPaper Class="px-2 ma-2" Elevation="1">
+        <MudList Clickable="false">
+            <MudListItem>
+                <MudText Typo="Typo.body1">
+                    It is software framework created by microsoft for building and running application.
+                </MudText>
+            </MudListItem>
+            <MudPaper Elevation="0" Class="mx-4">
+            <MudListItem >
+
+                    <ul style="list-style-type:disc;">
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            .NET Framework (Windows Specific)
+                        </MudText>
+                     </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            .NET Core ( Cross Platform Open Source)
+                        </MudText></li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            Roslyn ( Not Created by Microsoft an it is Open Source)
+                        </MudText> 
+                    </li> 
+                </ul>
+                
+            </MudListItem> 
+            </MudPaper>
+            <MudDivider/>  
+
+            <MudListItem>
+                <MudText Typo="Typo.body1">
+                    Supported Language within .NET Ecosystem are
+                </MudText>
+            </MudListItem>
+            <MudPaper Elevation="0" Class="mx-4">
+            <MudListItem>
+                
+                <ol type="1">
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <strong>C#</strong> : A primary language for .NET development.
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <strong>Visual Basic .NET (VB.NET)</strong> : Adapted version of Visual Basic for .NET.
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <strong>F#</strong> : A functional-first language for .NET.
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <strong>C++/CLI</strong> : C++ for .NET platform.
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <strong>IronPython</strong> : Python implementation for .NET.
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <strong>IronRuby</strong> : Ruby implementation for .NET.
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <strong>JScript .NET</strong> : .NET implementation of JavaScript.
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <strong>Boo</strong> : A statically typed programming language targeting .NET.
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <strong>PowerShell</strong> : Microsoft's task automation framework, has integration with .NET.
+                        </MudText>
+                    </li>
+                </ol>
+                
+            </MudListItem>
+            </MudPaper>
+            <MudDivider /> 
+            <MudListItem>
+                <MudText Typo="Typo.body1">
+                    Supported Language within .NET Ecosystem are
+                </MudText>
+            </MudListItem>
+            <MudPaper Elevation="0" Class="mx-4">
+            <MudListItem >
+
+                    <ol type="I">
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <LinkComponent Content="Visual Studio" Link="https://visualstudio.microsoft.com/" />
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <LinkComponent Content="Rider" Link="https://www.jetbrains.com/rider/" />
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <LinkComponent Content="Visual Studio Code" Link="https://code.visualstudio.com/" />
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <LinkComponent Content="Mono Develop" Link="https://www.monodevelop.com" />
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <LinkComponent Content="SharpLab.io" Link="https://sharplab.io/" />
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <LinkComponent Content="Paiza" Link="https://paiza.io/" />
+                        </MudText>
+                    </li>
+                    <li>
+                        <MudText Typo="Typo.body1">
+                            <LinkComponent Content="Text Editor" Link="https://notepad-plus-plus.org/downloads/" />
+                        </MudText>
+                    </li>
+                </ol> 
+                
+            </MudListItem>  
+            </MudPaper>
+        </MudList>
+    </MudPaper>
+</MudPaper>
+@code {
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+}

@@ -1,0 +1,74 @@
+﻿@page "/whatiscsharp"
+
+<MudPaper Elevation="0">
+    <Question QuestionText="What is C# ?"/>
+    <MudPaper Class="px-2 ma-2" Elevation="1">
+            <MudList Clickable="true"> 
+            <MudListItem>
+                <MudText Typo="Typo.body1">
+                    <LinkComponent Content="C Sharp" Link="https://learn.microsoft.com/en-us/dotnet/csharp" /> is a programming language developed by Microsoft.
+                    It is Type Safe means the variable Type must be decided at the time of creation of variable. And we can't asign value other than its original Type.
+                </MudText>
+            </MudListItem>  
+                <MudListItem>
+                    <MudPaper Elevation="0" Class="pa-0"> 
+<pre class="line-numbers">
+<code class="language-csharp">//Example :
+int a = 5;
+a = 6;    // It's fine as 6 is of type integer.
+a = 6.5   // This is not as 6.5 is of type float and a type is integer.</code>
+</pre>
+
+                    </MudPaper>
+                </MudListItem>
+                <MudListItem>
+                <MudText Typo="Typo.body1">
+                        It is <LinkComponent Content="Object Oriented Programming Language" Link="https://en.wikipedia.org/wiki/Object-oriented_programming" /> i.e. a computer programming model that organizes software design around data, or objects, rather than functions and logic.
+                    </MudText>
+                </MudListItem>
+                <MudListItem>
+                <MudText Typo="Typo.body1">
+
+                        It is widely used for building various types of application on <LinkComponent Content=".NET" Link="https://dotnet.microsoft.com" /> or <LinkComponent Content="Roslyn" Link="https://github.com/dotnet/roslyn" /> Compiler.
+                    </MudText>
+                </MudListItem>
+                <MudListItem>
+                <MudText Typo="Typo.body1">
+                        Example of Applications Type are
+                    </MudText>
+                </MudListItem>
+
+            <MudListItem Icon="@Icons.Material.Filled.ArrowRight">
+                <MudText Typo="Typo.body1">
+                    Web Application [ <LinkComponent Content="Asp.Net Core" Link="https://learn.microsoft.com/en-us/aspnet/core" />,<LinkComponent Content="Blazor" Link="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor" /> , Webform (old school), etc.. ]
+                    </MudText>
+                </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.ArrowRight">
+                <MudText Typo="Typo.body1">
+                    Games [<LinkComponent Content="Unity Engine" Link="https://unity.com" /> ,<LinkComponent Content="Godot Engine" Link="https://godotengine.org" />  , etc..]
+                    </MudText>
+                </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.ArrowRight">
+                <MudText Typo="Typo.body1">
+                    Mobile Application [<LinkComponent Content=".NET MAUI" Link="https://dotnet.microsoft.com/en-us/apps/maui" />,<LinkComponent Content="Uno Platform" Link="https://platform.uno/" /> ,<LinkComponent Content="Avalonia UI" Link="https://avaloniaui.net/" />, etc.. ]
+                    </MudText>
+                </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.ArrowRight">
+                <MudText Typo="Typo.body1">
+                    Desktop Application [<LinkComponent Content=".NET MAUI" Link="https://dotnet.microsoft.com/en-us/apps/maui" />,<LinkComponent Content="Uno Platform" Link="https://platform.uno/" /> ,<LinkComponent Content="Avalonia UI" Link="https://avaloniaui.net/" />, etc.. ]
+                    </MudText>
+                </MudListItem>
+                <MudListItem Text="IOT Applications" />
+            </MudList>
+        </MudPaper> 
+</MudPaper>
+@code {
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+}
