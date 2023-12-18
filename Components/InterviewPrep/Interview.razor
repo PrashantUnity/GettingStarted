@@ -1,0 +1,31 @@
+﻿@page "/Interview"
+@inject NavigationManager navigation 
+<MudPaper Class="ma-6 d-flex flex-wrap gap-2 justify-center " Elevation="0">
+    @foreach (var item in question)
+    {
+        <MudButton 
+            Variant="Variant.Filled" 
+            Size="Size.Large" 
+            Color="Color.Tertiary"
+            OnClick="(e)=>InterviewNavigation(item.NavigationLink)">
+            @item.Question
+        </MudButton>
+         
+    } 
+</MudPaper> 
+
+@code {
+    List<(string NavigationLink,string Question)> question = new();
+
+    protected override Task OnInitializedAsync()
+    {
+        question.Add(("whatiscsharp", "What is C# ?"));
+        question.Add(("whatisdotnet", "What is .NET ?"));
+        return base.OnInitializedAsync();
+    }
+
+    public void InterviewNavigation(string PageNavigateTo)
+    {
+        navigation.NavigateTo(PageNavigateTo);
+    }
+}

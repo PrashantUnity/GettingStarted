@@ -9,13 +9,13 @@
                 <MudGrid>
                     <MudItem xs="12">
                         <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
-                            <MudTabPanel Text="C#">
+                            <MudTabPanel Icon=@CustomIcons.CSharpLogo Text="C#">
                                 @RenderComponent(component.Sharp)
                             </MudTabPanel>
-                            <MudTabPanel Text="Python">
+                            <MudTabPanel Icon=@CustomIcons.PythonLogo Text ="Python">
                                 @RenderComponent(component.Python) 
                             </MudTabPanel>
-                            <MudTabPanel Text="C++">
+                            <MudTabPanel Icon=@CustomIcons.CPlusPlusLogo Text ="C++">
                                 @RenderComponent(component.Plus)
                             </MudTabPanel>
                         </MudTabs>
