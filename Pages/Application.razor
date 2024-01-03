@@ -1,0 +1,52 @@
+﻿
+<style>
+    .ItemList {
+        box-shadow: 0 0 3px black;
+        border-radius: 5px;
+        transform: scale(.9);
+        transition: 1s;
+    } 
+    .ItemList:hover {
+        box-shadow: 0 0 6px black;
+        transform: scale(1);
+    }
+</style>
+
+
+
+
+<MudList Clickable="false">
+    @foreach (var item in list) 
+    {
+        <MudListItem class="ItemList mb-6">
+            <MudGrid>
+                <MudItem xs="12" sm="4">
+                    <MudImage Fluid="true" Src="images/iceland.jpg" Alt="Swedish Farm House" Class="rounded-lg" />
+                </MudItem>
+                <MudItem xs="12" sm="8">
+                    xs=6
+                </MudItem>
+            </MudGrid>
+        </MudListItem>
+
+    }
+</MudList>
+
+@code {
+    List<InterviewQuestion> list=new();
+    protected override Task OnInitializedAsync()
+    {
+        list = new List<InterviewQuestion>()
+        {
+
+        };
+        return base.OnInitializedAsync();
+    }
+
+    public class InterviewQuestion
+    {
+        public string ImageUrl { get; set; }
+        public string QuestionHeading { get; set; }
+        public string ShortDescription { get; set; }
+    }
+}
