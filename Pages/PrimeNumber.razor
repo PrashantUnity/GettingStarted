@@ -1,0 +1,118 @@
+﻿@page "/primenumber"
+@inject IJSRuntime JSRuntime
+
+<MudPaper class="ma-6" Elevation="0"> 
+    <div class="d-flex justify-center flex-grow-1 gap-4 ma-6 ">
+        <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Warning">
+            Click for Prime Range
+        </MudButton> 
+    </div>
+    <div class="d-flex justify-center flex-grow-1 gap-4 ma-6 ">
+        <MudExpansionPanel Text="Source Code">
+            <pre class="line-numbers">
+<code class="language-csharp">async Task CalculatePrime(int n = 100)
+{
+    var res = await Task.Factory.StartNew(() => SieveOfEratosthenes(n));
+
+    for (int i = 0; i &lt; res.Length; i++)
+    {
+        if (res[i]) prime.Add(i);
+    } 
+}
+public bool[] SieveOfEratosthenes(int num)
+{
+    bool[] isPrime = new bool[num + 1];
+    for (int i = 2; i &lt;= num; i++) isPrime[i] = true;
+    // Removing multiples.
+    for (int i = 2; i &lt;= num; i++)
+    {
+        if (isPrime[i])
+        {
+            for (int j = i * 2; j &lt;= num; j += i)
+                isPrime[j] = false; // Eliminate multiples of i.
+        }
+    }
+    return isPrime;
+}
+</code>
+</pre>
+        </MudExpansionPanel>
+    </div>
+
+    <MudDialog @bind-IsVisible="visible" Options="dialogOptions">
+        <DialogContent>
+            <MudNumericField @bind-Value="IntValue" Label="Integer" Variant="Variant.Outlined" Min="0" Max="100000000" />
+        </DialogContent>
+        <DialogActions>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Submit" Class="d-flex flex-wrap justify-center gap-4">Generate</MudButton>
+        </DialogActions>
+    </MudDialog>
+    @if (prime.Count > 0)
+    {
+        <MudPaper Class="d-flex flex-wrap justify-center gap-4" Elevation="0">
+            @foreach (var item in prime)
+            {
+                <div class=" pa-1" style="background-color:transparent;">
+                    <MudCard>
+                        <MudCardContent>
+                            <div class="d-flex justify-center flex-grow-1 gap-4 ma-0">
+                                <MudText Typo="Typo.h1" Style="font-weight:bolder">@item</MudText>
+                                </div>
+                            </MudCardContent>
+                        </MudCard>
+                    </div>
+            }
+        </MudPaper>
+    }
+</MudPaper>
+@code {
+
+    List<int> prime = new List<int>();
+    private bool visible;
+    public int IntValue { get; set; } = 100;
+    private void OpenDialog() => visible = true;
+    async Task Submit()
+    {
+        visible = false;
+        prime = new List<int>();
+        await CalculatePrime(IntValue);
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+    private DialogOptions dialogOptions = new() { FullWidth = true };
+
+    async Task CalculatePrime(int n = 100)
+    {
+        var res = await Task.Factory.StartNew(() => SieveOfEratosthenes(n));
+
+        for (int i = 0; i < res.Length; i++)
+        {
+            if (res[i])
+            {
+                prime.Add(i);
+            }
+        }
+
+    }
+    public bool[] SieveOfEratosthenes(int num)
+    {
+        bool[] isPrime = new bool[num + 1];
+        for (int i = 2; i <= num; i++) isPrime[i] = true;
+        // Removing multiples.
+        for (int i = 2; i <= num; i++)
+        {
+            if (isPrime[i])
+            {
+                for (int j = i * 2; j <= num; j += i)
+                    isPrime[j] = false; // Eliminate multiples of i.
+            }
+        }
+        return isPrime;
+    }
+}
