@@ -1,0 +1,741 @@
+﻿@page "/FavouriteApplication" 
+@inject IJSRuntime JSRuntime
+<style>
+    .card {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        padding: 10px;
+        box-sizing: border-box;
+        overflow: hidden;
+        border-radius: 15px;
+    }
+
+    .logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: all 0.8s ease-in-out;
+    }
+
+    .card:hover .logo {
+        opacity: .4;
+    }
+
+    .website-url, .winget-link, .score {
+        position: absolute;
+        opacity: 0;
+        transition: all 0.8s ease-in-out;
+    }
+
+    .star-mark {
+        position: absolute;
+        opacity: 1;
+        transition: all 0.8s ease-in-out;
+    }
+
+    .card:hover .website-url,
+    .card:hover .winget-link,
+    .card:hover .score,
+    .card:hover .star-mark {
+        opacity: 1;
+    }
+
+    .website-url, .winget-link {
+        bottom: 5px;
+    }
+
+    .website-url {
+        left: 5px;
+    }
+
+    .winget-link {
+        right: 5px;
+    }
+
+    .score {
+        top: 5px;
+        left: 5px;
+    }
+
+    .star-mark {
+        top: 5px;
+        right: 5px;
+    }
+</style>
+
+
+@if (ls.Count > 0)
+{
+    foreach (var item in ls)
+    {
+        <h3>
+            @if (item.ApplicationClasses.Count > 0)
+            {
+                <MudPaper Class="d-flex justify-center flex-wrap gap-4" Elevation="0">
+                    @if (item.ApplicationClasses.Count > 0)
+                    {
+                        foreach (var apps in item.ApplicationClasses)
+                        {
+
+                            <MudPaper class="card" Elevation="2">
+                                <img class="logo" src="@apps.Image" alt="Logo">
+                                <a class="website-url" href="@apps.SourceUrl">Website</a>
+                                @if (apps.WingetUrl != null)
+                                {
+                                    <a class="winget-link" href="@apps.WingetUrl">Download</a>
+                                }
+                                <div class="score">@apps.Name</div>
+                                @if (apps.Fab)
+                                {
+                                    <div class="star-mark" style='font-size:30px;'>&#11088;</div>
+                                }
+                            </MudPaper>
+                        }
+                    }
+                </MudPaper>
+            }
+        </h3>
+
+
+    }
+}
+
+<MudExpansionPanel Text="Window Powershell Command Line Winget Code">
+<pre class="line-numbers"><code class="language-git">winget install -e --id RevoUninstaller.RevoUninstaller;
+winget install -e --id LINQPad.LINQPad.7;
+winget install -e --id SQLite.SQLite;
+winget install -e --id Mozilla.Firefox;
+winget install -e --id Microsoft.PowerToys;
+winget install -e --id BlenderFoundation.Blender;
+winget install -e --id Unity.UnityHub;
+winget install -e --id GitHub.GitHubDesktop;
+winget install -e --id Notepad++.Notepad++;
+winget install -e --id JetBrains.Rider;
+winget install -e --id JetBrains.CLion;
+winget install -e --id JetBrains.PyCharm.Community;
+winget install -e --id Microsoft.VisualStudioCode;
+winget install -e --id Microsoft.VisualStudio.2022.Community;
+winget install -e --id OBSProject.OBSStudio;
+winget install -e --id Discord.Discord;
+winget install -e --id SumatraPDF.SumatraPDF;
+winget install -e --id Bandisoft.Honeyview;
+winget install -e --id EpicGames.EpicGamesLauncher;
+winget install -e --id Notion.Notion;
+winget install -e --id PrestonN.FreeTube;
+winget install -e --id Valve.Steam;
+winget install -e --id qBittorrent.qBittorrent;
+winget install -e --id Xournal++.Xournal++;
+winget install -e --id MiKTeX.MiKTeX;
+winget install -e --id TeXstudio.TeXstudio;
+winget install -e --id dbeaver.dbeaver;
+winget install -e --id MongoDB.Compass.Full;
+winget install -e --id Microsoft.SQLServerManagementStudio;
+winget install -e --id Google.AndroidStudio;
+winget install -e --id Atlassian.Sourcetree;
+winget install -e --id KDE.Krita;
+winget install -e --id NGWIN.PicPick;
+winget install -e --id code52.Carnac;
+winget install -e --id VideoLAN.VLC;
+winget install -e --id Postman.Postman;
+winget install -e --id Vysor.Vysor;
+winget install -e --id TorProject.TorBrowser;
+winget install -e --id GlassWire.GlassWire;
+winget install -e --id Figma.Figma;
+winget install -e --id Microsoft.PowerAutomateDesktop;
+winget install -e --id ProjectJupyter.JupyterLab;
+winget install -e --id Anaconda.Anaconda3;
+winget install -e --id GIMP.GIMP;
+winget install -e --id Inkscape.Inkscape;
+winget install -e --id Microsoft.PowerShell.Preview;
+winget install -e --id Microsoft.SQLServer.2019.Developer;
+winget install -e --id PostgreSQL.PostgreSQL;
+winget install -e --id Google.Chrome;
+winget install -e --id RARLab.WinRAR;
+winget install -e --id Telegram.TelegramDesktop</code>
+</pre>
+</MudExpansionPanel>
+
+<a class="ma-6" target="_blank" 
+    href="https://icons8.com/icons/collections/ngvvay13t1srbeuzaqdr">LOGO</a> icons by <a target="_blank" href="https://icons8.com">Icons8</a>
+@code {
+    List<ApplicationList> ls = new();
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+    protected override Task OnInitializedAsync()
+    {
+        ls = new List<ApplicationList>()
+        {
+            new ApplicationList()
+            {
+                Enviroment = "Windows",
+                ApplicationClasses = new List<ApplicationClass>()
+                {
+                    new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-visual-studio-100.png",
+                        Name="Visual Studio",
+                        SourceUrl="https://visualstudio.microsoft.com/",
+                        WingetUrl="https://winget.run/pkg/Microsoft/VisualStudio.2022.Community",
+                        About ="Comprehensive IDE for various languages.",
+                        Score =10,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-visual-studio-code-2019-100.png",
+                        Name="Visual Studio Code",
+                        SourceUrl="https://code.visualstudio.com/",
+                        WingetUrl="https://winget.run/pkg/Microsoft/VisualStudioCode",
+                        About ="Lightweight, versatile code editor.",
+                        Score =9,
+                        Fab=true
+                    },
+                    new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-rider-jetbrains-100.png",
+                        Name="Rider",
+                        SourceUrl="https://www.jetbrains.com/rider/",
+                        WingetUrl="https://winget.run/pkg/JetBrains/Rider",
+                        About ="JetBrains IDE for .NET development.",
+                        Score =10,
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/clion.png",
+                        Name="CLion",
+                        SourceUrl="https://www.jetbrains.com/clion/",
+                        WingetUrl="https://winget.run/pkg/JetBrains/CLion",
+                        About ="JetBrains IDE for C and C++.",
+                        Score =10,
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-pycharm-100.png",
+                        Name="PyCharm",
+                        SourceUrl="https://www.jetbrains.com/pycharm/",
+                        WingetUrl="https://winget.run/pkg/JetBrains/PyCharm.Community",
+                        About ="JetBrains IDE for Python development.",
+                        Score =10,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-android-studio-100.png",
+                        Name="Android Studio",
+                        SourceUrl="https://developer.android.com/studio",
+                        WingetUrl="https://winget.run/pkg/Google/AndroidStudio",
+                        About ="Official IDE for Android app development."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/avatar.png",
+                        Name="SQLite",
+                        SourceUrl="https://www.sqlite.org/index.html",
+                        WingetUrl="https://winget.run/pkg/SQLite/SQLite",
+                        About ="Embedded relational database management system",
+                        Score =9,
+                        Fab=true
+
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-sourcetree-100.png",
+                        Name="Atlassian Sourcetree",
+                        SourceUrl="https://www.atlassian.com/software/sourcetree",
+                        WingetUrl="https://winget.run/pkg/Atlassian/Sourcetree",
+                        About ="Git GUI client by Atlassian."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-notepad++-100.png",
+                        Name="Notepad++",
+                        SourceUrl="https://notepad-plus-plus.org/",
+                        WingetUrl="https://winget.run/pkg/Notepad++/Notepad++",
+                        About ="Feature-rich code and text editor.",
+                        Score =10,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/linqpad.png",
+                        Name="LINQPad",
+                        SourceUrl="https://www.linqpad.net/Download.aspx",
+                        WingetUrl="https://winget.run/pkg/LINQPad/LINQPad.7",
+                        About ="Query tool for .NET languages.",
+                        Score =9,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-github-100.png",
+                        Name="GitHub Desktop",
+                        SourceUrl="https://desktop.github.com/",
+                        WingetUrl="https://winget.run/pkg/GitHub/GitHubDesktop",
+                        About ="Simplified Git version control tool.",
+                        Score =10,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-qt-100.png",
+                        Name="Neovim Qt",
+                        SourceUrl="https://github.com/neovim/neovim",
+                        WingetUrl="https://winget.run/pkg/Neovim/Neovim",
+                        About ="Extensible text editor focused on efficiency."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-pureref-100.png",
+                        Name="PureRef",
+                        SourceUrl="https://www.pureref.com/",
+                        About ="Visual reference and mood board tool.",
+                        Score =7,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/youtube.png",
+                        Name="Youtube Playlist Downloader",
+                        SourceUrl="https://github.com/shaked6540/YoutubePlaylistDownloader",
+                        About ="Tool to save YouTube videos"
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/Calligrakrita-base.svg.png",
+                        Name="Krita",
+                        SourceUrl="https://krita.org/en/download/krita-desktop/",
+                        WingetUrl="https://winget.run/pkg/KDE/Krita",
+                        About ="Open-source digital painting software."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-obs-100.png",
+                        Name="OBS Studio",
+                        SourceUrl="https://obsproject.com/",
+                        WingetUrl="https://winget.run/pkg/OBSProject/OBSStudio",
+                        About ="Free, open-source streaming software.",
+                        Score =9,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/Revouninstallerpro_icon.png",
+                        Name="Revo Uninstaller",
+                        SourceUrl="https://www.revouninstaller.com/revo-uninstaller-free-download/",
+                        WingetUrl="https://winget.run/pkg/RevoUninstaller/RevoUninstaller",
+                        About ="Software uninstallation utility.",
+                        Score =8,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/picpik.png",
+                        Name="PicPick",
+                        SourceUrl="https://picpick.app/en/",
+                        WingetUrl="https://winget.run/pkg/NGWIN/PicPick",
+                        About ="Screen capture and graphic design tool."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/Sumatra_PDF_logo.svg.png",
+                        Name="SumatraPDF",
+                        SourceUrl="https://www.sumatrapdfreader.org/free-pdf-reader",
+                        WingetUrl="https://winget.run/pkg/SumatraPDF/SumatraPDF",
+                        About ="Lightweight PDF reader.",
+                        Score =7,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/honeyview-logo.png",
+                        Name="Honeyview",
+                        SourceUrl="https://www.bandisoft.com/honeyview/",
+                        WingetUrl="https://winget.run/pkg/Bandisoft/Honeyview",
+                        About ="Fast image viewer with customization.",
+                        Score =7,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/carnac.png",
+                        Name="Carnac",
+                        SourceUrl="https://github.com/Code52/carnac",
+                        WingetUrl="https://winget.run/pkg/code52/Carnac",
+                        About ="Keystroke visualizer and shortcut utility."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/kenshape.jpg",
+                        Name="Kenshape",
+                        SourceUrl="https://kenney.nl/tools/kenney-shape",
+                        About ="Collaborative 3D design platform."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-unity-100.png",
+                        Name="Unity",
+                        SourceUrl="https://unity.com/",
+                        WingetUrl="https://winget.run/pkg/Unity/UnityHub",
+                        About ="Game development engine and editor",
+                        Score =10,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-blender-100.png",
+                        Name="Blender",
+                        SourceUrl="https://www.blender.org/",
+                        WingetUrl="https://winget.run/pkg/BlenderFoundation/Blender",
+                        About ="Open-source 3D creation suite",
+                        Score =10,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-unreal-engine-100.png",
+                        Name="Unreal Engine",
+                        SourceUrl="https://www.unrealengine.com/en-US/",
+                        About ="Game development platform by Epic Games."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-vlc-100.png",
+                        Name="VLC Media Player",
+                        SourceUrl="https://www.videolan.org/vlc/",
+                        WingetUrl="https://winget.run/pkg/VideoLAN/VLC",
+                        About ="Versatile multimedia player"
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/compassdb.png",
+                        Name="MongoDB Compass",
+                        SourceUrl="https://www.mongodb.com/products/tools/compass",
+                        WingetUrl="https://winget.run/pkg/MongoDB/Compass.Full",
+                        About ="GUI for MongoDB management"
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-discord-100.png",
+                        Name="Discord",
+                        SourceUrl="https://discord.com/",
+                        WingetUrl="https://winget.run/pkg/Discord/Discord",
+                        About ="Communication platform for gamers.",
+                        Score =8,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-steam-100.png",
+                        Name="Steam",
+                        SourceUrl="https://store.steampowered.com/",
+                        WingetUrl="https://winget.run/pkg/Valve/Steam",
+                        About ="Digital distribution platform for games.",
+                        Score =6,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-epic-games-100.png",
+                        Name="Epic Games",
+                        SourceUrl="https://store.epicgames.com/en-US/",
+                        WingetUrl="https://winget.run/pkg/EpicGames/EpicGamesLauncher",
+                        About ="Game development and distribution platform",
+                        Score =7,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-postman-is-the-only-complete-api-development-environment-100.png",
+                        Name="Postman",
+                        SourceUrl="https://www.postman.com/",
+                        WingetUrl="https://winget.run/pkg/Postman/Postman",
+                        About ="API development and testing tool."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/vysor.jpg",
+                        Name="Vysor",
+                        SourceUrl="https://www.vysor.io/#/",
+                        WingetUrl="https://winget.run/pkg/Vysor/Vysor",
+                        About ="Display and control Android devices on PC."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-notion-100.png",
+                        Name="Notion",
+                        SourceUrl="https://www.notion.so/",
+                        WingetUrl="https://winget.run/pkg/Notion/Notion",
+                        About ="All-in-one workspace and note-taking app.",
+                        Score =7,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/wallpaperengine.png",
+                        Name="Wallpaper Engine",
+                        SourceUrl="https://www.wallpaperengine.io/en",
+                        About ="Live wallpaper creation and display."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-tor-free-and-open-source-software-for-enabling-anonymous-communication.-100.png",
+                        Name="Tor Browser",
+                        SourceUrl="https://www.torproject.org/download/",
+                        WingetUrl="https://winget.run/pkg/TorProject/TorBrowser",
+                        About ="Secure web browser for anonymity"
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/glasswire.jpg",
+                        Name="GlassWire",
+                        SourceUrl="https://www.glasswire.com/",
+                        WingetUrl="https://winget.run/pkg/GlassWire/GlassWire",
+                        About ="Network monitoring and security tool"
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/New_qBittorrent_Logo.svg.png",
+                        Name="qBittorrent",
+                        SourceUrl="https://www.qbittorrent.org/",
+                        WingetUrl="https://winget.run/pkg/qBittorrent/qBittorrent",
+                        About ="Free and open-source torrent client",
+                        Score =6,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-figma-100.png",
+                        Name="Figma",
+                        SourceUrl="https://www.figma.com/",
+                        WingetUrl="https://winget.run/pkg/Figma/Figma",
+                        About ="Collaborative interface design tool."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/DBeaver_logo.svg.png",
+                        Name="DBeaver",
+                        SourceUrl="https://dbeaver.io/",
+                        WingetUrl="https://winget.run/pkg/dbeaver/dbeaver",
+                        About ="Universal database manager and SQL client.",
+                        Score =8,
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/ppink-ppInk-icon.png",
+                        Name="PPink",
+                        SourceUrl="https://pubpub-zz.github.io/ppInk/",
+                        About ="A graphical editor for Pixilang language.",
+                        Score =7,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/TeXstudio_Logo.svg.png",
+                        Name="TeXstudio",
+                        SourceUrl="https://www.texstudio.org/",
+                        WingetUrl="https://winget.run/pkg/TeXstudio/TeXstudio",
+                        About ="LaTeX editor with numerous features.",
+                        Score =10,
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/Xournal++_logo.svg.png",
+                        Name="Xournal++",
+                        SourceUrl="https://xournalpp.github.io/",
+                        WingetUrl="https://winget.run/pkg/Xournal++/Xournal++",
+                        About ="Note-taking and sketching application.",
+                        Score =5,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/mssqlms.png",
+                        Name="SQL Server Management Studio",
+                        SourceUrl="https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16",
+                        WingetUrl="https://winget.run/pkg/Microsoft/SQLServerManagementStudio",
+                        About ="Microsoft's tool for managing SQL Server.",
+                        Score =8
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/powertoys.jpg",
+                        Name="PowerToys",
+                        SourceUrl="https://learn.microsoft.com/en-us/windows/powertoys/",
+                        WingetUrl="https://winget.run/pkg/Microsoft/PowerToys",
+                        About ="Windows utilities for power users",
+                        Score =10,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-microsoft-power-automate-2020-100.png",
+                        Name="Power Automate",
+                        SourceUrl="https://www.microsoft.com/en-us/power-platform/products/power-automate",
+                        WingetUrl="https://winget.run/pkg/Microsoft/PowerAutomateDesktop",
+                        About ="Microsoft's workflow automation tool."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/jupyter_logo.svg.png",
+                        Name="Jupyter Notebook",
+                        SourceUrl="https://jupyter.org/",
+                        WingetUrl="https://winget.run/pkg/ProjectJupyter/JupyterLab",
+                        About ="Interactive computing and data analysis"
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/anaconda.png",
+                        Name="Anaconda",
+                        SourceUrl="https://www.anaconda.com/",
+                        WingetUrl="https://winget.run/pkg/Anaconda/Anaconda3",
+                        About ="Python/R data science platform."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/gimp.png",
+                        Name="GIMP",
+                        SourceUrl="https://www.gimp.org/",
+                        WingetUrl="https://winget.run/pkg/GIMP/GIMP",
+                        About ="Open-source image editor"
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/inkspace-logo.png",
+                        Name="Inkscape",
+                        SourceUrl="https://inkscape.org/",
+                        WingetUrl="https://winget.run/pkg/Inkscape/Inkscape",
+                        About ="Open-source vector graphics editor."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/wsl.png",
+                        Name="WSL (Windows Subsystem for Linux)",
+                        SourceUrl="https://learn.microsoft.com/en-us/windows/wsl/install",
+                        About ="Compatibility layer for running Linux binaries"
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-powershell-100.png",
+                        Name="PowerShell",
+                        SourceUrl="https://learn.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.4",
+                        WingetUrl="https://winget.run/pkg/Microsoft/PowerShell",
+                        About ="Microsoft's task automation framework."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-qt-100.png",
+                        Name="Qt Creator",
+                        SourceUrl="https://www.qt.io/product/development-tools",
+                        About ="Integrated development environment for Qt.",
+                        Score =8,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/miktex.png",
+                        Name="MiKTeX",
+                        SourceUrl="https://miktex.org/",
+                        WingetUrl="https://winget.run/pkg/MiKTeX/MiKTeX",
+                        About ="TeX/LaTeX distribution for Windows."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-microsoft-sql-server-100.png",
+                        Name="SQL Server",
+                        SourceUrl="https://www.microsoft.com/en-in/sql-server/sql-server-downloads",
+                        WingetUrl="https://winget.run/pkg/Microsoft/SQLServer.2019.Express",
+                        About ="Microsoft's relational database management system."
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-postgresql-100.png",
+                        Name="PostgreSQL",
+                        SourceUrl="https://www.postgresql.org/",
+                        WingetUrl="https://winget.run/pkg/PostgreSQL/PostgreSQL",
+                        About ="Powerful open-source relational database"
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-apple-music-100.png",
+                        Name="Apple Music Player",
+                        SourceUrl="https://music.apple.com/us/browse",
+                        WingetUrl="https://apps.microsoft.com/detail/9PFHDD62MXS1?hl=en-us&gl=US",
+                        About ="Apple's music streaming application.",
+                        Score =8
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/freetube.png",
+                        Name="FreeTube",
+                        SourceUrl="https://freetubeapp.io/",
+                        WingetUrl="https://winget.run/pkg/PrestonN/FreeTube",
+                        About ="Private YouTube client without ads.",
+                        Score =7,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-firefox-100.png",
+                        Name="Mozilla Firefox",
+                        SourceUrl="https://www.mozilla.org/en-US/firefox/new/",
+                        WingetUrl="https://winget.run/pkg/Mozilla/Firefox",
+                        About ="Open-source web browser by Mozilla.",
+                        Score =10,
+                        Fab=true
+                    },
+                     new ApplicationClass()
+                    {
+                        Image ="images/Apps/chrome.png",
+                        Name="Google Chrome",
+                        SourceUrl="https://www.google.com/intl/en_in/chrome/",
+                        WingetUrl="https://winget.run/pkg/Google/Chrome",
+                        About ="Web browser developed by Google"
+                    }, new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-winrar-100.png",
+                        Name="WinRAR",
+                        SourceUrl="https://www.win-rar.com/start.html?&L=0",
+                        WingetUrl="https://winget.run/pkg/RARLab/WinRAR",
+                        About ="File compression and archiving utility"
+                    }, new ApplicationClass()
+                    {
+                        Image ="images/Apps/icons8-telegram-100.png",
+                        Name="Telegram Desktop",
+                        SourceUrl="https://web.telegram.org/a/",
+                        WingetUrl="https://winget.run/pkg/Telegram/TelegramDesktop",
+                        About ="Messaging app with focus on privacy."
+                    },
+
+                }.OrderByDescending(x=>x.Fab==true).ThenByDescending(x=>x.Score).ToList()
+            }
+        };
+        return base.OnInitializedAsync();
+    }
+
+
+    public class ApplicationList
+    {
+        public string Enviroment { get; set; }
+        public List<ApplicationClass> ApplicationClasses { get; set; } = new();
+    }
+
+    public class ApplicationClass
+    {
+        public string Name { get; set; }
+        public string Image { get; set; } = "https://picsum.photos/100";
+        public string WingetUrl { get; set; }
+        public string SourceUrl { get; set; }
+        public string About { get; set; }
+        public bool Fab { get; set; } = false;
+        public int Score { get; set; } = 2;
+    }
+     
+}
