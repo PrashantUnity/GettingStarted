@@ -1,0 +1,206 @@
+﻿
+<style>
+    .InputContainer {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(255, 255, 255);
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+        padding-left: 15px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.075);
+    }
+
+    .input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        font-size:xx-large;
+        font-weight:bold;
+        caret-color: rgb(255, 81, 0);
+    }
+
+
+    .searchIcon {
+        width: 13px;
+    }
+
+    .border {
+        height: 40%;
+        width: 1.3px;
+        background-color: rgb(223, 223, 223);
+    }
+
+    .micIcon {
+        width: 12px;
+    }
+
+    .micButton {
+        padding: 0px 15px 0px 12px;
+        border: none;
+        background-color: transparent;
+        height: 40px;
+        cursor: pointer;
+        transition-duration: .3s;
+    }
+
+    .searchIcon path {
+        fill: rgb(114, 114, 114);
+    }
+
+    .micIcon path {
+        fill: rgb(255, 81, 0);
+    }
+
+    .micButton:hover {
+        background-color: rgb(255, 230, 230);
+        transition-duration: .3s;
+    }
+</style>
+ 
+
+@inject NavigationManager nav;
+<MudPaper Elevation="0" Class="ml-6 mr-8">
+    <div class="InputContainer">
+        <input 
+            type="text" name="text"
+            value="@Search" @oninput="(e)=> {Search = e.Value.ToString();ListAllSearchItem();}"
+            class="input" 
+            id="input" 
+            placeholder="Search">
+
+        <label for="input" class="labelforsearch">
+
+        </label>
+        <MudSpacer />
+        <div class="border"></div>
+
+        <button class="micButton" @onclick="ListAllSearchItem">
+            <svg viewBox="0 0 512 512" class="searchIcon"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path></svg>
+        </button>
+    </div>
+</MudPaper>
+<MudContainer Style="max-height: 300px;  overflow-y:auto">
+    @if(result.Count>0)
+    {
+        <MudList Class="my-6" Clickable="true"> 
+            @foreach (var item in result)
+            {
+                <MudListItem> 
+                    <MudPaper 
+                        Class="pa-3" 
+                        @onclick="()=>GoTo(item.Directory)"
+                        Style="@($"color:{_theme.Palette.SuccessLighten}; background:{_theme.Palette.Dark};")">@item.Description</MudPaper>
+                
+                </MudListItem>
+            }
+        </MudList>
+    }
+</MudContainer> 
+ 
+@code{
+    private MudTheme _theme = new();
+
+    [Parameter]
+    public string Search { get; set; } = ""; 
+    List<SearchPopupClass> result = new();
+
+    void GoTo(string text)
+    {
+        nav.NavigateTo(text);
+    }
+    void ListAllSearchItem()
+    {
+        if (Search != null)
+        {
+            result = direectory
+                    .Where(x => x.Directory.Contains(Search, StringComparison.OrdinalIgnoreCase))
+                    .OrderByDescending(x=>x.TimeCreated)
+                    .ToList();
+        }
+    }
+    public class SearchPopupClass
+    {
+        public string Directory { get; set; } = "";
+        public string Description { get; set; } = "";
+        public DateTime TimeCreated { get; set; } = DateTime.Parse("01/01/2024");
+    } 
+    List<SearchPopupClass> direectory = new()
+    {
+        new SearchPopupClass()
+        {
+            Description ="Generate Prime Number but do be greedy",
+            Directory="primenumber"
+        },
+        new SearchPopupClass()
+        {
+            Description ="Generating Perfect Image and download image",
+            Directory="Maze"
+        },
+        new SearchPopupClass()
+        {
+            Description ="Basic String Manipulation ?",
+            Directory="TransformString"
+        },
+        new SearchPopupClass()
+        {
+            Description ="Learn Common syntax in different language",
+            Directory="Languages"
+        },
+        new SearchPopupClass()
+        {
+            Description ="Now You know What you are Typing",
+            Directory="Sharplab"
+        },
+        new SearchPopupClass()
+        {
+            Description ="Online C# Ide",
+            Directory="Ide"
+        },
+        new SearchPopupClass()
+        {
+            Description ="Application which i like most",
+            Directory="FavouriteApplication"
+        },
+        new SearchPopupClass()
+        {
+            Description ="Find Sum of Two Number in an array ?",
+            Directory="TwoSum"
+        },
+        new SearchPopupClass()
+        {
+            Description ="Paint App bit in big chunk of Pixel :)",
+            Directory="PixelPaint"
+        },
+        new SearchPopupClass()
+        {
+            Description ="Find Path in Maze?",
+            Directory="graph"
+        },
+        new SearchPopupClass()
+        {
+            Description ="Sorting Algorithm Visualiser ?",
+            Directory="BubbleSort"
+        },
+        new SearchPopupClass()
+        {
+            Description ="What is Dotnet ?",
+            Directory="whatisdotnet"
+        },
+        new SearchPopupClass()
+        {
+            Description ="What is C# ?",
+            Directory="whatiscsharp"
+        },
+        new SearchPopupClass()
+        {
+            Description ="List Of Popular Interview Questions.",
+            Directory="Interview"
+        },
+
+    };
+    
+}
