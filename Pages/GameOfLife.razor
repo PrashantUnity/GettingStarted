@@ -1,0 +1,138 @@
+﻿@page "/GameOfLife"
+
+<PageTitle>Game Of Life</PageTitle>
+<MudExpansionPanel Class="mx-6">
+    <MudSlider @bind-Value="sleep" Min="1" Max="3000">Delay</MudSlider>
+    @* <MudSlider @bind-Value="x" Min="5" Max="64" @onchange="Reset">X-Length</MudSlider>
+    <MudSlider @bind-Value="y" Min="5" Max="64" @onchange="Reset">Y-Length</MudSlider> *@
+    <MudSlider @bind-Value="pixelSize" Min="5" Max="64">Pixel</MudSlider>
+</MudExpansionPanel>
+
+<MudButtonGroup Class="mx-6" Color="Color.Primary" Variant="Variant.Outlined">
+    <MudButton OnClick="Reset" Color="Color.Warning" Variant="Variant.Outlined">Reset</MudButton>
+    <MudButton OnClick="Simulate" Color="Color.Secondary" Variant="Variant.Outlined">Start</MudButton>
+</MudButtonGroup>
+
+<MudPaper Class="d-flex flex-wrap justify-center ma-6" Height="100" Elevation="0">
+    <MudPaper Class="d-flex flex-column justify-center flex-grow-1 gap-1" Elevation="0">
+        @foreach (var item in orignal)
+        {
+            <MudPaper Class="d-flex flex-row justify-center  flex-grow-1 gap-1" Elevation="0">
+                @foreach (var cell in item)
+                {
+                    if (cell == 1)
+                    {
+                        <MudPaper Width="@(pixelSize.ToString()+"px")" Height="@(pixelSize.ToString()+"px")" Class="mud-success" />
+                    }
+                    else
+                    {
+                        <MudPaper Width="@(pixelSize.ToString()+"px")" Height="@(pixelSize.ToString()+"px")" Class="mud-Background" />
+                    }
+                }
+
+            </MudPaper>
+        }
+
+    </MudPaper>
+</MudPaper>
+
+@code {
+    int x = 20;
+    int y = 20;
+    int pixelSize = 64;
+    List<List<int>> orignal = new();
+    int sleep = 100;
+    Random random = new Random();
+    bool gameOn = false;
+
+    protected override Task OnParametersSetAsync()
+    {
+        Reset();
+        return base.OnParametersSetAsync();
+    }
+    void Reset()
+    {
+        gameOn = false;
+        orignal = new();
+        for (int i = 0; i < x; i++)
+        {
+            var temp = new List<int>();
+            for (int j = 0; j < y; j++)
+            {
+                if (random.Next(1, 10) > 6)
+                {
+                    temp.Add(1);
+                }
+                else
+                {
+                    temp.Add(0);
+                }
+            }
+            orignal.Add(temp);
+        }
+        
+        StateHasChanged();
+    }
+
+
+    async Task Simulate()
+    {
+        gameOn = true;
+        while (gameOn)
+        {
+            var modified = new List<List<int>>();
+
+            for (int i = 0; i < x; i++)
+            {
+                var temp = new List<int>();
+                for (int j = 0; j < y; j++)
+                {
+                    var neigh = CalCulate(i, j);
+
+                    if (neigh >= 4 || neigh <= 1)
+                    {
+                        temp.Add(0);
+                    } 
+                    else if (orignal[i][j] == 0)
+                    {
+                        if (neigh == 3) temp.Add(1);
+                        else temp.Add(0);
+                    } 
+                    else if (neigh == 2 || neigh ==3)
+                    {
+                        temp.Add(1);
+                    }
+                    else
+                    {
+                        temp.Add(0);
+                    }
+                }
+                modified.Add(temp);
+            }
+            orignal = modified;
+            StateHasChanged();
+            await Task.Delay(sleep); 
+        }
+
+    }
+
+    int CalCulate(int m, int n)
+    {
+
+        var count = 0;
+
+        var ls = new List<(int a, int b)>(){(-1,-1),(-1,0),(-1,1),(0,1),(1,1),(1,0),(1,-1)};
+        foreach (var item in ls)
+        {
+            var xPos = m + item.a;
+            var yPos = n + item.b;
+
+            if (xPos >= 0 && yPos >= 0 && xPos < x && yPos < y && orignal[xPos][yPos] == 1)
+            {
+                count++;
+            }
+        }
+        return count;
+
+    }
+}
