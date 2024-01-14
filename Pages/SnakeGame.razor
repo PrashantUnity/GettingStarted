@@ -1,0 +1,312 @@
+﻿@page "/BuggySnakeGame"
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+@inject IDialogService Dialog
+
+<MudPaper Class="d-flex justify-center flex-grow-1 gap-4 ma-6" Elevation="0">
+
+    @if (!IsPlaying)
+    { 
+        <MudButton Variant="Variant.Filled"
+                   OnClick="StartGame"
+                   Color="Color.Tertiary">Start()</MudButton>
+     
+    }
+ 
+    <MudPaper Class="d-flex flex-column flex-grow-1 gap-1" Elevation="0">
+        <MudPaper Class="d-flex flex-row flex-grow-1 gap-1" Elevation="0">
+            <MudPaper Class="mud-theme-white" Width="64px" Height="64px" Elevation="0"> </MudPaper>
+            <MudPaper Class="mud-theme-primary" Width="64px" Height="64px" @onclick="()=>Calculate('U')">
+                <MudImage Src="images/Snake/up.png" Alt="Mony the dog" Elevation="25" Width="64" Height="64" Class="rounded-lg" />
+            </MudPaper>
+            <MudPaper Class="mud-theme-white" Width="64px" Height="64px" Elevation="0"></MudPaper> 
+        </MudPaper>
+        <MudPaper Class="d-flex flex-row flex-grow-1 gap-1" Elevation="0">
+            <MudPaper Class="mud-theme-primary" Width="64px" Height="64px" @onclick="()=>Calculate('L')">
+                <MudImage Src="images/Snake/left.png" Alt="Mony the dog" Elevation="25" Width="64" Height="64" Class="rounded-lg" />
+            </MudPaper>
+            <MudPaper Class="mud-theme-primary" Width="64px" Height="64px" @onclick="()=>Calculate('D')">
+                <MudImage Src="images/Snake/down.png" Alt="Mony the dog" Elevation="25" Width="64" Height="64" Class="rounded-lg" />
+            </MudPaper>
+            <MudPaper Class="mud-theme-primary" Width="64px" Height="64px" @onclick="()=>Calculate('R')">
+                <MudImage Src="images/Snake/right.png" Alt="Mony the dog" Elevation="25" Width="64" Height="64" Class="rounded-lg" />
+            </MudPaper>
+        </MudPaper>
+    </MudPaper>
+</MudPaper>
+
+<MudPaper Class="d-flex justify-center flex-grow-1 gap-4 ma-6" Elevation="0">
+    <MudPaper Class="d-flex flex-column flex-grow-1 gap-1" Elevation="0">
+        @foreach (var item in ls)
+        {
+            <MudPaper Class="d-flex flex-row flex-grow-1 gap-1" Elevation="0">
+                @foreach (var point in item)
+                {
+                    <MudPaper Style="@($"{point.NodeColor}")" Width="64px" Height="64px" />
+                }
+
+            </MudPaper>
+        }
+    </MudPaper>
+</MudPaper>
+
+
+
+<MudDialog @bind-IsVisible="GameOfover" Options="dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <strong style="text-decoration: line-through;">Friend</strong> Snake
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <p>Game Score  is @(snakeLength * 100 * 13.5)</p>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit" Class="px-10">Retry</MudButton>
+    </DialogActions>
+    </MudDialog>
+
+@code {
+
+    int n = 10;
+    int m = 25;
+    List<List<Node>> ls = new();
+    Node head;
+    Random random = new Random();
+    char PreviousKey = 'O';
+    int sleepTimer = 500;
+    int snakeLength = 0;
+
+    bool GameOfover = false;
+    bool IsPlaying = false;
+
+    #region Color Variable
+    string headColor = $"background:{Colors.Teal.Default};";
+    string bodyColor = $"background:{Colors.Teal.Lighten3};";
+    string foodColor = $"background:{Colors.LightBlue.Darken1};";
+    string playGroundColor = $"background:{Colors.LightBlue.Lighten5};";
+    #endregion
+
+    Queue<Node> snake = new Queue<Node>();
+
+    #region Dialog Related
+    private bool visible;
+    private void OpenDialog()
+    {
+        GameOfover = true;
+        IsPlaying = false;
+    }
+    void Submit()
+    {
+        GameOfover = false;
+        while (snake.Count > 1)
+        {
+            var tail = snake.Dequeue();
+            tail.NodeColor = playGroundColor;
+            tail.IsBody = false;
+            tail.IsfoodPosition = false;
+        }
+        snakeLength = snake.Count;
+    }
+
+    DialogOptions dialogOptions =
+    new()
+        {
+            FullWidth = true,
+            DisableBackdropClick = true
+        };
+
+    #endregion
+    protected override Task OnInitializedAsync()
+    {
+        ls = new();
+
+        for (var i = 0; i < n; i++)
+        {
+            var temp = new List<Node>();
+            for (var j = 0; j < m; j++)
+            {
+                temp.Add(new Node(i, j));
+            }
+            ls.Add(temp);
+        }
+        ls[5][5].IsBody = true;
+        head = ls[5][5];
+        head.NodeColor = headColor;
+
+        snake.Enqueue(head);
+        snakeLength++;
+
+        return base.OnInitializedAsync();
+    }
+
+    //food
+    async Task StartGame()
+    {
+        int prevX = -1;
+        int prevY = -1;
+        int x = random.Next(0, n), y = random.Next(0, n);
+
+        if (IsPlaying) return;
+
+        while (!GameOfover)
+        {
+            prevX = x;
+            prevY = y;
+
+            x = random.Next(0, n);
+            y = random.Next(0, m);
+
+            while (ls[x][y].IsBody)
+            {
+                x = random.Next(0, n);
+                y = random.Next(0, m);
+            }
+            ls[x][y].IsfoodPosition = true;
+            ls[x][y].NodeColor = foodColor; 
+
+            if (x != prevX && y != prevY && !ls[prevX][prevY].IsBody)
+            {
+                ls[prevX][prevY].IsfoodPosition = false;
+                ls[prevX][prevY].NodeColor = playGroundColor;
+            }
+            IsPlaying = true;
+            StateHasChanged();
+            await Task.Delay(6000);
+        }
+        IsPlaying = false;
+    }
+
+    async Task Calculate(char CurrentKey)
+    {
+        if (CurrentKey == PreviousKey) return;
+        if (CurrentKey == 'L' && PreviousKey == 'R') return;
+        if (CurrentKey == 'R' && PreviousKey == 'L') return;
+
+        if (CurrentKey == 'U' && PreviousKey == 'D') return;
+        if (CurrentKey == 'D' && PreviousKey == 'U') return;
+
+        PreviousKey = CurrentKey;
+
+
+        while (PreviousKey == 'L')
+        {
+            var y = head.Y - 1;
+            var x = head.X;
+            if (y < 0) y = m - 1;
+
+            if (ls[x][y].IsBody)
+            {
+                GameOfover = true;
+                break;
+            }
+
+            head.NodeColor = bodyColor; 
+
+            head = ls[x][y];
+
+
+            SnakeHelper(head);
+
+            StateHasChanged();
+            await Task.Delay(sleepTimer);
+        }
+
+        while (PreviousKey == 'R')
+        {
+            var y = head.Y + 1;
+            var x = head.X;
+
+            if (y >= m) y = 0;
+
+            if (ls[x][y].IsBody)
+            {
+                GameOfover = true;
+                break;
+            }
+
+            head.NodeColor = bodyColor;
+
+            head = ls[x][y];
+
+            SnakeHelper(head);
+
+            StateHasChanged();
+            await Task.Delay(sleepTimer);
+        }
+        while (PreviousKey == 'U')
+        {
+            var x = head.X - 1;
+            var y = head.Y;
+            if (x < 0) x = n - 1;
+
+
+            if (ls[x][y].IsBody)
+            {
+                GameOfover = true;
+                break;
+            }
+
+            head.NodeColor = bodyColor;
+            head = ls[x][y];
+
+            SnakeHelper(head);
+
+            StateHasChanged();
+            await Task.Delay(sleepTimer);
+        }
+        while (PreviousKey == 'D')
+        {
+            var x = head.X + 1;
+            var y = head.Y;
+            if (x >= n) x = 0;
+
+            if (ls[x][y].IsBody)
+            {
+                GameOfover = true;
+                break;
+            }
+
+            head.NodeColor = bodyColor;
+            head = ls[x][head.Y];
+
+            SnakeHelper(head);
+
+            StateHasChanged();
+            await Task.Delay(sleepTimer);
+        }
+        if (GameOfover) OpenDialog();
+
+    }
+    void SnakeHelper(Node head)
+    {
+        head.NodeColor = headColor;
+        head.IsBody = true;
+        snake.Enqueue(head);
+
+        if (head.IsfoodPosition) snakeLength++;
+
+        if (snakeLength < snake.Count)
+        {
+            var tail = snake.Dequeue();
+            tail.NodeColor = playGroundColor;
+            tail.IsBody = false;
+            tail.IsfoodPosition = false;
+        }
+    }
+    public class Node
+    {
+        public int X { get; set; } = 0;
+        public int Y { get; set; } = 0;
+        public bool IsBody = false;
+        public bool IsfoodPosition = false;
+        public string NodeColor = $"background:{Colors.LightBlue.Lighten5};";
+        public Node(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+        public Node Child { get; set; }
+    }
+}
