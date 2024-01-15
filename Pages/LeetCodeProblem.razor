@@ -1,0 +1,104 @@
+﻿@page "/Leetcode"
+
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject IJSRuntime jsRuntime
+
+<MudPaper Class="ma-6">
+
+    <MudGrid Spacing="2">
+        <MudItem xs="12" sm="6" md="4"><MudNumericField @bind-Value="MinValue" Label="Min Rating" Variant="Variant.Outlined" Step="100" /></MudItem>
+        <MudItem xs="12" sm="6" md="4"><MudNumericField @bind-Value="MaxValue" Label="Max Rating" Variant="Variant.Outlined" Step="100" /></MudItem>
+        <MudItem xs="12"><MudButton OnClick="FilterMe" Variant="Variant.Outlined" Color="Color.Secondary" FullWidth="true">Filter</MudButton> </MudItem>
+    </MudGrid>
+    <MudTable Items="@Elements" Hover="true" SortLabel="Sort By" Bordered="true" Striped="true">
+
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortBy="new Func<LeetcodeProblem, object>(x=>x.ID)">ID</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel Enabled="@enabled" SortBy="new Func<LeetcodeProblem, object>(x=>x.Rating)">Rating</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<LeetcodeProblem, object>(x=>x.Title)">Title</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<LeetcodeProblem, object>(x=>x.ContestSlug)">Contest</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<LeetcodeProblem, object>(x=>x.ProblemIndex)">Problem Index</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="ID">@context.ID</MudTd>
+                <MudTd DataLabel="Rating" @onclick="()=>{CallMe(context.TitleSlug);}">@context.Rating</MudTd>
+                <MudTd DataLabel="Title" @onclick="()=>{CallMe(context.TitleSlug);}">@context.Title</MudTd>
+                <MudTd DataLabel="Contest" @onclick="()=>{CallMe(context.TitleSlug);}">@context.ContestSlug</MudTd>
+                <MudTd DataLabel="Problem Index" @onclick="()=>{CallMe(context.TitleSlug);}">@context.ProblemIndex</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[] {  25,50,75, 100,200 }" />
+            </PagerContent>
+        </MudTable>
+
+    </MudPaper>
+    @code {
+    public class LeetcodeProblem
+    {
+        public Double Rating { get; set; }
+        public long ID { get; set; }
+        public string Title { get; set; }
+
+        public string TitleSlug { get; set; }
+
+        public string ContestSlug { get; set; }
+
+        public string ProblemIndex { get; set; }
+    }
+    private bool enabled = true;
+
+    private int MinValue = 100;
+    private int MaxValue = 4000;
+    private string TextValue;
+    IEnumerable<LeetcodeProblem> Elements = new List<LeetcodeProblem>();
+    IEnumerable<LeetcodeProblem> Original = new List<LeetcodeProblem>();
+
+    void FilterMe()
+    {
+        if (MinValue > MaxValue)
+        {
+            Elements = Original;
+            StateHasChanged();
+            return;
+        }
+        Elements = Original.Where(x => x.Rating > MinValue && x.Rating < MaxValue);
+        StateHasChanged();
+    }
+    void CallMe(string arg)
+    {
+        jsRuntime.InvokeAsync<object>("open", "https://leetcode.com/problems/" + arg, "_blank");
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await new HttpClient().GetStringAsync("https://raw.githubusercontent.com/zerotrac/leetcode_problem_rating/main/ratings.txt");
+
+        var ls = result.Split('\n').Select(x => x.Split('\t').ToList()).ToList();
+
+        var problems = new List<LeetcodeProblem>();
+
+        foreach (var line in ls)
+        {
+            try
+            {
+                var problem = new LeetcodeProblem()
+                    {
+                        Rating = Convert.ToDouble(line[0].Split('.')[0]),
+                        ID = Convert.ToInt64(line[1]),
+                        Title = line[2],
+                        TitleSlug = line[4],
+                        ContestSlug = string.Join(" ", line[5].Split('-')),
+                        ProblemIndex = line[6]
+                    };
+                Console.WriteLine(problem.TitleSlug);
+                problems.Add(problem);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Something Went Wrong");
+            }
+        }
+        Original = problems;
+        Elements = problems;
+    }
+}
