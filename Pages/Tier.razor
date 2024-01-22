@@ -1,0 +1,184 @@
+﻿@page "/Tier"
+
+<style>
+    .categoriesZone {
+        width: 104px;
+        height: 64px;
+        text-align: center;
+        line-height: 64px;
+        border: 1px solid black;
+        border-radius:6px;
+    }
+
+    .categoriesZoneOne {
+        width: 64px;
+        height: 64px;
+        text-align: center;
+        line-height: 64px; 
+        background-color: aqua;
+        border-radius: 6px;
+    }
+
+    .categoriesBox {   
+        height: 64px; 
+        border: 1px solid black;
+    }
+
+    dropping:hover {
+        background-color: greenyellow;
+    }
+
+</style>
+<MudPaper Class="mx-6">
+
+<MudDropContainer T="DropItem" 
+        Items="_items"
+        ItemsSelector="@((item,dropzone) => item.Identifier == dropzone)"
+        ItemDropped="ItemUpdated"
+        ApplyDropClassesOnDragStarted="true"
+        Class="d-flex flex-row flex-grow-1 gap-4">
+
+    <ChildContent> 
+        <MudGrid>
+            <MudItem xs="12">
+                <MudStack Class="my-3">
+                    @foreach (var item in CategoriesName)
+                    {
+                        <MudPaper Class="dropping">
+                            <MudDropZone T="DropItem"
+                                         Identifier="@item.Item1"
+                                         DraggingClass="mud-alert-text-info" 
+                                         ItemDraggingClass="mud-alert-text-info"
+                                         Class=" d-flex flex-row flex-grow-1 gap-4">
+                                <MudPaper Class="categoriesZone" Style="@item.Item2">
+                                    <MudText Typo="Typo.h3" Style="font-weight:bolder">
+                                        @item.Item1
+                                    </MudText> 
+                                </MudPaper>
+                            </MudDropZone>
+                        </MudPaper>
+
+
+                    }
+                </MudStack>
+            </MudItem>
+            <MudItem xs="12">
+                <MudPaper>
+                    <MudDropZone T="DropItem"
+                                 Identifier="Initial"
+                                 DraggingClass="mud-alert-text-success" ItemDraggingClass="mud-alert-text-success"
+                                 Class="d-flex flex-row flex-wrap gap-4">
+                        <div class="categoriesZoneOne">
+                            =>
+                        </div>
+                    </MudDropZone>
+                </MudPaper> 
+            </MudItem>
+        </MudGrid> 
+    </ChildContent>
+
+    <ItemRenderer>
+        <div 
+            style="width: 64px; height: 64px; padding:2px;">
+            <img src="@context.Name" style="max-width: 100%; max-height: 100%; height: auto; width: auto;">
+        </div>  
+    </ItemRenderer>
+</MudDropContainer>
+
+</MudPaper>
+@* <div class="d-flex">
+    <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
+        Configure Tier List
+    </MudButton> 
+</div> *@
+
+<MudDialog @bind-IsVisible="visible" Options="dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Edit rating
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <p>How awesome are inline dialogs?</p>
+        <MudRating @bind-SelectedValue="rating" Class="mt-3" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit" Class="px-10">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+    @code{ 
+
+    List<(string, string)> CategoriesName;
+
+    protected override Task OnInitializedAsync()
+    {
+        CategoriesName = new List<(string,string)>
+        {
+            ("God","background-color:orangered"),
+            ("S","background-color:lightsalmon"),
+            ("A","background-color:darkorange"),
+            ("B","background-color:sandybrown"),
+            ("C","background-color:lightskyblue"),
+            ("D","background-color:greenyellow"),
+            ("E","background-color:yellowgreen"), 
+            ("Bin","background-color:black")
+
+        };
+
+        return base.OnInitializedAsync();
+    }
+
+    private void ItemUpdated(MudItemDropInfo<DropItem> dropItem)
+    {
+        dropItem.Item.Identifier = dropItem.DropzoneIdentifier;
+    }
+
+    private List<DropItem> _items = new()
+    {
+        new DropItem(){ Name = "images/LanguageTier/c-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/cplusplus-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/csharp-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/dart-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/elixir-original-wordmark.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/fsharp-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/go-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/haskell-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/java-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/javascript-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/jquery-original-wordmark.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/julia-original-wordmark.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/lua-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/opengl-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/php-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/postgresql-original-wordmark.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/processing-original-wordmark.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/python-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/r-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/ruby-original-wordmark.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/ruby-original.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/scala-original-wordmark.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/swift-original-wordmark.svg", Identifier = "Initial" },
+        new DropItem(){ Name = "images/LanguageTier/typescript-original.svg", Identifier = "Initial" },
+    };
+
+    public class DropItem
+    {
+        public string Name { get; init; }
+        public string Identifier { get; set; }
+    }
+
+
+    private bool visible;
+    private int rating;
+    private void OpenDialog()
+    {
+        visible = true;
+    }
+    void Submit() 
+    {
+        visible = false;
+    }
+
+    private DialogOptions dialogOptions = new() { FullWidth = true };
+}
