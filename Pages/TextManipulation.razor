@@ -1,0 +1,297 @@
+﻿@page "/TextManipulation"
+
+ <style>
+
+    textarea {
+        border: 1px solid #999999;
+        width: 100%;
+        margin: 5px 0;
+        padding: 3px;
+    }
+
+    .textmap ul {
+        height: 70vh; 
+    }
+
+    .textmap ul {
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+ </style>
+
+ <MudPaper Class="ma-6 " Elevation="0"> 
+    <textarea @bind="@sampleText" cols="2" rows="10"></textarea>
+ </MudPaper>
+
+<MudPaper Class="d-flex gap-2 mx-6" Elevation="0" >
+    <MudPaper Class="textmap" Elevation="0" Width="150px">
+        <ul>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="RemoveWhiteSpace">RemoveWhiteSpace</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="UpperCase">UPPER CASE</MudButton>  
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="LowerCase">lower case</MudButton>  
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="AddPrefixToLines">- Add Prefix to lines</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="AddSuffixToLines">Add Suffix to lines -</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="AddLineBreaks">- Add Prefix and Suffix to all lines -</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="TitleCase" >Title Case</MudButton> 
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="PascalCase" >PascalCase</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="CamelCase" >camelCase</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="RemoveEmptyLines" >Remove Empty Lines</MudButton> 
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="RemoveLeadingSpaces">Remove Leading Spaces</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="RemoveTrailingSpaces">Remove Trailing Spaces</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="ReverseText" >rotareneG txeT esreveR</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="NumberEachLine" >1 Number Each Line</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="NumberEachLineZeroBased" >0 Number Each Line (Zero-based)</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="AddLineBreaks" >Add Line Breaks \n </MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="WordWrap" >Word-Wrap --^</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="RemoveLineBreaks" >Remove Line Breaks</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="TabsToSpaces" >Tabs to Spaces</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="SpacesToTabs" >Spaces to Tabs</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="ConcatenateText" >Concatenate+Text</MudButton> 
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="Base64Encode" >Base64 Encode</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="Base64Decode" >Base64 Decode</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="CountWords" >Count Words -> 2</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="CountLetters" >Count Letters -></MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="CountLetters" >Count Rows -- 1</MudButton>
+            <MudButton FullWidth="true" Color="Color.Primary" Style="text-transform:none" Variant="Variant.Outlined" OnClick="CountColumns" >Count Columns || 2</MudButton>  
+        </ul>
+    </MudPaper> 
+    <MudPaper Class="d-flex flex-column flex-grow-1 gap-4" Elevation="0">
+        <MudPaper  Width="100%" Height="100%">
+            <textarea  cols="2" rows="32" @bind="@Result" disabled></textarea>
+        </MudPaper> 
+    </MudPaper> 
+</MudPaper>
+
+@code{
+    string sampleText ="";
+    string Result = "";
+    void AddPrefixAndSuffixToAllLines()
+    {
+        var ls = sampleText.Split(new char[] { '\n' }).Select(x => x.Trim());
+        var lsResult = new List<string>();
+        Result = "";
+        string prefix = "I am Prefix";
+        foreach (var i in ls)
+        {
+            lsResult.Add($"{prefix} {i} {prefix}");
+        }
+        foreach (var i in lsResult)
+        {
+            Result += (i) + "\n";
+        }
+    }
+
+    void AddSuffixToLines()
+    {
+        var ls = sampleText.Split(new char[] { '\n' }).Select(x => x.Trim());
+        var lsResult = new List<string>();
+        string prefix = "I am Prefix";
+        Result = "";
+        foreach (var i in ls)
+        {
+            lsResult.Add($"{i} {prefix}");
+        }
+        foreach (var i in lsResult)
+        {
+            Result += (i) + "\n";
+        }
+
+    }
+    void AddPrefixToLines()
+    {
+        var ls = sampleText.Split(new char[] { '\n' }).Select(x => x.Trim());
+        var lsResult = new List<string>();
+        Result = "";
+        string prefix = "Ima Prefix";
+        foreach (var i in ls)
+        {
+            lsResult.Add($"{prefix} {i}");
+        }
+        foreach (var i in lsResult)
+        {
+            Result += (i) +"\n";
+        }
+
+    }
+    void TitleCase()
+    {
+        var ls = sampleText.Split('\n').Select(y => string.Join(" ", y.Split(' ').Select(x =>
+                string.Join("", x.Trim().ToCharArray().Select(x => x.ToString().ToUpper()).Take(1)) +
+                string.Join("", x.Trim().ToCharArray().Select(x => x.ToString().ToLower()).Skip(1)))));
+        Result = (string.Join("\n", ls));
+    } 
+
+    void PascalCase()
+    {
+        var ls = sampleText.Split('\n')
+                        .Select(y => 
+                            string.Join("",
+                            string.Join("", y.Split(' ').Take(1).Select(x => x.ToLower())) +
+                            string.Join("", y.Split(' ').Skip(1)
+                                    .Select(x =>
+                                        string.Join("", x.Trim().ToCharArray().Select(x => x.ToString().ToUpper()).Take(1)) +
+                                        string.Join("", x.Trim().ToCharArray().Select(x => x.ToString().ToLower()).Skip(1))))));
+        Result = (string.Join("\n", ls));
+    }
+    void CamelCase()
+    {
+        var ls = sampleText.Split('\n').Select(y => string.Join("", y.Split(' ').Select(x =>
+                string.Join("", x.Trim().ToCharArray().Select(x => x.ToString().ToUpper()).Take(1)) +
+                string.Join("", x.Trim().ToCharArray().Select(x => x.ToString().ToLower()).Skip(1)))));
+        Result =(string.Join("\n", ls));
+
+    }
+    void RemoveEmptyLines()
+    {
+        var ls = sampleText.Split('\n').Where(x => x.Trim().Length > 0);
+        Result =(string.Join("\n", ls));
+
+    }
+    void RemoveLeadingSpaces()
+    {
+        var ls = sampleText.Split('\n').Select(x => x.TrimStart());
+        Result =(string.Join("\n", ls));
+
+    }
+    void RemoveTrailingSpaces()
+    {
+        var ls = sampleText.Split('\n').Select(x => x.TrimEnd());
+
+        Result =(string.Join("\n", ls));
+    }
+    void ReverseText()
+    {
+        Result = (string.Join("", sampleText.Reverse()));
+    }
+    void NumberEachLine()
+    {
+        Result = "";
+        var ls = sampleText.Split(new char[] { '\n' }).Select(x => x.Trim());
+        var lsResult = new List<string>();
+        int j = 1;
+        foreach (var i in ls)
+        {
+            lsResult.Add($"{j++} {i}");
+        }
+        foreach (var i in lsResult)
+        {
+            Result +=(i) +"\n";
+        }
+
+    }
+    void NumberEachLineZeroBased()
+    {
+        var ls = sampleText.Split(new char[] { '\n' }).Select(x => x.Trim());
+        var lsResult = new List<string>();
+        int j = 0;
+        Result = "";
+        foreach (var i in ls)
+        {
+            lsResult.Add($"{j++} {i}");
+        }
+        foreach (var i in lsResult)
+        {
+            Result += (i) + "\n";
+        }
+
+    }
+    void AddLineBreaks()
+    {
+        int chunkSize = 18;
+        var ls = sampleText.Split(new char[] { ' ', '\n' }).Select(x => x.Trim()).Chunk(chunkSize);
+        Result = "";
+        foreach (var i in ls)
+        {
+            Result += (string.Join(' ', i)) + "\n";
+        }
+
+
+    }
+
+    void WordWrap()
+    {
+        int chunkSize = 18;
+        var ls = sampleText.Split(new char[] { ' ', '\n' }).Select(x => x.Trim()).Chunk(chunkSize);
+        Result = "";
+        foreach (var i in ls)
+        {
+            Result += (string.Join(' ', i)) +"\n";
+        }
+    }
+
+    void RemoveLineBreaks()
+    {
+        Result = (string.Join(' ', sampleText.Split('\n')));
+    }
+    void TabsToSpaces()
+    {
+        Result = (string.Join(' ', sampleText.Split("    ").Where(x => x.Length > 0).Select(x => x.Trim())));
+    }
+    void SpacesToTabs()
+    {
+        Result = (sampleText.Replace(" ", "  "));
+    }
+    void ConcatenateText()
+    {
+        string joinerString = " ";
+        Result = (string.Join(joinerString, sampleText.Split(' ').Where(x => x.Length > 0).Select(x => x.Trim())));
+    }
+    void Base64Encode()
+    {
+        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(sampleText);
+        Result = (System.Convert.ToBase64String(plainTextBytes));
+    }
+    void Base64Decode()
+    {
+        try
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(sampleText);
+            Result = (System.Text.Encoding.UTF8.GetString(base64EncodedBytes));
+        }
+        catch (Exception ex)
+        {
+            Result = (ex.Message);
+        }
+    }
+    void CountWords()
+    {
+        Result = string.Join(' ', sampleText.Split(' ').Select(x => x.Trim()).Where(x => x.Length > 0)).Count().ToString();
+    }
+    void CountLetters()
+    {
+        var dict = new Dictionary<char, int>();
+        foreach (var i in sampleText)
+        {
+            dict.TryAdd(i, 0);
+            dict[i]++;
+        }
+        Result = "";
+        foreach (var i in dict)
+        {
+            Result += $"{i.Key.ToString()} : {i.Value} \n";
+        }
+    }
+    void CountRows()
+    {
+        Result = sampleText.Split('\n').Count().ToString();
+    }
+    void CountColumns()
+    {
+        Result = "Colums Count In Each Row" + "\n" + string.Join(' ', sampleText.Split('\n').Select(x => x.Split(' ').Count()))
+        + "\n" + "MaxColums Count" + sampleText.Split('\n').Select(x => x.Split(' ').Count()).Max();
+    }
+    void LowerCase()
+    {
+        Result = string.Join(' ', sampleText.Split(' ').Select(x => x.ToLower())); 
+    }
+    void RemoveWhiteSpace()
+    {
+        Result = string.Join(' ', sampleText.Split(' ').Select(x => x.Trim())); 
+    }
+    void UpperCase()
+    {
+        Result = string.Join(' ', sampleText.Split(' ').Select(x => x.ToUpper())); 
+    }
+
+}
+
