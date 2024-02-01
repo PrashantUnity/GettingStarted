@@ -1,0 +1,126 @@
+﻿@page "/BoderRadius"
+@using MudBlazor.Utilities 
+<MudPaper Class="d-flex flex-column flex-grow-1 gap-4 ma-6" Elevation="0">  
+    <MudPaper Class="d-flex flex-row flex-grow-1 gap-4" Elevation="0">
+        <MudPaper Width="30%" Elevation="0">
+            <MudStack Justify="Justify.Center">
+                <MudPaper Class="pa-3">
+                    <MudText> Boder Radius</MudText>
+                    <MudSlider @bind-Value="@boderRadius" Min="0" Max="100" @onchange="SingleFourSide" />
+                </MudPaper>
+                <MudPaper Class="pa-3">
+                    <MudText> Boder Width</MudText>
+                    <MudSlider @bind-Value="@boderWidth" Min="0" Max="100" />
+                </MudPaper>
+                <MudPaper Class="pa-3">
+                    <MudText> Top left border</MudText>
+                    <MudSlider @bind-Value="@topLeftBorder" Min="0" Max="100" @onchange="AllFourSide" />
+                </MudPaper>
+                <MudPaper Class="pa-3">
+                    <MudText> Top right border</MudText>
+                    <MudSlider @bind-Value="@topRightBorder" Min="0" Max="100" @onchange="AllFourSide" />
+                </MudPaper>
+                <MudPaper Class="pa-3">
+                    <MudText> Bottom left border</MudText>
+                    <MudSlider @bind-Value="@bottomLeftBorder" Min="0" Max="100" @onchange="AllFourSide" />
+                </MudPaper>
+                <MudPaper Class="pa-3">
+                    <MudText> Bottom right border</MudText>
+                    <MudSlider @bind-Value="@bottomRightBorder" Min="0" Max="100" @onchange="AllFourSide" />
+                </MudPaper>
+                <MudPaper Class="pa-3">
+                    <MudSelect T="string" @bind-Value="@boderStyleValue" ToStringFunc="@converter" Label="Boder Style" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable>
+                        @foreach (var item in boderStyle)
+                        {
+                            <MudSelectItem Value="item" />
+                        }
+                    </MudSelect>
+                </MudPaper>
+
+
+            </MudStack>
+        </MudPaper>
+        <MudPaper Width="40%" Class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
+            <MudPaper Class="pa-3">
+                <MudColorPicker @bind-Value="_pickerColor" DisableToolbar="false" DisableAlpha="false" DisableColorField="false" DisablePreview="false" DisableSliders="false" DisableInputs="false" DisableModeSwitch="false" ColorPickerMode="ColorPickerMode" PickerVariant="PickerVariant.Static" />
+            </MudPaper>
+        </MudPaper>
+        <MudPaper Class="d-flex align-content-center justify-center flex-column flex-grow-1 gap-4" Width="30%" Elevation="0">
+            @if (singleBoder)
+            {   
+                <MudPaper Class="pa-3">
+                    <MudText>
+                        @($"border-radius:{boderRadius}px;")
+                    </MudText>
+                    <MudText>
+                        @($"border:{boderWidth}px {boderStyleValue} {_pickerColor.Value};")
+                    </MudText>
+                </MudPaper>
+                <MudPaper Class="pa-16 ma-2" Elevation="3"
+                          Style="@($"border-radius:{boderRadius}px; border:{boderWidth}px {boderStyleValue} {_pickerColor.Value};")" />
+
+                
+                
+                
+            }
+            else
+            {
+                <MudPaper Class="pa-3">
+                    <MudText>
+                        @($"border-radius:{topLeftBorder}px {topRightBorder}px {bottomRightBorder}px {bottomLeftBorder}px;")
+                    </MudText>
+                    <MudText>
+                        @($"border:{boderWidth}px {boderStyleValue} {_pickerColor.Value};")
+                    </MudText>
+                </MudPaper>
+                <MudPaper Class="pa-6 ma-2" Elevation="3"
+                          Style="@($"border-radius:{topLeftBorder}px {topRightBorder}px {bottomRightBorder}px {bottomLeftBorder}px; border:{boderWidth}px {boderStyleValue} {_pickerColor.Value};")" />
+                   
+            }
+        </MudPaper>
+    </MudPaper>
+    
+    
+</MudPaper>
+
+@code {
+    bool singleBoder = true;
+    double boderRadius = 42;
+    double boderWidth = 42;
+    double border = 58;
+    double topLeftBorder = 73;
+    double topRightBorder = 79;
+    double bottomLeftBorder = 56;
+    double bottomRightBorder = 58;
+    string boderStyleValue = "groove";
+    List<string> boderStyle = new List<string>
+    {
+        "dotted",
+        "dashed",
+        "solid",
+        "double",
+        "groove",
+        "ridge",
+        "inset",
+        "outset",
+        "hidden",
+        "none"
+    };
+
+    public ColorPickerMode ColorPickerMode { get; set; }
+
+    MudColor _pickerColor = (new MudTheme()).Palette.Success;
+
+    void AllFourSide()
+    {
+        singleBoder = false;
+    }
+    void SingleFourSide()
+    {
+        singleBoder = true;
+    }
+    Func<string, string> converter = p => p;
+
+     
+}
+

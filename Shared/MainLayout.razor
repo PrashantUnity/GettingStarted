@@ -10,7 +10,12 @@
         <MudSpacer /> 
         <MudPaper Elevation="0" Class="mx-6">
             <div class="InputContainer">
-                <input type="text" name="text" @bind-value="_normalText" class="input" id="input" placeholder="Search">
+                <input type="text" 
+                    name="text" 
+                    @bind-value="_normalText" 
+                    class="input" id="input" 
+                    placeholder="Search"
+                       @onclick="SearchMe">
 
                 <label for="input" class="labelforsearch">
 
