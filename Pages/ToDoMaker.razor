@@ -1,0 +1,181 @@
+﻿@page "/ToDoList"
+@using System.Text.Json
+@inject IJSRuntime jsRuntime
+
+<PageTitle>ToDo</PageTitle>
+<MudGrid>
+    <MudItem xs="12">
+        <MudPaper Style="background-color:transparent" Height="@positionGap" Elevation="0" />
+    </MudItem>
+    <MudItem xs="1" Class="d-flex align-center justify-center">
+        <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Success" OnClick="Add" />
+    </MudItem>
+    <MudItem xs="11">
+        <MudPaper Class="d-flex align-center justify-center pa-2" Elevation="0">
+            <MudTextField Label="Enter Task Here"
+                          @bind-Value="str"
+                          @onkeypress="OnKeyPress"
+                          AutoFocus="true"
+                          DisableUnderLine="true"
+                          Variant="Variant.Outlined" />
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12">
+        <MudPaper Style="background-color:transparent" Height="30px"  Elevation="0"/>
+    </MudItem>
+    @if (ls.Count > 0)
+    {
+        @foreach (var item in ls)
+        {
+            <MudItem xs="1" Class="d-flex align-center justify-center">
+                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                               Color="Color.Secondary" OnClick="()=>DeleteItem(item)"></MudIconButton>
+                @* <MudPaper Class="d-flex align-center justify-center mud-width-full pa-2"
+        Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark};")"
+        Width="128px" Elevation="1">
+
+        <MudButton Size="Size.Small" Color="Color.Secondary" OnClick="()=>DeleteItem(item)">Delete</MudButton>
+        </MudPaper> *@
+            </MudItem>
+            <MudItem xs="11">
+                <MudPaper Class="d-flex align-center  mud-width-full pa-2"
+                          Elevation="1"
+                          Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark};")"
+                          Height="60px"
+                          @onclick="()=>CheckBoxChanged(item)">
+                    @if (item.IsCompleted)
+                    {
+                        <strike>
+                            <MudText>
+                                @item.ItemContent
+                            </MudText>
+                        </strike>
+                    }
+                    else
+                    {
+                        <MudText>
+                            @item.ItemContent
+                        </MudText>
+                    }
+
+                </MudPaper>
+            </MudItem>
+            @* <MudItem>
+    <MudPaper Class="d-flex align-center justify-center mud-width-full pa-2"
+    Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark};")"
+    Width="64px" Elevation="1">
+
+    <MudCheckBox Checked="@item.IsCompleted" @onclick="()=>CheckBoxChanged(item)" />
+    </MudPaper>
+
+    </MudItem> *@
+
+        }
+    }
+</MudGrid>
+
+@code
+{
+    string positionGap = "300px";
+    private MudTheme Theme = new MudTheme();
+    List<ToDo> ls = new List<ToDo>();
+    string str = "";
+    int id = 0;
+    
+    void Add()
+    {
+
+        if (str.Length > 0)
+        {
+            var toDo = new ToDo
+                {
+                    Id = id++,
+                    ItemContent = str
+                };
+            ls.Add(toDo);
+            positionGap = GapCalculator() + "px";
+        }
+        str = string.Empty;
+        StateHasChanged();
+    }
+    void CheckBoxChanged(ToDo e)
+    {
+        try
+        {
+            var data = ls.Find(x => x.Id == e.Id);
+            if (data != null)
+            {
+                data.IsCompleted = !data.IsCompleted;
+            }
+            StateHasChanged();
+        }
+        catch (Exception)
+        {
+
+            Console.WriteLine("Some Error While Changing the event");
+        } 
+
+    }
+    void DeleteItem(ToDo delete)
+    {
+        var item = ls.Find(x => x.Id == delete.Id);
+        if (item != null)
+        {
+            ls.Remove(item);
+            positionGap = GapCalculator() + "px";
+        }
+        StateHasChanged();
+    }
+    int GapCalculator()=> (300- 60 * Math.Min( 5 , ls.Count)); 
+    public class ToDo
+    {
+        public int Id { get; set; }
+        public string ItemContent { get; set; }
+        public bool IsCompleted { get; set; } = false;
+    } 
+    
+    #region DataBase Stuff
+    string storedData = "";
+    string StoredKey = "ToDoDataBase";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            storedData = await GetItem();
+            if (!string.IsNullOrEmpty(storedData))
+            {
+                ls = JsonSerializer.Deserialize<List<ToDo>>(storedData) ?? new List<ToDo>();
+            }
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine(ex.Message);
+        }
+        //return base.OnInitializedAsync();
+    }
+
+    public async Task<string> GetItem()
+    {
+        return await jsRuntime.InvokeAsync<string>("localStorage.getItem", StoredKey);
+    }
+    public async Task Update()
+    {
+        await jsRuntime.InvokeVoidAsync("localStorage.setItem", StoredKey, storedData);
+    }
+    public async Task AddItem()
+    {
+        storedData = JsonSerializer.Serialize<List<ToDo>>(ls);
+        await jsRuntime.InvokeVoidAsync("localStorage.addItem", StoredKey, storedData);
+    }
+    private async Task OnKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            Add();
+        }
+    }
+    #endregion
+}

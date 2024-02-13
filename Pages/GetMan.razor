@@ -1,0 +1,245 @@
+﻿@page "/GETMAN"
+@using System.Text
+@using System.Text.Json
+
+
+<MudStack Row="true">
+    <MudButton OnClick="Testing">
+        Test
+    </MudButton>
+    <MudButton OnClick="NewData">
+        New
+    </MudButton>
+</MudStack>
+
+<MudStack Row="true">
+    <MudSelect @bind-Value="postType"
+               Label="Method"
+               Placeholder="Select Type"
+               AdornmentIcon="@Icons.Material.Filled.PostAdd"
+               AdornmentColor="Color.Tertiary">
+        <MudSelectItem Value="@("GET")">GET</MudSelectItem>
+        <MudSelectItem Value="@("POST")">POST</MudSelectItem>
+    </MudSelect>
+    <MudTextField @bind-Value="apiUrl" Label="Api Url" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+</MudStack>
+
+@if (string.IsNullOrEmpty(responseBody))
+{
+
+
+    <MudText>Query String</MudText>
+    <MudStack>
+        @if (queryStringsList.Count > 0)
+        {
+            @foreach (var item in queryStringsList)
+            {
+                <MudStack Row="true">
+                    <MudTextField @bind-Value="@item.Name"
+                                  Label="Query String" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+                    <MudTextField @bind-Value="@item.Value" Label="Value" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                   Color="Color.Secondary"
+                                   aria-label="Delete"
+                                   OnClick="()=>DeleteQueryString(item)" />
+                </MudStack>
+            }
+        }
+
+
+        <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Success" aria-label="Add" OnClick="AddQueryString"></MudIconButton>
+    </MudStack>
+
+    <MudText>Query Header</MudText>
+    <MudStack>
+        @if (queryHeaderList.Count > 0)
+        {
+            @foreach (var item in queryHeaderList)
+            {
+                <MudStack Row="true">
+                    <MudTextField @bind-Value="@item.Name"
+                                  Label="Query Header"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+
+                    <MudTextField @bind-Value="@item.Value"
+                                  Label="Value"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                   Color="Color.Secondary"
+                                   aria-label="Delete"
+                                   OnClick="()=>DeleteQueryHeader(item)" />
+                </MudStack>
+            }
+        }
+        <MudIconButton Icon="@Icons.Material.Filled.Add"
+                       Color="Color.Success"
+                       aria-label="Add"
+                       OnClick="AddQueryHeader">
+
+        </MudIconButton>
+    </MudStack>
+}
+else
+{
+    <MudPaper>
+        <MudText>
+            @responseBody
+        </MudText>
+    </MudPaper>
+}
+
+@code {
+    string postType = "";
+    string apiUrl = "";
+    int queryid = 0;
+    int headerid = 0;
+    string responseBody;
+
+    List<QueryString> queryStringsList = new();
+    List<Header> queryHeaderList = new();
+
+    async Task Testing()
+    {
+        try
+        {
+
+
+            if (apiUrl != "")
+            {
+                using (HttpClient httpClient = new())
+                {
+                    //https://reqres.in/api/users?page=2
+                    
+
+                    foreach (var item in queryHeaderList)
+                    {
+                        if (!string.IsNullOrEmpty(item.Name) && string.IsNullOrEmpty(item.Value))
+                        {
+                            httpClient.DefaultRequestHeaders.Add(item.Name, item.Value);
+                        }
+                    }
+
+                    if (postType == "GET")
+                    {
+                        httpClient.BaseAddress = new Uri(apiUrl);
+                        var query = new StringBuilder();
+                        query.Append("?");
+                        foreach (var item in queryStringsList)
+                        {
+                            if (!string.IsNullOrEmpty(item.Name) && string.IsNullOrEmpty(item.Value))
+                            {
+                                query.Append($"{item.Name}={item.Value}&");
+                            }
+                        }
+                        var response = await httpClient.GetAsync(query.ToString());
+                        response.EnsureSuccessStatusCode();
+                        responseBody = await response.Content.ReadAsStringAsync();
+                    }
+                    else if (postType == "POST")
+                    {
+                        string _proxyUrl = "https://cors-anywhere.herokuapp.com/"; 
+                        string proxiedUrl = _proxyUrl + apiUrl;
+                        httpClient.BaseAddress = new Uri(proxiedUrl);
+                        responseBody = "in Development";
+                        //return;
+
+                        var query = new StringBuilder();
+                        query.Append("{");
+                        for (var item = 0; item < queryStringsList.Count; item++)
+                        {
+                            if (!string.IsNullOrEmpty(queryStringsList[item].Name) && string.IsNullOrEmpty(queryStringsList[item].Value))
+                            {
+
+                                query.Append($"\"{queryStringsList[item].Name}\":\"{queryStringsList[item].Value}\"");
+                                if (item != queryStringsList.Count - 1)
+                                {
+                                    query.Append(",");
+                                }
+                            }
+                        }
+                        query.Append("}");
+                        using StringContent jsonContent = new(
+                                JsonSerializer.Serialize(query.ToString()),
+                                Encoding.UTF8,
+                                "application/json");
+                        var response = await httpClient.PostAsync("", jsonContent);
+                        response.EnsureSuccessStatusCode();
+                        responseBody = await response.Content.ReadAsStringAsync();
+                    }
+
+                    StateHasChanged();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+
+            responseBody = ex.Message;
+        }
+
+    }
+    void NewData()
+    {
+        queryStringsList = new();
+        queryHeaderList = new();
+        responseBody = "";
+        StateHasChanged();
+    }
+    void DeleteQueryString(QueryString query)
+    {
+        var temp = queryStringsList.Find(x => x.Id == query.Id);
+
+        if (temp != null)
+        {
+            if (queryStringsList.Remove(temp))
+                Console.WriteLine(temp.Id);
+
+        }
+        StateHasChanged();
+    }
+    void DeleteQueryHeader(Header query)
+    {
+        var temp = queryHeaderList.Find(x => x.Id == query.Id);
+
+        if (temp != null)
+        {
+            if (queryHeaderList.Remove(temp))
+                Console.WriteLine(temp.Id);
+        }
+        StateHasChanged();
+    }
+    void AddQueryString()
+    {
+        var temp = new QueryString()
+            {
+                Id = queryid++
+            };
+        queryStringsList.Add(temp);
+        StateHasChanged();
+    }
+    void AddQueryHeader()
+    {
+        var temp = new Header()
+            {
+                Id = headerid++
+            };
+        queryHeaderList.Add(temp);
+        StateHasChanged();
+    }
+    public class QueryString
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
+        public int Id { get; set; }
+    }
+
+    public class Header
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
+        public int Id { get; set; }
+    }
+
+}

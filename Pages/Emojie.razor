@@ -1,0 +1,52 @@
+﻿@page "/Emogy"
+
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+@if (emojies != null)
+{
+    <MudPaper Class="d-flex flex-column flex-grow-1 gap-4 ma-4" Elevation="0">
+         
+        <Virtualize Items="emojies" Context="item">
+            <MudText>@item.Key</MudText>
+            <MudPaper Class="d-flex flex-wrap gap-4" Elevation="1">
+                @foreach (var emogy in item)
+                { 
+                    <MudText Typo="Typo.h4" @onclick="()=>Copy(emogy.Glyph)">@emogy.Glyph</MudText>
+                }
+            </MudPaper> 
+        </Virtualize> 
+    </MudPaper> 
+}
+@code {
+    private List<Emojies>? forecasts;
+
+    List<IGrouping<string, Emojies>> emojies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetFromJsonAsync<List<Emojies>>("js/Emoji.json");
+        if (forecasts != null)
+        {
+            emojies = forecasts.GroupBy(x => x.Group).ToList();
+        }
+    }
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<List<Root>>(myJsonResponse);
+
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; } 
+
+    private async Task Copy(string CodeText)
+    {
+        Snackbar.Add($"Copied {CodeText}", Severity.Success);
+        await JSRuntime.InvokeVoidAsync("copyCode", CodeText);
+    }
+    public class Emojies
+    {
+        public string Glyph { get; set; }
+
+        public string Group { get; set; }
+
+        public string Unicode { get; set; }
+    }
+}
