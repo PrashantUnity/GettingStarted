@@ -84,7 +84,7 @@
     </MudPaper>
 </MudPaper> 
 
-<MudDialog @bind-IsVisible="visible" Options="dialogOptions"> 
+<MudDialog @bind-IsVisible="visible" Options="dialogOptions">
     <DialogContent>
         @if(metaList.Count>0)
         {
@@ -94,14 +94,15 @@
                     {
                         <MudText>@item</MudText>
                     }
-                    @* @(string.Join("\n",metaList)) *@
+                    @* @(string.Join("\r\n",metaList)) *@
                 </MudContainer>
             </MudPaper>
             
         }
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="Submit" Class="px-10">Close</MudButton>
+        <MudButton Variant="Variant.Filled" 
+            Color="Color.Primary" FullWidth="true" OnClick="Submit" Class="px-10">Copy</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -133,7 +134,11 @@
     List<string> metaList = new();
     private bool visible; 
     private void OpenDialog() => visible = true;
-    void Submit() => visible = false;
+    void Submit()
+    {
+        visible = false;
+        Copy();
+    } 
 
     private DialogOptions dialogOptions = new() { FullWidth = true };
     void Generate()
@@ -225,13 +230,27 @@
         } 
         #endregion
         metaList.Add(" ");
-        metaList.Add($"<meta name=\"generator\" content=\"CodeFryDev.com\">"); 
+        metaList.Add($"<meta name=\"generator\" content=\"CodeFryDev.com\">");
+
+        CodeText = string.Join("\r\n", metaList);
         OpenDialog();
 
     }
     public bool CheckForValidity(string str) 
     => (!string.IsNullOrWhiteSpace(str)) && str.Length > 0;
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+    [Inject]
+    public ISnackbar Snackbar { get; set; }
 
+    [Parameter, EditorRequired]
+    public string CodeText { get; set; }
+
+    private async Task Copy()
+    {
+        Snackbar.Add($"Copied {CodeText}", Severity.Success);
+        await JSRuntime.InvokeVoidAsync("copyCode", CodeText);
+    }
 }
 
 
