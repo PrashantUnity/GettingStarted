@@ -1,0 +1,238 @@
+﻿@page "/MetaTag"
+@using System.Text
+
+<style>
+    .containerMetatag {
+        display: flex; /* This sets up flexbox layout */
+        justify-content: center; /* This centers items horizontally */
+        align-items: center; /* This centers items vertically */
+        /* Optionally, add more styles as needed */
+        width: 60%; /*  Adjust width as needed */
+        /*  height: 100vh; Adjust height as needed */
+    }
+</style> 
+    <MudPaper Class="d-flex justify-center align-center flex-grow-1 gap-4 ma-3 pa-3" >
+
+    <MudPaper Class="d-flex flex-column flex-grow-1 gap-4" Elevation="0">
+         
+        <MudTextField @bind-Value="Title" Label="Title" Variant="Variant.Outlined"></MudTextField>
+        <MudTextField @bind-Value="imageUrl" Label="Thumbnail Image Url" Variant="Variant.Outlined"></MudTextField>
+        <MudTextField @bind-Value="websiteUrl" Label="Website Url" Variant="Variant.Outlined"></MudTextField>
+         
+        <MudTextField @bind-Value="description" Label="Description :" Variant="Variant.Outlined"></MudTextField>
+         
+        <MudTextField @bind-Value="keywords" Label="Keywords" Variant="Variant.Outlined"></MudTextField>
+
+         
+        <MudSelect T="string" @bind-Value="robots" Label="Robots" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+            <MudSelectItem T="string" Value="@($"index, follow")">Index, Follow</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"index, nofollow")">Index, Nofollow</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"noindex, follow")">Noindex, Follow</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"noindex, nofollow")">Noindex, Nofollow</MudSelectItem>
+        </MudSelect>
+
+         
+        <MudTextField @bind-Value="copyright" Label="Copyright:" Variant="Variant.Outlined"></MudTextField>
+ 
+        <MudSelect T="string" @bind-Value="language" Label="Language" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+            <MudSelectItem T="string" Value="@($"EN")">English</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"EN-GB")">English - UK</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"EN-US")">English - US</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"ZH")">Chinese</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"NL")">Dutch</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"FI")">Finnish</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"FR")">French</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"DE")">German</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"IW")">Hebrew</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"HI")">Hindi</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"IT")">Italian</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"JA")">Japanese</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"KO")">Korean</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"NO")">Norwegian</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"PL")">Polish</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"PT")">Portuguese</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"RO")">Romanian</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"RU")">Russian</MudSelectItem>
+            <MudSelectItem T="string" Value="@($"ES")">Spanish</MudSelectItem>
+        </MudSelect>
+         
+
+        <MudText>Optional Meta Tags</MudText>
+        <MudExpansionPanels>
+            <MudExpansionPanel Text="Additional"> 
+                <MudTextField @bind-Value="author" Label="Author" Variant="Variant.Outlined"></MudTextField>
+                 
+                <MudTextField @bind-Value="creationdate" Label="Creation Date" Variant="Variant.Outlined"></MudTextField>
+
+                 
+                <MudSelect T="string" @bind-Value="distribution" Label="Distribution" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+                    <MudSelectItem T="string" Value="@($"global")" />
+                    <MudSelectItem T="string" Value="@($"local")" />
+                </MudSelect>
+                 
+                <MudSelect T="string" Label="Rating" @bind-Value="rating" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+                    <MudSelectItem T="string" Value="@($"general")" />
+                    <MudSelectItem T="string" Value="@($"kids")" />
+                    <MudSelectItem T="string" Value="@($"mature")" />
+                    <MudSelectItem T="string" Value="@($"restricted")" />
+                </MudSelect>
+
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Generate" FullWidth="true">Generate Meta Tags</MudButton>
+    </MudPaper>
+</MudPaper> 
+
+<MudDialog @bind-IsVisible="visible" Options="dialogOptions"> 
+    <DialogContent>
+        @if(metaList.Count>0)
+        {
+            <MudPaper Class="d-flex flex-column flex-grow-1 gap-4" Elevation="0">
+                 <MudContainer Style="max-height: 300px; overflow-y: scroll">
+                    @foreach (var item in metaList)
+                    {
+                        <MudText>@item</MudText>
+                    }
+                    @* @(string.Join("\n",metaList)) *@
+                </MudContainer>
+            </MudPaper>
+            
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" OnClick="Submit" Class="px-10">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+
+    #region Variables
+    string Title = string.Empty;
+
+    string description = string.Empty;
+
+    string keywords = string.Empty;
+
+    string robots = string.Empty;
+
+    string copyright = string.Empty;
+    string language = string.Empty;
+    string author = string.Empty;
+    string creationdate = string.Empty;
+    string distribution = string.Empty;
+    string rating = string.Empty;
+    string websiteUrl = string.Empty;
+    string imageUrl = string.Empty;
+    #endregion
+
+
+
+    string metaTags = string.Empty;
+    List<string> metaList = new();
+    private bool visible; 
+    private void OpenDialog() => visible = true;
+    void Submit() => visible = false;
+
+    private DialogOptions dialogOptions = new() { FullWidth = true };
+    void Generate()
+    {
+        metaList = new();
+
+        #region Nomal Gindigi
+
+        metaList.Add("<!-- Primary Meta Tags -->");
+        metaList.Add($"<title>{Title}</title>");
+        if(CheckForValidity(Title))
+        { 
+            metaList.Add($"<meta name=\"title\" content=\"{Title}\" />");
+        }
+        if (CheckForValidity(description))
+        {
+            metaList.Add($"<meta name=\"description\" content=\"{description}\" />");
+        }
+
+        metaList.Add(" ");
+        if (CheckForValidity(keywords))
+        {
+            metaList.Add($"<meta name=\"keywords\" content=\"{keywords}\" />");
+        }
+        if (CheckForValidity(robots))
+        {
+            metaList.Add($"<meta name=\"robots\" content=\"{robots}\" />");
+        }
+        if (CheckForValidity(robots))
+        {
+            metaList.Add($"<meta name=\"copyright\" content=\"{copyright}\" />");
+        }
+
+        if (CheckForValidity(language))
+        {
+            metaList.Add($"<meta name=\"language\" content=\"{language}\" />");
+        }
+        if (CheckForValidity(distribution))
+        {
+            metaList.Add($"<meta name=\"distribution\" content=\"{distribution}\" />");
+        }
+        #endregion
+
+        metaList.Add(" ");
+        #region Chappri Jindigi
+
+        metaList.Add("<!-- Open Graph / Facebook -->");  
+        metaList.Add($"<meta property=\"og:type\" content=\"website\" />"); 
+
+        if (CheckForValidity(websiteUrl))
+        {
+            metaList.Add($"<meta property=\"og:url\" content=\"{websiteUrl}\" />");
+        }
+
+        if (CheckForValidity(Title))
+        {
+            metaList.Add($"<meta property=\"og:title\" content=\"{Title}\" />");
+        }
+        if (CheckForValidity(description))
+        {
+            metaList.Add($"<meta name=\"og:description\" content=\"{description}\" />");
+        }
+        if (CheckForValidity(imageUrl))
+        {
+            metaList.Add($"<meta name=\"og:image\" content=\"{imageUrl}\" />");
+        }
+
+        #endregion
+        metaList.Add(" ");
+        #region Pelon Jindigi
+        metaList.Add("<!-- Twitter -->");
+        metaList.Add("<meta property=\"twitter: card\" content=\"summary_large_image\" />");
+        if (CheckForValidity(websiteUrl))
+        {
+            metaList.Add($"<meta property=\"twitter:url\" content=\"{websiteUrl}\" />");
+        }
+
+        if (CheckForValidity(Title))
+        {
+            metaList.Add($"<meta property=\"twitter:title\" content=\"{Title}\" />");
+        }
+        if (CheckForValidity(description))
+        {
+            metaList.Add($"<meta name=\"twitter:description\" content=\"{description}\" />");
+        }
+        if (CheckForValidity(imageUrl))
+        {
+            metaList.Add($"<meta name=\"twitter:image\" content=\"{imageUrl}\" />");
+        } 
+        #endregion
+        metaList.Add(" ");
+        metaList.Add($"<meta name=\"generator\" content=\"CodeFryDev.com\">"); 
+        OpenDialog();
+
+    }
+    public bool CheckForValidity(string str) 
+    => (!string.IsNullOrWhiteSpace(str)) && str.Length > 0;
+
+}
+
+
+<Giscus />
