@@ -1,0 +1,56 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-go">package main
+
+import (
+    "fmt"
+    "math"
+)
+
+// Define an interface named IShape
+type IShape interface {
+    // Method to calculate area
+    CalculateArea() float64
+
+    // Method to get the shape's name
+    Name() string
+}
+
+// Define a struct named Circle implementing the IShape interface
+type Circle struct {
+    Radius float64
+}
+
+// Implement the CalculateArea method for the Circle struct
+func (c Circle) CalculateArea() float64 {
+    return math.Pi * c.Radius * c.Radius
+}
+
+// Implement the Name method for the Circle struct
+func (c Circle) Name() string {
+    return "Circle"
+}
+
+func main() {
+    // Using the implemented interface
+    circle := Circle{Radius: 5}
+    fmt.Printf("Area of the %s is: %.2f\n", circle.Name(), circle.CalculateArea())
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

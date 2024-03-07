@@ -1,0 +1,101 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-go">package main
+
+import "fmt"
+
+// Return Type
+func Add(a, b int) int {
+    return a + b
+}
+
+// Parameters
+func Greet(name string) {
+    fmt.Println("Hello, " + name)
+}
+
+func GreetWithDefault(name string) {
+    if name == "" {
+        name = "Guest"
+    }
+    fmt.Println("Hello, " + name)
+}
+
+// Overloading (Go does not support overloading)
+// You can achieve similar functionality by using different function names.
+
+// Optional Parameters (Go does not support optional parameters)
+// You can achieve similar functionality by providing default values.
+
+// Lambda Expressions (Go supports anonymous functions)
+var add = func(a, b int) int {
+    return a + b
+}
+
+// Function Types (Go does not have delegate types)
+// You can directly use function types.
+
+// Async Methods (Go uses goroutines for concurrency)
+// Similar functionality can be achieved using goroutines and channels.
+
+// Extension Methods (Go does not support extension methods)
+// You can define methods for types defined in other packages by creating a new type and attaching methods to it.
+
+// Ref and Out Parameters (Go does not have ref and out parameters)
+// You can achieve similar functionality by passing pointers to variables.
+
+// For example:
+
+// Modify function modifies the value of the number
+func Modify(number *int) {
+    *number = *number + 1
+}
+
+// Retrieve function returns a value using an out parameter
+func Retrieve(number *int) {
+    // Here, we set the value of the out parameter
+    *number = 10
+}
+
+func main() {
+    // Example usage
+    result := Add(5, 3)
+    fmt.Println("Result:", result)
+
+    Greet("Alice")
+    GreetWithDefault("") // Will print "Hello, Guest"
+
+    fmt.Println("Lambda Add:", add(5, 3))
+
+    // Function types can be used directly
+    mathOperation := func(a, b int) int {
+        return a + b
+    }
+    fmt.Println("Function Type Add:", mathOperation(5, 3))
+
+    // Using Modify and Retrieve functions
+    var number int
+    Retrieve(&number)
+    fmt.Println("Retrieved number:", number) // Output should be 10
+
+    Modify(&number)
+    fmt.Println("Modified number:", number) // Output should be 11
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

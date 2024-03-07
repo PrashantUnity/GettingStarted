@@ -1,0 +1,45 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-go">package main
+
+import "fmt"
+
+func main() {
+    var myInteger int = 10                // int: Used to store integer values.
+    var myFloat float32 = 3.14            // float32: Used to store single-precision floating-point numbers.
+    var myDouble float64 = 3.14159        // float64: Used to store double-precision floating-point numbers.
+    var isTrue bool = true                // bool: Used to store boolean values (true or false).
+    var myChar rune = 'A'                 // rune: Used to store a single Unicode character.
+    var myByte byte = 255                 // byte: Used to store unsigned integers from 0 to 255.
+    var myShort int16 = 1000              // int16: Used to store small integers.
+    var myLong int64 = 1000000000         // int64: Used to store large integers.
+    var myDecimal float64 = 123.456       // float64: Used to store precise decimal numbers.
+
+    fmt.Println("myInteger:", myInteger)
+    fmt.Println("myFloat:", myFloat)
+    fmt.Println("myDouble:", myDouble)
+    fmt.Println("isTrue:", isTrue)
+    fmt.Println("myChar:", myChar)
+    fmt.Println("myByte:", myByte)
+    fmt.Println("myShort:", myShort)
+    fmt.Println("myLong:", myLong)
+    fmt.Println("myDecimal:", myDecimal)
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

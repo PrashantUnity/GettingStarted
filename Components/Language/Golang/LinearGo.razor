@@ -1,0 +1,66 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-go">package main
+
+import (
+    "container/list"
+    "fmt"
+)
+
+func main() {
+    // Arrays
+    numbers := []int{1, 2, 3, 4, 5}
+
+    // Lists (using a linked list)
+    names := list.New()
+    names.PushBack("Alice")
+    names.PushBack("Bob")
+
+    // Queues (using slices)
+    queue := []int{10, 20}
+    value := queue[0]           // Peek operation
+    queue = queue[1:]           // Dequeue operation
+
+    // Stacks (using slices)
+    stack := []string{"A", "B"}
+    item := stack[len(stack)-1] // Peek operation
+    stack = stack[:len(stack)-1] // Pop operation
+
+    // Linked List (using a package provided linked list)
+    linkedList := list.New()
+    linkedList.PushBack(1)
+    linkedList.PushBack(2)
+
+    fmt.Println("Array:", numbers)
+    fmt.Print("List: ")
+    for e := names.Front(); e != nil; e = e.Next() {
+        fmt.Print(e.Value, " ")
+    }
+    fmt.Println()
+    fmt.Println("Queue Value:", value)
+    fmt.Println("Queue:", queue)
+    fmt.Println("Stack Item:", item)
+    fmt.Println("Stack:", stack)
+    fmt.Print("LinkedList: ")
+    for e := linkedList.Front(); e != nil; e = e.Next() {
+        fmt.Print(e.Value, " ")
+    }
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

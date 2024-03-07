@@ -1,0 +1,52 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-go">package main
+
+import (
+    "fmt"
+    "sort"
+)
+
+func main() {
+    // Map (Equivalent to Dictionary &lt;TKey, TValue>)
+    ages := map[string]int{
+        "Alice": 30,
+        "Bob":   25,
+    }
+
+    aliceAge := ages["Alice"] // Access value by key
+    fmt.Println("Alice's age:", aliceAge)
+
+    // Set (Equivalent to HashSet &lt;T>)
+    uniqueNumbers := make(map[int]struct{})
+    uniqueNumbers[10] = struct{}{}
+    uniqueNumbers[20] = struct{}{}
+    uniqueNumbers[10] = struct{}{} // Won't be added since it's a duplicate
+
+    containsTwenty := uniqueNumbers[20] // Check if 20 exists
+    fmt.Println("Contains twenty:", containsTwenty)
+
+    // Sorted Set (Equivalent to SortedSet &lt;T>)
+    sortedNumbers := []int{30, 10, 20}
+    sort.Ints(sortedNumbers)
+
+    fmt.Println("Sorted numbers:", sortedNumbers)
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

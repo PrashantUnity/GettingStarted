@@ -1,0 +1,53 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-go">package main
+
+import "fmt"
+
+func main() {
+    // for loop
+    for i := 0; i &lt; 5; i++ {
+        fmt.Println(i)
+    }
+
+    // while loop
+    count := 0
+    for count &lt; 5 {
+        fmt.Println(count)
+        count++
+    }
+
+    // do-while loop (Go doesn't have a direct equivalent)
+    value := 0
+    for {
+        fmt.Println(value)
+        value++
+        if value >= 5 {
+            break
+        }
+    }
+
+    // foreach loop (using range)
+    numbers := []int{1, 2, 3, 4, 5}
+    for _, number := range numbers {
+        fmt.Println(number)
+    }
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

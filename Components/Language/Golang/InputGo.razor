@@ -1,0 +1,40 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-go">package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+)
+
+func main() {
+    fmt.Println("Enter your name: ") // Prompt the user for input
+
+    // Create a new scanner to read from standard input
+    scanner := bufio.NewScanner(os.Stdin)
+
+    // Read the input provided by the user
+    scanner.Scan()
+    name := scanner.Text()
+
+    fmt.Println(name)
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

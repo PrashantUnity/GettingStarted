@@ -1,0 +1,43 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-go">package main
+
+import "fmt"
+
+func main() {
+    // String Concatenation
+    name := "John"
+    age := 30
+    message := "My name is " + name + " and I am " + fmt.Sprint(age) + " years old."
+    fmt.Println(message)
+
+    // String Interpolation
+    message = fmt.Sprintf("My name is %s and I am %d years old.", name, age)
+    fmt.Println(message)
+
+    // Verbatim String
+    path := `C:\MyFolder\MyFile.txt`
+    multiline := `This is a
+                   multiline
+                   string.`
+    fmt.Println(path)
+    fmt.Println(multiline)
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}
