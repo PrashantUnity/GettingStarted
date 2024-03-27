@@ -1,0 +1,49 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-rust">use std::collections::{HashMap, HashSet, BTreeSet};
+
+fn main() {
+    // Dictionary&lt;TKey, TValue>
+    let mut ages = HashMap::&lt;String, i32>::new();
+    ages.insert("Alice".to_string(), 30);
+    ages.insert("Bob".to_string(), 25);
+
+    if let Some(alice_age) = ages.get("Alice") {
+        println!("Alice's age: {}", alice_age);
+    }
+
+    // HashSet&lt;T>
+    let mut unique_numbers = HashSet::&lt;i32>::new();
+    unique_numbers.insert(10);
+    unique_numbers.insert(20);
+    unique_numbers.insert(10); // Won't be added since it's a duplicate
+
+    let contains_twenty = unique_numbers.contains(&20);
+    println!("Contains twenty: {}", contains_twenty);
+
+    // SortedSet&lt;T>
+    let mut sorted_numbers = BTreeSet::&lt;i32>::new();
+    sorted_numbers.insert(30);
+    sorted_numbers.insert(10);
+    sorted_numbers.insert(20);
+
+    println!("Sorted numbers: {:?}", sorted_numbers); // Prints: Sorted numbers: {10, 20, 30}
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

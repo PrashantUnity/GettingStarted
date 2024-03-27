@@ -1,0 +1,25 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-rust">fn main() {
+    println!("This will write in single line after that whatever you write will be printed in a new line");
+    print!("We can use This to write in a single line by multiple print! statements");
+    print!("This will also print in the same line as above");
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

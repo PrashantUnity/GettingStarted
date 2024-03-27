@@ -1,0 +1,90 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-rust">use std::future::Future;
+
+// Return Type
+fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+// Parameters
+fn greet(name: &str) {
+    println!("Hello, {}", name);
+}
+
+fn greet_with_default(name: &str) {
+    println!("Hello, {}", name);
+}
+
+// Overloading
+fn add_int(a: i32, b: i32) -> i32 {
+    // Code here
+    a + b
+}
+
+fn add_double(a: f64, b: f64) -> f64 {
+    // Code here
+    a + b
+}
+
+// Optional Parameters
+fn print_name(first_name: &str, last_name: &str) {
+    println!("{} {}", first_name, last_name);
+}
+
+// Lambda Expressions
+fn main() {
+    let add = |a: i32, b: i32| -> i32 { a + b };
+
+    // Delegate Methods
+    let add: fn(i32, i32) -> i32 = |a, b| a + b;
+
+    // Async Methods
+    async fn get_data_async() -> i32 {
+        // Asynchronous operations
+        Some_async_operation().await
+    }
+
+    // Extension Methods
+    trait StringExtensions {
+        fn is_null_or_empty(&self) -> bool;
+    }
+
+    impl StringExtensions for str {
+        fn is_null_or_empty(&self) -> bool {
+            self.is_empty()
+        }
+    }
+
+    // Ref and Out Parameters
+    fn modify(number: &mut i32) {
+        // Code here
+    }
+
+    fn retrieve() -> i32 {
+        // Code here
+        42
+    }
+}
+
+async fn Some_async_operation() -> i32 {
+    42
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}
