@@ -1,0 +1,25 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-rust">fn main() {
+    let my_number: i32; // Declaring an integer variable without initializing it
+    let greeting = String::from("Hello, World!"); // Declaring a string variable and initializing it with a value
+    let (a, b, c): (i32, i32, i32); // Declaring multiple integer variables in a single line
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

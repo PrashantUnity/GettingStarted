@@ -1,0 +1,49 @@
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-rust">struct Person {
+    name: String,
+    age: i32,
+}
+
+impl Person {
+    // Constructor
+    fn new(name: &str, age: i32) -> Self {
+        Person {
+            name: name.to_string(),
+            age,
+        }
+    }
+
+    // Method
+    fn say_hello(&self) {
+        println!("Hello, my name is {} and I'm {} years old.", self.name, self.age);
+    }
+}
+
+fn main() {
+    // Creating an instance of the Person struct
+    let person = Person::new("Alice", 30);
+
+    // Accessing fields and calling methods of the object
+    println!("{}", person.name); // Output: Alice
+    println!("{}", person.age); // Output: 30
+    person.say_hello(); // Output: Hello, my name is Alice and I'm 30 years old.
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}

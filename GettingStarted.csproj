@@ -15,7 +15,6 @@
 	<ItemGroup>
 	  <Folder Include="Components\HundredDays\" />
 	  <Folder Include="Components\Language\JavaScript\" />
-	  <Folder Include="Components\Language\Rust\" />
 	</ItemGroup>
 	
 	
