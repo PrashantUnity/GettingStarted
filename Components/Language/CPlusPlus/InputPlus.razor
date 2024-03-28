@@ -1,8 +1,22 @@
 ﻿@inject IJSRuntime JSRuntime
 <pre class="line-numbers">
-<code class="language-cilkcpp">Console.WriteLine("Enter your name: "); // Prompt the user for input
-string name = Console.ReadLine(); // Read the input provided by the user
-Console.WriteLine(name);</code>
+<code class="language-cilkcpp">#include &lt;iostream>
+#include &lt;string>
+
+int main() {
+    // Prompt the user for input
+    std::cout &lt;&lt; "Enter your name: " &lt;&lt; std::endl;
+
+    // Read the input provided by the user
+    std::string name;
+    std::getline(std::cin, name);
+
+    // Print the input
+    std::cout &lt;&lt; name &lt;&lt; std::endl;
+
+    return 0;
+}
+</code>
 </pre>
 
 
