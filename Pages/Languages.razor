@@ -1,21 +1,21 @@
-﻿@page "/Languages"
+@page "/Languages"
 @page "/Language"
 <PageTitle>Language Dimension</PageTitle>
 <MudPaper Class="ma-6">
     <MudExpansionPanels>
         @foreach (var component in list)
-        { 
+        {
             <MudExpansionPanel Text="@component.Name">
                 <MudGrid>
                     <MudItem xs="12">
                         <MudTabs Elevation="4" Rounded="true" Centered="true" Style="@($"color:{Theme.Palette.SuccessLighten}; background:{Theme.Palette.Dark.ColorDarken};")">
-                            <MudTabPanel   Text="C#">
+                            <MudTabPanel Text="C#">
                                 @RenderComponent(component.Sharp)
                             </MudTabPanel>
-                            <MudTabPanel   Text ="Python">
-                                @RenderComponent(component.Python) 
+                            <MudTabPanel Text="Python">
+                                @RenderComponent(component.Python)
                             </MudTabPanel>
-                            <MudTabPanel   Text="Golang">
+                            <MudTabPanel Text="Golang">
                                 @RenderComponent(component.Golang)
                             </MudTabPanel>
                             <MudTabPanel Text="Rust">

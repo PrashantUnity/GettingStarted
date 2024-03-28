@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@inject IJSRuntime JSRuntime
 <pre class="line-numbers">
 <code class="language-rust">fn main() {
@@ -29,3 +30,36 @@
     }
 
 }
+=======
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-rust">fn main() {
+    let my_integer: i32 = 10; // i32: Used to store integer values.
+    let my_float: f32 = 3.14; // f32: Used to store single-precision floating-point numbers.
+    let my_double: f64 = 3.14159; // f64: Used to store double-precision floating-point numbers.
+    let is_true: bool = true; // bool: Used to store boolean values (true or false).
+    let my_char: char = 'A'; // char: Used to store a single character.
+    let my_byte: u8 = 255; // u8: Used to store unsigned integers from 0 to 255.
+    let my_short: i16 = 1000; // i16: Used to store small integers.
+    let my_long: i64 = 1000000000; // i64: Used to store large integers.
+    let my_decimal: f64 = 123.456; // f64: Used to precise decimal number. Uses Banking etc.
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}
+>>>>>>> 7b19b28c0089322ea26a126a4cb1ee3c52a149c4

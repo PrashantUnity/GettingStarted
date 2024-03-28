@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@inject IJSRuntime JSRuntime
 <pre class="line-numbers">
 <code class="language-rust">fn main() {
@@ -47,3 +48,54 @@
     }
 
 }
+=======
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-rust">fn main() {
+    // for loop
+    for i in 0..5 {
+        println!("{}", i);
+    }
+
+    // while loop
+    let mut count = 0;
+    while count &lt; 5 {
+        println!("{}", count);
+        count += 1;
+    }
+
+    // do-while loop
+    let mut value = 0;
+    loop {
+        println!("{}", value);
+        value += 1;
+        if value >= 5 {
+            break;
+        }
+    }
+
+    // for-each loop (using iterators)
+    let numbers = vec![1, 2, 3, 4, 5];
+    for number in numbers.iter() {
+        println!("{}", number);
+    }
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}
+>>>>>>> 7b19b28c0089322ea26a126a4cb1ee3c52a149c4

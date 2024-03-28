@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@inject IJSRuntime JSRuntime
 <pre class="line-numbers">
 <code class="language-rust">use std::collections::{LinkedList, VecDeque};
@@ -50,3 +51,57 @@ fn main() {
     }
 
 }
+=======
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-rust">use std::collections::{LinkedList, VecDeque};
+
+fn main() {
+    // Arrays
+    let numbers = [1, 2, 3, 4, 5];
+
+    // Vectors (similar to Lists)
+    let mut names = Vec::&lt;String>::new();
+    names.push("Alice".to_string());
+    names.push("Bob".to_string());
+
+    // Queues
+    let mut queue = VecDeque::&lt;i32>::new();
+    queue.push_back(10);
+    queue.push_back(20);
+    if let Some(value) = queue.pop_front() {
+        println!("Removed value from queue: {}", value); // Prints: Removed value from queue: 10
+    }
+
+    // Stacks
+    let mut stack = Vec::&lt;String>::new();
+    stack.push("A".to_string());
+    stack.push("B".to_string());
+    if let Some(item) = stack.pop() {
+        println!("Removed item from stack: {}", item); // Prints: Removed item from stack: B
+    }
+
+    // Linked List
+    let mut linked_list = LinkedList::&lt;i32>::new();
+    linked_list.push_back(1);
+    linked_list.push_back(2);
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}
+>>>>>>> 7b19b28c0089322ea26a126a4cb1ee3c52a149c4

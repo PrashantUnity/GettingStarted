@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@inject IJSRuntime JSRuntime
 <pre class="line-numbers">
 <code class="language-rust">use std::io;
@@ -31,3 +32,38 @@ fn main() {
     }
 
 }
+=======
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-rust">use std::io;
+
+fn main() {
+    println!("Enter your name: "); // Prompt the user for input
+
+    let mut name = String::new(); // Create a mutable String to store the user's input
+
+    io::stdin()
+        .read_line(&mut name) // Read the input provided by the user
+        .expect("Failed to read line"); // Handle any potential errors
+
+    println!("{}", name); // Print the input provided by the user
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}
+>>>>>>> 7b19b28c0089322ea26a126a4cb1ee3c52a149c4

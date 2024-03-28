@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@inject IJSRuntime JSRuntime
 <pre class="line-numbers">
 <code class="language-rust">fn main() {
@@ -35,3 +36,42 @@
     }
 
 }
+=======
+﻿@inject IJSRuntime JSRuntime
+<pre class="line-numbers">
+<code class="language-rust">fn main() {
+    // String Concatenation
+    let name = "John";
+    let age = 30;
+    let message = format!("My name is {} and I am {} years old.", name, age);
+
+    // String Interpolation
+    let name = "John";
+    let age = 30;
+    let message_interpolation = format!("My name is {} and I am {} years old.", name, age);
+
+    // Verbatim String
+    let path = r#"C:\MyFolder\MyFile.txt"#;
+    let multiline = r#"This is a
+                   multiline
+                   string."#;
+}
+</code>
+</pre>
+
+
+@code {
+    // Inside a .razor file or a separate class
+    @inject IJSRuntime JSRuntime
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+
+}
+>>>>>>> 7b19b28c0089322ea26a126a4cb1ee3c52a149c4
