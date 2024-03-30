@@ -4,10 +4,19 @@
     <Headline TextContent="Hoist Blazor Webassembly on GitHub Using Github Action ?" TextSize="Typo.h4"/> 
     <MudPaper Class="px-2 ma-2" Elevation="0">
         <MudExpansionPanels MultiExpansion=true >
+            <MudExpansionPanel Disabled=true>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudText>
+                            Date : 30 March 2024
+                        </MudText>
+                    </div>
+                </TitleContent>
+            </MudExpansionPanel>
             <MudExpansionPanel>
                 <TitleContent>
                     <div class="d-flex">
-                        <MudIcon Icon="@Icons.Material.Filled.Filter1" class="mr-3"></MudIcon>
+                        <MudIcon Icon="@Icons.Material.Filled.Filter1" Color="Color.Success" class="mr-3"></MudIcon>
                         <MudText>Create <strong>Public</strong> Repository</MudText>
                     </div>
                 </TitleContent>
@@ -40,7 +49,7 @@
             <MudExpansionPanel IsInitiallyExpanded=true>
                 <TitleContent>
                     <div class="d-flex">
-                        <MudIcon Icon="@Icons.Material.Filled.Filter2" class="mr-3"></MudIcon>
+                        <MudIcon Icon="@Icons.Material.Filled.Filter2" Color="Color.Warning"  class="mr-3"></MudIcon>
                         <MudText>Create github action using asp.net core sdk from market place</MudText>
                     </div>
                 </TitleContent>
@@ -134,7 +143,7 @@ jobs:
             <MudExpansionPanel >
                 <TitleContent>
                     <div class="d-flex">
-                        <MudIcon Icon="@Icons.Material.Filled.Filter3" class="mr-3"></MudIcon>
+                        <MudIcon Icon="@Icons.Material.Filled.Filter3" Color="Color.Primary" class="mr-3"></MudIcon>
                         <MudText>Github Page Setup / Making live</MudText>
                     </div>
                 </TitleContent>
@@ -166,7 +175,7 @@ jobs:
             <MudExpansionPanel IsInitiallyExpanded=true>
                 <TitleContent>
                     <div class="d-flex">
-                        <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" class="mr-3"></MudIcon>
+                        <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" Color="Color.Error" class="mr-3"></MudIcon>
                         <MudText>
                             Sometimes if it fails To Deploy
                         </MudText>
@@ -176,7 +185,7 @@ jobs:
                     <MudList Clickable=false>
 
                         <MudListItem >
-                            <MudImage Src="problemImage/blazorhelp/githubactionerr.png" Height="110" />
+                            <MudImage Src="problemImage/blazorhelp/githubactionerr.png" Fluid=true />
                         </MudListItem>
                         <MudListItem Icon="@Icons.Material.Filled.Filter1">
                             <MudText Typo="Typo.subtitle1">
@@ -209,15 +218,7 @@ jobs:
                     </MudList>
                 </ChildContent>
             </MudExpansionPanel>
-            <MudExpansionPanel Disabled=true>
-                <TitleContent>
-                    <div class="d-flex">
-                        <MudText>
-                            Date : 30 March 2024
-                        </MudText>
-                    </div>
-                </TitleContent> 
-            </MudExpansionPanel>
+            
         </MudExpansionPanels>
     </MudPaper>
 </MudPaper>
