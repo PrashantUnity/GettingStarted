@@ -1,0 +1,15 @@
+﻿<MudPaper Class="@ClassText">
+    <MudText Typo="@TextSize">
+        @TextContent
+    </MudText>
+</MudPaper>
+
+@code {
+    [Parameter, EditorRequired]
+    public string TextContent { get; set; } = string.Empty;
+
+    [Parameter]
+    public Typo TextSize { get; set; } = Typo.h4;
+    [Parameter]
+    public string ClassText { get; set; } = "pa-6 ma-2";
+}

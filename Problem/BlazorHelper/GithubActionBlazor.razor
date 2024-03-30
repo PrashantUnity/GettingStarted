@@ -1,0 +1,233 @@
+﻿@page "/Problem/Blazor/GithubAction"
+
+<MudPaper Elevation="0">
+    <Headline TextContent="Hoist Blazor Webassembly on GitHub Using Github Action ?" TextSize="Typo.h4"/> 
+    <MudPaper Class="px-2 ma-2" Elevation="0">
+        <MudExpansionPanels MultiExpansion=true >
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter1" class="mr-3"></MudIcon>
+                        <MudText>Create <strong>Public</strong> Repository</MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList Clickable=false>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter1">
+                            <MudText Typo="Typo.subtitle1">
+                                After Creating Repository Go to repository setting
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter2">
+                            <MudText Typo="Typo.subtitle1">
+                                Go to Action Tab
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter2">
+                            <MudText Typo="Typo.subtitle1">
+                                Expand and Select General
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter3">
+                            <MudText Typo="Typo.subtitle1">
+                               In workflow section Make Sure it is checked 
+                               Read and write permissions Allow GitHub Actions to create and approve pull requests
+                            </MudText>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+            <MudExpansionPanel IsInitiallyExpanded=true>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter2" class="mr-3"></MudIcon>
+                        <MudText>Create github action using asp.net core sdk from market place</MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Copy And Paste Below yaml code below
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem >
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-yaml">name: DeployBlazorWebAssembly
+on:
+  push:
+    branches: [ "master" ] 
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Publish .NET Core Project
+      run: dotnet publish BlazorGitHubPagesDemo.csproj -c Release -o release --nologo
+
+
+    - name: Change base-tag in index.html from / to BlazorGitHubPagesDemo
+      run: sed -i 's/&lt;base href="\/" \ /&gt;/&lt;base href="\/BlazorGitHubPagesDemo\/" \ /&gt;/g' release/wwwroot/index.html
+
+
+    - name: copy index.html to 404.html
+      run: cp release/wwwroot/index.html release/wwwroot/404.html
+
+    # (Allow files and folders starting with an underscore)
+    - name: Add .nojekyll file
+      run: touch release/wwwroot/.nojekyll
+
+    - name: Commit wwwroot to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: release/wwwroot	</code>
+                    </pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter1">
+                            <MudText Typo="Typo.subtitle1">
+                                In line Number 19 Replace 
+                                <strong style="color:red">
+                                    BlazorGitHubPagesDemo.csproj
+                                </strong>
+                                to 
+                                <strong style="color:green">
+                                    YourprojectName.csproj
+                                </strong>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter2">
+                            <MudText Typo="Typo.subtitle1">
+                                In line Number 23 Replace
+                                <strong style="color:red">
+                                    BlazorGitHubPagesDemo
+                                </strong>
+                                to
+                                <strong style="color:green">
+                                    YourprojectName
+                                </strong>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter3">
+                            <MudText Typo="Typo.subtitle1">
+                                For Line Number 
+                                <strong>
+                                    12 , 14, 16 , 34 
+                                </strong> 
+                                change Ap per your project version/ Like
+                            </MudText>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+            <MudExpansionPanel >
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter3" class="mr-3"></MudIcon>
+                        <MudText>Github Page Setup / Making live</MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList Clickable=false>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter1">
+                            <MudText Typo="Typo.subtitle1">
+                                Go to repository setting
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter2">
+                            <MudText Typo="Typo.subtitle1">
+                                Pages
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter2">
+                            <MudText Typo="Typo.subtitle1">
+                                Build and deployment section
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter3">
+                            <MudText Typo="Typo.subtitle1">
+                                Set Source to deploy from a branch in branch dropdown select gh-pages ( or whatever you have decided in Commit wwwroot to GitHub Pages section)
+                            </MudText>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+            <MudExpansionPanel IsInitiallyExpanded=true>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" class="mr-3"></MudIcon>
+                        <MudText>
+                            Sometimes if it fails To Deploy
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList Clickable=false>
+
+                        <MudListItem >
+                            <MudImage Src="problemImage/blazorhelp/githubactionerr.png" Height="110" />
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter1">
+                            <MudText Typo="Typo.subtitle1">
+                                The Work Around I found Out is Sometimes it is Missing Enviroment Variable
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter2">
+                            <MudText Typo="Typo.subtitle1">
+                                Got to /settings/environments
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter2">
+                            <MudText Typo="Typo.subtitle1">
+                                Click On New Enviroment
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter3">
+                            <MudText Typo="Typo.subtitle1">
+                                Inside Enviroment Make Sure It is Checked
+                                <strong>
+                                    Allow administrator to bypass...
+                                    and Deployment tag to No Restriction
+                                </strong> 
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.Filter4">
+                            <LinkComponent Content="For More Info about Error Please visit Here" 
+                                Link="https://github.com/actions/checkout/issues/417#issuecomment-2019915877"           LinkColor="#00BEFF" />
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+            <MudExpansionPanel Disabled=true>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudText>
+                            Date : 30 March 2024
+                        </MudText>
+                    </div>
+                </TitleContent> 
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </MudPaper>
+</MudPaper>
+@code {
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+}

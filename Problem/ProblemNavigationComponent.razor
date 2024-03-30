@@ -1,0 +1,23 @@
+﻿<MudPaper Elevation="0">
+    <MudList Clickable=true>
+        @foreach (var item in ListOfContent)
+        {
+            <MudListItem OnClick="@(()=>NavigationFunction(item.link))">
+                <MudText>
+                    @item.text
+                </MudText>
+            </MudListItem>
+        }
+    </MudList>
+</MudPaper>
+
+@code {
+    
+    [Inject] public NavigationManager NavManager { get; set; } = null!;
+
+    [Parameter] public List<(string link, string text)> ListOfContent { get; set; } = new();
+    void NavigationFunction(string link)
+    {
+        NavManager.NavigateTo(link);
+    }
+}
