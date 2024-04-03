@@ -1,0 +1,25 @@
+﻿@page "/Problem/AspNet/HotQuestions/One"
+<MudPaper Elevation="0">
+    <Headline TextContent="Hot Questions" TextSize="Typo.h4" />
+    <MudPaper Class="ma-2" Elevation="0">
+        <MudExpansionPanels MultiExpansion=true>
+            <HotMVCOne/> 
+            <MudDivider DividerType="DividerType.Middle" Class="my-6"/> 
+            <HotAdoOne/> 
+            <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+            <HotCSharpOne/> 
+            <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+            <HotSqlOne/> 
+        </MudExpansionPanels>
+    </MudPaper>
+</MudPaper>
+@code {
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+}

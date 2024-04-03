@@ -1,0 +1,25 @@
+﻿@if(OpenInOtherPage)
+{
+    <a href="@Link" 
+       class="mud-text-secondary" 
+       style="color:@(LinkColor)"
+       target="_blank" 
+    >@Content</a>
+}
+else
+{
+    <a href="@Link" class="mud-text-secondary" style="color:@(LinkColor)">@Content</a>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public string Content { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Link { get; set; }
+    [Parameter]
+    public string LinkColor { get; set; } = "#00BEFF";
+
+    [Parameter]
+    public bool OpenInOtherPage { get; set; } = false;
+}

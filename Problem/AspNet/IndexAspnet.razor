@@ -1,6 +1,12 @@
 ﻿@page "/Problem/Aspnet"
-<h3>IndexAspnet</h3>
-
+<ProblemNavigationComponent ListOfContent="@ls" />
 @code {
-
+    List<(string link, string text)> ls = new()
+    {
+        ("Problem/AspNet/AspNetCoreAnalysis",
+        "Analysing Program.cs of Aspnet Core Application"),
+        ("Problem/AspNet/HotQuestions/One",
+        "Hot Aspnet Core Application")
+    };
 }
+

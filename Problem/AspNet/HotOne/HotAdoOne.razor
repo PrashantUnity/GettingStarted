@@ -1,0 +1,204 @@
+﻿<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter1" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is ADO.NET?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    ADO.NET (ActiveX Data Objects) is a data access technology in the .NET framework used to interact with data sources, such as databases. It provides a set of classes for connecting to databases, executing commands (queries, updates), and retrieving results into datasets or data readers.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter2" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Differentiate between DataSet and DataReader</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    DataSet: It's an in-memory cache of data retrieved from the database. It can hold multiple DataTables, relationships, and constraints. It is disconnected, meaning it doesn't need an active connection to the database once data is loaded.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    DataReader: It provides a read-only, forward-only stream of data from the database. It's faster and uses less memory compared to DataSet but is less flexible as it doesn't store data locally.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter3" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the steps to connect to a database using ADO.NET</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Create a connection object (SqlConnection, OleDbConnection, etc.).
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Open the connection using Open() method.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Create a command object (SqlCommand, OleDbCommand, etc.) specifying the SQL query or stored procedure.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Execute the command using ExecuteNonQuery(), ExecuteScalar(), or ExecuteReader() methods.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Close the connection using the Close() or Dispose() method.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter4" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What are the different components of ADO.NET?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Connection: Represents a connection to a data source.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Command: Executes commands (SQL queries or stored procedures) against a database.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    DataReader: Retrieves data in a read-only, forward-only manner.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    DataAdapter: Populates a DataSet and resolves changes back to the database.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    DataSet: In-memory cache holding data in tables and relationships.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter5" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How does ADO.NET prevent SQL injection attacks?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    ADO.NET provides parameterized queries through SqlParameter objects. Using parameterized queries ensures that input values are treated as parameters rather than concatenated directly into the SQL command. This prevents malicious SQL injection by separating data from SQL commands.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter6" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText> Explain the difference between SqlCommand and SqlDataAdapter</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    SqlCommand: Represents a SQL command to be executed against a database. It's used to execute SQL queries, stored procedures, and perform data manipulation operations.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    SqlDataAdapter: Acts as a bridge between a DataSet and a data source. It populates the DataSet and resolves changes back to the database using Fill() and Update() methods.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter7" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is the purpose of the ExecuteNonQuery() method in ADO.NET?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    ExecuteNonQuery() method is used to execute SQL commands (such as INSERT, UPDATE, DELETE) that don't return any data, only the number of rows affected by the command.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How can you handle exceptions in ADO.NET?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    Exceptions in ADO.NET can be handled using try-catch blocks. Commonly used exception classes are SqlException, OleDbException, etc. Handling exceptions involves catching specific exceptions that may occur during database operations and taking appropriate actions, such as logging errors or displaying user-friendly messages.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+@code {
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+}

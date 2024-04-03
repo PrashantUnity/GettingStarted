@@ -15,6 +15,7 @@
 	<ItemGroup>
 	  <Folder Include="Components\HundredDays\" />
 	  <Folder Include="Components\Language\JavaScript\" />
+	  <Folder Include="wwwroot\problemImage\aspnet\" />
 	</ItemGroup>
 	
 	

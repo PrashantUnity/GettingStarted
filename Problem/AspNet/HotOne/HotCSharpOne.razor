@@ -1,0 +1,180 @@
+﻿
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter1" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is C#?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    C# (pronounced as "C sharp") is a programming language developed by Microsoft. It is a versatile, object-oriented programming language used for building various types of applications on the .NET framework.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter2" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the difference between ref and out parameters in C #</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    ref Parameters: Used to pass a variable by reference. The variable must be initialized before passing it to a method. Changes made to the parameter inside the method persist after the method execution.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    out Parameters: Similar to ref, but the variable doesn’t need to be initialized before passing it to the method. The method must assign a value to an out parameter before it returns.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter3" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What are the differences between IEnumerable and IQueryable in C#?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    IEnumerable: Represents a forward-only collection that can be enumerated using a foreach loop. It's suitable for working with in-memory collections like arrays, lists, etc.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    IQueryable: Inherits from IEnumerable and is used for querying data from various data sources like databases. It provides capabilities for deferred execution and expressing queries in a form that can be translated into different query languages (e.g., SQL in the case of Entity Framework).
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter4" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is the difference between String and StringBuilder in C#?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    String: Immutable; any operation that modifies a string (like concatenation) creates a new string object. Once created, its value cannot be changed.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    StringBuilder: Mutable; designed for the efficient manipulation of strings. It allows modifications like appending, inserting, or removing characters without creating a new instance for each operation, which can improve performance for string manipulations.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter5" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is boxing and unboxing in C#?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Boxing: The process of converting a value type to the object type (reference type) by encapsulating it within an instance of the System.Object class or any other compatible reference type.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Unboxing: The reverse process of extracting the value type from the object by casting it back to its original value type.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter6" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the difference between override and new in C #</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    override: Used in inheritance to provide a new implementation of a method in a derived class that already exists in the base class. It participates in polymorphism, invoking the overridden method based on the runtime type of the object.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    new: Hides the base class method in the derived class. It doesn’t participate in polymorphism. If an object of the derived class is accessed through a reference of the base class, the base class method is invoked unless the reference is explicitly of the derived class.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter7" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is the purpose of the using statement in C#?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    The using statement in C# is used to ensure the correct use of resources like file streams, database connections, etc. It automatically releases resources once they are no longer needed, even if exceptions occur, by calling the Dispose() method of the object implementing IDisposable.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is the difference between async and await in C#?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    async: Indicates that a method is asynchronous and can perform asynchronous operations.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    await: Pauses the execution of an async method until the awaited task completes. It allows the method to asynchronously wait for the result without blocking the thread.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+@code {
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+}

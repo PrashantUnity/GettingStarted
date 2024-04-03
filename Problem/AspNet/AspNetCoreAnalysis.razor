@@ -1,0 +1,665 @@
+﻿@page "/Problem/AspNet/AspNetCoreAnalysis"
+<MudPaper Elevation="0">
+    <Headline TextContent="Analysing Program.cs File Of Asp.net Core Application" TextSize="Typo.h4" />
+    <MudPaper Class="ma-2" Elevation="0">
+        <MudExpansionPanels MultiExpansion=true>
+            <MudExpansionPanel Disabled=true>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudText>
+                            Date : 3 April 2024
+                        </MudText>
+                    </div>
+                </TitleContent>
+            </MudExpansionPanel>
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter1" Color="Color.Success" class="mr-3"></MudIcon>
+                        <MudText>Sample <strong>Program.cs</strong> Code</MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList Clickable=false>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MvcMovie.Data;
+using MvcMovie.Models;
+namespace MvcMovie
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext&lt;MvcMovieContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext"));
+
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
+
+            var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                SeedData.Initialize(services);
+            }   
+
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.Run();
+        }
+    }
+}</code>
+                    </pre>
+                            </MudText>
+                        </MudListItem> 
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter2" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            WebApplication & CreateBuilder ?
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">var builder = WebApplication.CreateBuilder(args);</code></pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Resides in 
+                                <strong style="color:yellow">
+                                    MicrosoftAspNetCore.Builder.WebApplication
+                                </strong>
+                                Namespace
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1"> 
+                                <strong style="color:yellow">
+                                    WebApplication :
+                                </strong>
+                                The web application used to configure the HTTP pipeline, and routes.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <strong style="color:yellow">
+                                    CreateBuilder :
+                                </strong>
+                                Initializes a new instance of the WebApplicationBuilder class with preconfigured defaults.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">public static WebApplicationBuilder CreateBuilder(string[] args) => new(new() { Args = args });</code></pre>
+                                
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <HrefComponent Content="For More Info About WebApplication"
+                                           Link="https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.webapplication" 
+                                OpenInOtherPage="true"
+                            ></HrefComponent>
+                        </MudListItem>
+                        <MudListItem>
+                            <HrefComponent Content="For More Info About Createbuilder"
+                                           Link="https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.webapplication.createbuilder"
+                                           OpenInOtherPage="true"
+                            ></HrefComponent>
+                        </MudListItem> 
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter3" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            Services
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">builder.Services.AddDbContext&lt;MvcMovieContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext"));</code></pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Resides in
+                                <strong style="color:yellow">
+                                    Microsoft.AspNetCore.Builder
+                                </strong>
+                                Namespace
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">IServiceCollection WebApplicationBuilder.Services { get; }</code></pre> 
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                A collection of services for the application to compose. 
+                                It is useful for adding user provided or framework provided services.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">public static WebApplicationBuilder CreateBuilder(string[] args) => new(new() { Args = args });</code></pre>
+
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Defines a mechanism for retrieving a service object; that is, an object that provides custom support to other objects.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <HrefComponent Content="For More Info About Services"
+                                           Link="https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.webapplication.services"
+                                           OpenInOtherPage="true"></HrefComponent>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter3" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            AddDbContext
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">builder.Services.AddDbContext&lt;MvcMovieContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext"));</code></pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Reside in Microsoft.Extensions.DependencyInjection namespace
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Registers the given context as a service in the IServiceCollection.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Use this method when using dependency injection in your application, such as with ASP.NET Core.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                For applications that don't use dependency injection, consider creating DbContext instances directly with its constructor.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                The DbContext.OnConfiguring(DbContextOptionsBuilder) method can then be overridden to configure a connection string and other options.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Entity Framework Core does not support multiple parallel operations being run on the same DbContext instance.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                This includes both parallel execution of async queries and any explicit concurrent use from multiple threads. Therefore, always await async calls immediately, or use separate DbContext instances for operations that execute in parallel.Avoiding DbContext threading issues.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                This includes both parallel execution of async queries and any explicit concurrent use from multiple threads. Therefore, always await async calls immediately, or use separate DbContext instances for operations that execute in parallel.Avoiding DbContext threading issues.
+                            </MudText>
+                        </MudListItem>
+
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Returns: The same service collection so that multiple calls can be chained.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <HrefComponent Content="For More Info About AddDbContext"
+                                           Link="https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext"
+                                           OpenInOtherPage="true"></HrefComponent>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter4" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            AddControllersWithViews
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">// Add services to the container.
+builder.Services.AddControllersWithViews();</code></pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Reside in Microsoft.Extensions.DependencyInjection namespace
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Adds services for controllers to the specified IServiceCollection. This method will not register services used for pages.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                This combines the effects of
+                                <pre class="line-numbers">
+                                <code class="language-csharp">MvcCoreServiceCollectionExtensions.AddMvcCore(IServiceCollection);
+MvcApiExplorerMvcCoreBuilderExtensions.AddApiExplorer(IMvcCoreBuilder);
+MvcCoreMvcCoreBuilderExtensions.AddAuthorization(IMvcCoreBuilder);
+MvcCorsMvcCoreBuilderExtensions.AddCors(IMvcCoreBuilder);
+MvcDataAnnotationsMvcCoreBuilderExtensions.AddDataAnnotations(lMvcCoreBuilder);
+MvcCoreMvcCoreBuilderExtensions.AddFormatterMappings(IMvcCoreBuilder);
+agHelperServicesExtensions.AddCacheTagHelper(IMvcCoreBuilder);
+MvcViewFeaturesMvcCoreBuilderExtensions.AddViews(IMvcCoreBuilder);
+MvcRazorMvcCoreBuilderExtensions.AddRazorViewEngine(IMvcCoreBuilder);
+MvcServiceCollectionExtensions.AddRazorPages(IServiceCollection);</code></pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                add services for pages call
+                            </MudText>
+                        </MudListItem> 
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Returns: An IMvcBuilder that can be used to further configure the MVC services.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <HrefComponent Content="For More Info About addcontrollerswithviews"
+                                           Link="https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollerswithviews"
+                                           OpenInOtherPage="true"></HrefComponent>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter5" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            Build
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">var app = builder.Build();</code></pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Reside in Microsoft.AspNetCore.Builder namespace
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Builds the WebApplication to process HTTP requests.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Returns: A configured WebApplication.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <HrefComponent Content="For More Info About Builds"
+                                           Link="https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.builder.iapplicationbuilder.build"
+                                           OpenInOtherPage="true"></HrefComponent>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter6" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            CreateScope
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    SeedData.Initialize(services);
+}</code></pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Reside in Microsoft.Extensions.DependencyInjection namespace
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Creates a new IServiceScope that can be used to resolve scoped services.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Returns: A IServiceScope that can be used to resolve scoped services.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <HrefComponent Content="For More Info About createscope"
+                                           Link="https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.serviceproviderserviceextensions.createscope"
+                                           OpenInOtherPage="true"></HrefComponent>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter7" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            Configure the HTTP request pipeline
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">if(!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}</code></pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Reside in Microsoft.AspNetCore.Builder namespace
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Adds a middleware to the pipeline that will catch exceptions, log them, reset the request path, and re-execute the request. The request will not be re-executed if the response has already started.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                using HSTS middleware,makes Strict-Transport-Security header.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <HrefComponent Content="For More Info Click Me"
+                                           Link="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware"
+                                           OpenInOtherPage="true"></HrefComponent>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            UseHttpsRedirection()
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">app.UseHttpsRedirection();</code></pre>
+                            </MudText>
+                        </MudListItem>  
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            UseStaticFiles()
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">app.UseStaticFiles();</code></pre>
+                            </MudText>
+                        </MudListItem> 
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Enables static file serving for the current request path Files are served from the path specified in IWebHostEnvironment.WebRootPath or IWebHostEnvironment.WebRootFileProvider which defaults to the 'wwwroot' subfolder.</MudText>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Filter9" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            UseRouting()
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">app.UseRouting();</code></pre>
+                            </MudText>
+                        </MudListItem> 
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Adds as a Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware to the specified IApplicationBuilder.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                A call to EndpointRoutingApplicationBuilderExtensions.UseRouting (IApplicationBuilder) must be followed by a call to Middleware to EndpointRoutingApplicationBuilderExtensions.UseEndpoints(lApplicationBuilder Action) for the same IApplicationBuilder instance.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                The Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware defines a point in the middleware pipeline where routing decisions are made, and an Endpoint is associated with the HttpContext.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                The Microsoft.AspNetCore.Routing.EndpointMiddleware defines a point in the middleware pipeline where the current Endpoint is executed. Middleware between the Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware and Microsoft.AspNetCore.Routing.EndpointMiddleware may observe or change the Endpoint associated with the HttpContext. Returns: A reference to this instance after the operation has completed.
+                            </MudText>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Security" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            UseAuthorization
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">app.UseAuthorization();</code></pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Adds the Microsoft.AspNetCoreAuthorization.AuthorizationMiddleware to the specified IApplicationBuilder, which enables authorization capabilities.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                When authorizing a resource that is routed using endpoint routing, this call must appear between the calls to app. UseRouting() and app. UseEndpoints(). for the middleware to function correctly.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Returns: A reference to app after the operation has completed.
+                            </MudText>
+                        </MudListItem> 
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Router" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            MapControllerRoute
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");</code></pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Adds endpoints for controller actions to the IEndpointRouteBuilder.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Specifies a route with the given name, pattern, defaults, constraints, and data Tokens.
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Returns: An ControllerActionEndpointConventionBuilder for endpoints associated with controller actions for this route.
+                            </MudText>
+                        </MudListItem> 
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.DirectionsRun" Color="Color.Warning" class="mr-3"></MudIcon>
+                        <MudText>
+                            Run
+                        </MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                <pre class="line-numbers">
+                                <code class="language-csharp">app.Run();</code></pre>
+                            </MudText>
+                        </MudListItem>
+                        <MudListItem>
+                            <MudText Typo="Typo.subtitle1">
+                                Runs an application and block the calling thread until host shutdown.
+                            </MudText>
+                        </MudListItem>
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel> 
+        </MudExpansionPanels>
+    </MudPaper>
+</MudPaper>
+@code {
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+}

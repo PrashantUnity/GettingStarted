@@ -1,0 +1,271 @@
+﻿
+<MudExpansionPanel Disabled=true>
+    <TitleContent>
+        <div class="d-flex">
+            <MudText>
+                Date : 3 April 2024
+            </MudText>
+        </div>
+    </TitleContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter1" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is middleware in ASP.NET Core?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    Middleware in ASP.NET Core is software components that are assembled into the HTTP request pipeline to handle requests and responses. Each middleware component performs a specific function and can process an incoming HTTP request, generate a response, or pass the request to the next middleware in the pipeline.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter2" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How does middleware differ from HTTP modules in ASP.NET?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    Middleware in ASP.NET Core is a more flexible and lightweight approach compared to HTTP modules in traditional ASP.NET. Middleware can be added or removed easily in the application's startup configuration. It allows for better control over the request pipeline and can be organized into a pipeline of components, whereas HTTP modules are more tightly coupled and don't offer the same level of flexibility.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter3" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the concept of request delegates in middleware</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    Request delegates in middleware are functions that handle HTTP requests. They accept an HTTP context as an argument and typically either process the request or pass it to the next request delegate in the pipeline by calling next(context).
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter4" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How can you create custom middleware in ASP.NET Core?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    To create custom middleware in ASP.NET Core:
+                </MudText>
+            </MudListItem>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-csharp">public class CustomMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public CustomMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        // Custom logic before the request reaches next middleware
+        await _next(context); // Pass the request to the next middleware
+        // Custom logic after the request has been processed by other middleware
+    }
+}
+
+// In Startup.cs, configure the middleware in the Configure method:
+public void Configure(IApplicationBuilder app)
+{
+    app.UseMiddleware&lt;CustomMiddleware>();
+    // Other middleware configurations
+}</code></pre>
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter5" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText> How can you terminate the request pipeline in middleware?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    To terminate the request pipeline in middleware and prevent the request from reaching subsequent middleware components:
+                </MudText>
+            </MudListItem>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-csharp">public async Task InvokeAsync(HttpContext context)
+{
+    // Terminate the pipeline and return a response
+    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+    await context.Response.WriteAsync("Access Denied");
+    return;
+}</code></pre>
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter6" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the purpose of UseExceptionHandler middleware</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    UseExceptionHandler middleware is used to catch exceptions that occur during the processing of an HTTP request. It allows developers to centralize error handling and customize the response sent back to the client when an exception occurs.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter7" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is the role of UseStaticFiles middleware?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    UseStaticFiles middleware is responsible for serving static files (like HTML, CSS, JavaScript, images, etc.) to the client without involving the application logic. It enables the serving of these files directly from the specified directory.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you configure middleware to run for specific routes in ASP.NET Core?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    You can use the Map or MapWhen extension methods to conditionally apply middleware to specific routes or request conditions.
+                </MudText>
+            </MudListItem>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-csharp">app.Map("/specificroute", specificRouteApp =>
+{
+    specificRouteApp.UseMiddleware&lt;CustomMiddleware>();
+});</code></pre>
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel> 
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter9" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the concept of routing in ASP.NET MVC.</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    Routing in ASP.NET MVC is the mechanism that maps URLs to controller actions. It determines how incoming HTTP requests are handled and which controller action method should respond to a particular URL. The routing engine in ASP.NET MVC examines the incoming URL and attempts to match it to a route defined in the application.
+                </MudText>
+            </MudListItem>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    The routing system is configured in the RouteConfig.cs file in the App_Start folder of an ASP.NET MVC project. It defines routes using the MapRoute method, specifying URL patterns and associating them with controller and action methods.
+                </MudText>
+            </MudListItem>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-csharp">public class RouteConfig
+{
+    public static void RegisterRoutes(RouteCollection routes)
+    {
+        routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+        routes.MapRoute(
+            name: "Default",
+            url: "{controller}/{action}/{id}",
+            defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+        );
+    }
+}</code></pre>
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1"> 
+                    {controller} and {action} are placeholders for the controller and action names, respectively.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1"> 
+                    {id} is an optional parameter.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1"> 
+                    The Default route specifies that if a URL doesn't match any other defined routes, it defaults to the HomeController's Index action.
+                </MudText>
+            </MudListItem> 
+            <MudListItem >
+                <MudText Typo="Typo.subtitle1"> 
+                    Routing in ASP.NET MVC provides a powerful way to define URL patterns, enabling clean and SEO-friendly URLs, and it plays a crucial role in how requests are dispatched to controllers and actions within the MVC framework.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel> 
+@code{
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
+}
