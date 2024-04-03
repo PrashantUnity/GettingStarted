@@ -1,5 +1,225 @@
-﻿<h3>HotNUnitOne</h3>
+﻿
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter1" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is NUnit?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    NUnit is a unit-testing framework for .NET applications. It provides a framework for writing and running unit tests in C#, allowing developers to perform automated testing of their code.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter2" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you create a test fixture in NUnit?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    To create a test fixture in NUnit, you use the [TestFixture] attribute above a class. Test fixtures are used to group related tests together.
+                </MudText>
+            </MudListItem>
+            <MudListItem  >
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-csharp">using NUnit.Framework;
+
+[TestFixture]
+public class MyTestClass
+{
+    // Test methods go here
+}</code>
+                    </pre>
+                </MudText>
+            </MudListItem> 
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter3" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the purpose of [SetUp] and [TearDown] in NUnit </MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    [SetUp]: This attribute marks a method that is run before each test method within the test fixture. It is used to set up preconditions or initialize resources needed for the tests.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    [TearDown]: This attribute marks a method that is run after each test method within the test fixture. It is used to clean up or release resources used during the tests.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter4" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you write a simple test method in NUnit?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    To write a test method in NUnit, you use the [Test] attribute above a method
+                </MudText>
+            </MudListItem>
+            <MudListItem  >
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-csharp">[Test]
+public void MyTestMethod()
+{
+    // Arrange (setup)
+    // Act (perform action)
+    // Assert (verify results)
+}</code>
+                    </pre>
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter5" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What are assertions in NUnit?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Assertions in NUnit are used to verify the expected behavior of the code being tested. NUnit provides various assertion methods like Assert.AreEqual, Assert.IsTrue, Assert.IsFalse, etc., to compare values and verify conditions in test methods.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter6" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you mark an ignored test in NUnit?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    To mark a test as ignored (skipped), you can use the [Ignore] attribute above the test method
+                </MudText>
+            </MudListItem>
+            <MudListItem  >
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-csharp">[Test]
+[Ignore("Reason for ignoring this test")]
+public void MyIgnoredTest()
+{
+    // Test logic
+}</code>
+                    </pre>
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter7" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the purpose of parameterized tests in NUnit</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    Parameterized tests in NUnit allow running the same test logic with different input values. NUnit's [TestCase] attribute enables specifying multiple sets of arguments for a test method. This helps in testing multiple scenarios with a single test method.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is the [TestCaseSource] attribute used for in NUnit?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    The [TestCaseSource] attribute in NUnit is used to specify a property or method that provides the test cases for a parameterized test. It allows for more dynamic generation of test cases by retrieving data from a source method or property
+                </MudText>
+            </MudListItem> 
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you perform expected exception testing in NUnit?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    To test for expected exceptions in NUnit, you use the Assert.Throws
+                </MudText>
+            </MudListItem>
+            <MudListItem >
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-csharp">[Test]
+public void MyExceptionTest()
+{
+    // Arrange
+    MyClass instance = new MyClass();
+
+    // Act and Assert
+    Assert.Throws&lt;SomeException>(() => instance.MethodThatThrows());
+}</code>
+                    </pre>
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
 
 @code {
-
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
 }

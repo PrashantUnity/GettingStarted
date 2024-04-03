@@ -1,5 +1,257 @@
-﻿<h3>HotStoreProcedure</h3>
+﻿
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter1" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is a Stored Procedure?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    A Stored Procedure is a precompiled and stored SQL code that can be executed multiple times. It consists of SQL statements and procedural logic and is stored in a database.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter2" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you create a Stored Procedure in SQL?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    To create a Stored Procedure in SQL, you use the CREATE PROCEDURE statement followed by the procedure name, parameters (if any), and the SQL code.
+                </MudText>
+            </MudListItem>
+            <MudListItem  >
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-sql">CREATE PROCEDURE GetEmployeeById
+                            @@EmployeeId INT
+AS
+BEGIN
+    SELECT * FROM Employees WHERE Id = @@EmployeeId;
+END</code>
+                    </pre>
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter3" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the benefits of using Stored Procedures</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Performance: Stored Procedures are precompiled and cached, leading to improved performance as they reduce compilation overhead.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Security: They provide a layer of security by allowing access control to tables and views, reducing the risk of SQL injection.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Code Reusability: They allow code to be reused across multiple applications or different parts of the same application.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter4" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you execute a Stored Procedure in SQL?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    To execute a Stored Procedure in SQL, you use the EXEC or EXECUTE statement followed by the procedure name and parameters. Example:
+                </MudText>
+            </MudListItem>
+            <MudListItem  >
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-sql">EXEC GetEmployeeById @@EmployeeId = 101;</code>
+                    </pre>
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter5" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What are input parameters in Stored Procedures?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Input parameters in Stored Procedures are variables used to pass values into the procedure from the calling code. They allow the procedure to accept values and perform actions based on those values.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter6" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you return values from a Stored Procedure?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Stored Procedures can return values using OUTPUT parameters or RETURN statement. OUTPUT parameters can be explicitly declared and used to pass values back to the calling code. RETURN statement is used to return an integer value as the result of the execution.
+                </MudText>
+            </MudListItem> 
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter7" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the concept of output parameters in Stored Procedures</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    Output parameters in Stored Procedures are used to return values to the calling code. They are declared within the procedure and marked as OUTPUT parameters. After the procedure execution, their values can be accessed in the calling code.
+                </MudText>
+            </MudListItem> 
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText> How do you handle errors within a Stored Procedure?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Error handling in Stored Procedures can be achieved using TRY...CATCH blocks. Errors can be caught using BEGIN TRY...END TRY and handled in the BEGIN CATCH...END CATCH block, allowing for graceful error handling.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you modify an existing Stored Procedure in SQL?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    To modify an existing Stored Procedure in SQL, you use the ALTER PROCEDURE statement followed by the procedure name and the modified code.
+                </MudText>
+            </MudListItem>
+            <MudListItem  >
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-sql">ALTER PROCEDURE GetEmployeeById
+                            @@EmployeeId INT,
+                            @@IsActive BIT
+AS
+BEGIN
+    SELECT * FROM Employees WHERE Id = @@EmployeeId AND IsActive = @@IsActive;
+END</code>
+                    </pre>
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Let's create a Stored Procedure that takes an employee ID as input and returns the employee's details:
+                </MudText>
+            </MudListItem>
+            <MudListItem  >
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-sql">CREATE PROCEDURE GetEmployeeDetails
+                            @@EmployeeId INT
+AS
+BEGIN
+    -- Check if the EmployeeId exists in the Employees table
+    IF EXISTS (SELECT 1 FROM Employees WHERE Id = @@EmployeeId)
+    BEGIN
+        -- Select and return the details of the employee
+        SELECT * FROM Employees WHERE Id = @@EmployeeId;
+        RETURN 0; -- Return 0 to indicate success
+    END
+    ELSE
+    BEGIN
+        -- If the EmployeeId doesn't exist, return an error code (-1)
+        RETURN -1; -- Return -1 to indicate failure or no records found
+    END
+END</code>
+                    </pre>
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    The Stored Procedure GetEmployeeDetails takes an @@EmployeeId parameter.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    It checks if the provided @@EmployeeId exists in the Employees table.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    If the employee exists, it retrieves and returns the details of the employee using SELECT.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    If the employee does not exist, it returns an error code (-1) using the RETURN statement to indicate no records found.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
 
 @code {
-
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
 }

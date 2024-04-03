@@ -1,5 +1,182 @@
-﻿<h3>HotEntityOne</h3>
+﻿
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter1" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is Entity Framework (EF)?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    Entity Framework is an object-relational mapping (ORM) framework provided by Microsoft for .NET applications. It simplifies the interaction between the .NET application and the database by allowing developers to work with database objects as .NET objects.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter2" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What are the different approaches to using Entity Framework?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Database-First Approach: Generating entity classes from an existing database schema using the Entity Data Model (EDM) designer.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Code-First Approach: Creating entity classes and relationships in code, letting EF generate the database schema based on these classes.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Model-First Approach: Creating entity classes using the EDM designer and then generating the database schema from the model.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter3" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the DbContext in Entity Framework</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    DbContext is a core class in Entity Framework that represents a session with the database and allows performing CRUD (Create, Read, Update, Delete) operations. It manages database connections, tracks changes to entities, and implements a unit of work pattern.
+                </MudText>
+            </MudListItem> 
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter4" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is the role of DbSet in Entity Framework?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    DbSet is a property of the DbContext class that represents an entity set, allowing access to a collection of entities for a particular type in the underlying database. It provides methods to query, insert, update, and delete entities of a specific entity type.
+                </MudText>
+            </MudListItem> 
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter5" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the concept of Code-First migration in Entity Framework</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Code-First migration is a feature in Entity Framework that enables developers to automatically update the database schema based on changes made to the entity classes. It allows for the seamless transition of the database schema without losing existing data.
+                </MudText>
+            </MudListItem> 
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter6" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is Lazy Loading in Entity Framework?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Lazy Loading is a feature in Entity Framework where related entities are automatically loaded from the database when they are accessed for the first time. It delays the loading of related data until it is explicitly requested.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter7" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you configure relationships between entities in Entity Framework?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    Relationships between entities in Entity Framework are configured using attributes (in Code-First approach) or fluent API (method chaining). Relationships such as one-to-one, one-to-many, and many-to-many can be defined using navigation properties and configuration methods.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the difference between SaveChanges() and SaveChangesAsync() in Entity Framework</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    SaveChanges(): Synchronously saves all changes made in the context to the database and returns the number of affected rows.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    SaveChangesAsync(): Asynchronously saves all changes made in the context to the database and returns a task representing the asynchronous operation.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the concept of Inheritance Mapping in Entity Framework</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Inheritance Mapping in Entity Framework refers to the process of mapping inheritance hierarchies in object-oriented programming to database schemas. It allows mapping entities that inherit from each other (like Table Per Hierarchy, Table Per Type, Table Per Concrete Class) to database tables.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
 
 @code {
-
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
 }

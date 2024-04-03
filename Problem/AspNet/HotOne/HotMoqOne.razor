@@ -1,5 +1,204 @@
-﻿<h3>HotMoqOne</h3>
+﻿
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter1" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>What is Moq?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    Moq is a popular mocking framework for .NET that allows developers to create mock objects in unit tests. It simplifies the process of creating mock implementations of interfaces or classes for testing purposes.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter2" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you create a mock object using Moq?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    To create a mock object using Moq, you typically use the Mock&lt;T> class, where T is the type of the interface or class you want to mock
+                </MudText>
+            </MudListItem>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-csharp">// Creating a mock object for an interface
+var mockService = new Mock&lt;IMyService>();
+
+// Creating a mock object for a class with constructor arguments
+var mockRepository = new Mock&lt;MyRepository>(arg1, arg2);</code>
+                    </pre>
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter3" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the purpose of the Setup method in Moq</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    The Setup method in Moq is used to configure the behavior of a mock object. It allows you to define how the mock should behave when its methods are called, specifying return values, setups for properties, or callbacks for method invocations.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter4" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you set up a method to return a specific value in Moq?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    You can use the Returns method within a Setup to define the return value of a method
+                </MudText>
+            </MudListItem>
+            <MudListItem >
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-csharp">// Setting up a method to return a specific value
+mockService.Setup(x => x.GetValue()).Returns(10);</code>
+                    </pre>
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter5" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the concept of verifying method calls in Moq</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    In Moq, you can use the Verify method to assert that a specific method on a mock object was called with specified arguments. It allows you to verify that certain interactions between the test code and the mock object have occurred.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter6" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you set up a method to throw an exception in Moq?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    You can use the Throws method within a Setup to define an exception to be thrown when a method is called
+                </MudText>
+            </MudListItem>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    <pre class="line-numbers">
+                    <code class="language-csharp">// Setting up a method to throw an exception
+mockService.Setup(x => x.MethodThatThrows()).Throws&lt;SomeException>();</code>
+                    </pre>
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter7" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>Explain the difference between Mock.Of&lt;T>() and new Mock&lt;T>() in Moq</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    Mock.Of&lt;T>(): Creates a mock object with default behavior without explicitly setting up methods. It creates a mock object with all methods having default behavior (usually returning default values).
+                </MudText>
+            </MudListItem>
+            <MudListItem>
+                <MudText Typo="Typo.subtitle1">
+                    new Mock&lt;T>(): Creates a mock object with full control over behavior. It allows setting up specific behaviors for methods using the Setup method.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you verify property interactions in Moq?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    To verify property interactions, you can use the VerifyGet and VerifySet methods in Moq. They allow you to assert that the getter or setter of a property on a mock object was called.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel>
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Filter8" Color="Color.Success" class="mr-3"></MudIcon>
+            <MudText>How do you verify that no further interactions are made with a mock object in Moq?</MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudList Clickable=false>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    You can use the VerifyNoOtherCalls method in Moq to verify that no further interactions occurred on a mock object after specified calls. It checks that all expected calls were made and no additional unexpected calls happened.
+                </MudText>
+            </MudListItem>
+            <MudListItem Icon="@Icons.Material.Filled.Send">
+                <MudText Typo="Typo.subtitle1">
+                    Moq is a powerful tool for creating mock objects, defining their behaviors, and verifying interactions, making it essential for effective unit testing in .NET applications.
+                </MudText>
+            </MudListItem>
+        </MudList>
+    </ChildContent>
+</MudExpansionPanel>
 
 @code {
-
+    @inject IJSRuntime JSRuntime
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializePrism");
+        }
+    }
 }
